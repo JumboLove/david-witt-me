@@ -7,7 +7,7 @@ import {documentInternationalization} from '@sanity/document-internationalizatio
 
 export default defineConfig({
   name: 'default',
-  title: 'space-madness',
+  title: 'davidwitt.me',
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: 'production',
 
