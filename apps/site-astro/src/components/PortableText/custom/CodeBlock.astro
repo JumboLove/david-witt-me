@@ -1,0 +1,17 @@
+---
+import type { Props as $ } from "astro-portabletext/types";
+import type { CodeBlock } from "content-models";
+import ContentCodeBlock from "@/components/content/CodeBlock.astro";
+
+export type Props = $<CodeBlock>;
+const { node } = Astro.props;
+---
+
+<section class="not-prose my-8">
+  <ContentCodeBlock
+    code={node.code}
+    language={node.language}
+    filename={node.filename}
+    highlightLines={node.highlightedLines}
+  />
+</section>
