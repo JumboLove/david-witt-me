@@ -1,15 +1,48 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import davidPic from "@/assets/david-and-lucy.jpg";
+import { Image } from "astro:assets";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/content/Popover";
 ---
 
 <Layout>
   <main>
-    <div class="prose-width content-container">
-      <h1 class="h1">Welcome to Space Madness</h1>
-      <p class="p">
-        Check out <a href="https://spacemadness.dev/docs/">the docs</a> for details
-        on how to get started
-      </p>
-    </div>
+    <header class="content-container max-w-[900px]">
+      <div
+        class="flex flex-col items-center sm:grid sm:grid-cols-2 gap-5 sm:gap-10"
+      >
+        <Image
+          src={davidPic}
+          width={600}
+          class="rounded-full w-full max-w-[400px]"
+          alt="David and Lucy - my dog"
+        />
+        <div
+          class="text-center sm:text-start flex flex-col items-center justify-center gap-5 text-2xl text-balance"
+        >
+          <p>developer advocate, full stack engineer, dubious philosopher</p>
+          <p>
+            Currently developing <a href="https://spacemadness.dev/"
+              >Space Madness</a
+            > and writing my journey along the way
+          </p>
+          <p>
+            I built and write for <a href="https://polylove.life/"
+              >PolyLove.life</a
+            > to educate people about <Popover>
+              <PopoverTrigger>polyamory</PopoverTrigger><PopoverContent>
+                The expansion of romantic relationships beyond two people with
+                the consent and knowledge of all parties involved.
+              </PopoverContent>
+            </Popover>
+          </p>
+        </div>
+      </div>
+    </header>
   </main>
 </Layout>

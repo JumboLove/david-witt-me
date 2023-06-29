@@ -1,10 +1,10 @@
-export const siteTitle = "Space Madness Stack";
-export const siteTagline = "Connected content with ease";
+export const siteTitle = "David Witt";
+export const siteTagline = "developer, writer, dubious philosopher";
 export const siteDescription =
-  "A content framework that connects ideas so you can build your digital garden ";
+  "David's digital garden with content on web development, polyamory, and living a rich,full life";
 export const hostname =
   process.env.NODE_ENV === "production"
-    ? "https://demo.spacemadness.dev/"
+    ? "https://davidwitt.me/"
     : "https://localhost:3000/";
 
 export function titleTemplate(title?: string, tagline: string = siteTagline) {
