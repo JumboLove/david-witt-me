@@ -1,0 +1,60 @@
+---
+// TODO theming is a bit off
+// focus-hoverable needs attention and should match
+// what the search header box is doing
+import { Moon, Sun } from "lucide-react";
+---
+
+<button id="theme-toggle" class="border-focusable flex p-2"
+  ><span class="sr-only">Toggle theme between light and dark</span>
+  <div class="w-5 overflow-hidden">
+    <div
+      class="flex h-5 w-10 flex-row items-center transition-all opacity-0"
+      data-theme-toggle-icons
+    >
+      <Sun className="w-5" />
+      <Moon className="w-5" />
+    </div>
+  </div>
+</button>
+
+<script>
+  const docEl = document.documentElement;
+  // Get initial state from document element
+  // This will likely be set from the <Layout/> component
+  let theme: "light" | "dark" = (() => {
+    return docEl.classList.contains("dark") ? "dark" : "light";
+  })();
+
+  const themeToggleBtn = document.getElementById("theme-toggle");
+  const iconWrapper = themeToggleBtn?.querySelector(
+    "[data-theme-toggle-icons]"
+  );
+
+  themeToggleBtn?.addEventListener("click", toggleTheme);
+  // sync UI state with preferred theme
+  (() => {
+    theme === "light" ? setLightMode() : setDarkMode();
+    window.setTimeout(() => {
+      iconWrapper?.classList.remove("opacity-0");
+    }, 150);
+  })();
+
+  function toggleTheme() {
+    theme === "light" ? setDarkMode() : setLightMode();
+  }
+
+  function setLightMode() {
+    theme = "light";
+    docEl.classList.remove("dark");
+    window.localStorage.setItem("theme", theme);
+    iconWrapper?.classList.add("-translate-x-1/2");
+  }
+
+  function setDarkMode() {
+    theme = "dark";
+    docEl.classList.add("dark");
+    window.localStorage.setItem("theme", theme);
+    iconWrapper?.classList.remove("-translate-x-1/2");
+  }
+</script>

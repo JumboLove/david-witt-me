@@ -23,6 +23,29 @@ import SiteSearch from "@/components/SiteSearch.astro";
     </slot>
   </head>
   <body class="max-w-full overflow-x-hidden">
+    <script is:inline>
+      // Get theme before rendering the page
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      })();
+
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+      window.localStorage.setItem("theme", theme);
+    </script>
+
     <SiteHeader />
     <slot />
 
