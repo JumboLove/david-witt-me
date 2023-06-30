@@ -1,6 +1,7 @@
 import {
   conceptSanityDefinition,
   postSanityDefinition,
+  projectSanityDefinition,
   tagSanityDefinition,
   blockContentSanityDefinition,
   resourceSanityDefinition,
@@ -11,10 +12,10 @@ import {
 export const schemaTypes = [
   conceptSanityDefinition,
   postSanityDefinition,
+  projectSanityDefinition,
   resourceSanityDefinition,
   resourceContentSanityDefinition,
   tagSanityDefinition,
   blockContentSanityDefinition,
   partialSanityDefinition,
 ]
-export const translatedTypes = [conceptSanityDefinition.name, postSanityDefinition.name]

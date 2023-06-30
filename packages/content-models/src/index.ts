@@ -1,5 +1,6 @@
 export * from "./concept";
 export * from "./post";
+export * from "./project";
 export * from "./resource";
 export * from "./resourceContent";
 export * from "./tag";

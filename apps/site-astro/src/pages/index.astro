@@ -1,29 +1,38 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import davidPic from "@/assets/david-and-lucy.jpg";
+import picDavid from "@/assets/david-and-lucy.jpg";
+import picPolyLoveLife from "@/assets/poly-love-life-site.png";
 import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import SanityImage from "@/components/content/SanityImage.astro";
+import PortableText from "@/components/PortableText/PortableText.astro";
+import TagsList from "@/components/content/TagsList.astro";
+
+import { getProject } from "@/queries/project";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/content/Popover";
+
+const currentProjectIds = ["space-madness", "poly-love-life"];
+const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 ---
 
 <Layout>
   <main>
     <header class="content-container max-w-[900px]">
       <div
-        class="flex flex-col items-center sm:grid sm:grid-cols-2 gap-5 sm:gap-10"
+        class="flex flex-col items-center gap-5 sm:grid sm:grid-cols-2 sm:gap-10"
       >
         <Image
-          src={davidPic}
+          src={picDavid}
           width={600}
-          class="rounded-full w-full max-w-[400px]"
+          class="w-full max-w-[400px] rounded-full"
           alt="David and Lucy - my dog"
         />
         <div
-          class="text-center sm:text-start flex flex-col items-center justify-center gap-5 text-2xl text-balance"
+          class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
         >
           <p>developer advocate, full stack engineer, dubious philosopher</p>
           <p>
@@ -44,5 +53,82 @@ import {
         </div>
       </div>
     </header>
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
+      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+        Currently obsessing over...
+      </h2>
+      <div
+        class="flex flex-col items-center gap-5 sm:grid sm:grid-cols-2 sm:gap-10"
+      >
+        {
+          currentProjects.map((project) => {
+            return (
+              <figure>
+                {project.mainImage && (
+                  <SanityImage
+                    image={project.mainImage}
+                    width={600}
+                    height={400}
+                    class="w-full rounded-sm"
+                    alt={`${project.title} homepage`}
+                  />
+                )}
+                <figcaption>
+                  <h3 class="my-4 text-xl font-semibold">{project.title}</h3>
+                  {project.body && <PortableText value={project.body} />}
+                  {project.tags && (
+                    <TagsList
+                      tags={project.tags}
+                      asLinks={true}
+                      className="my-4"
+                    />
+                  )}
+                </figcaption>
+              </figure>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- Testing with Grid Layout -->
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
+      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+        In the past I've done some things...(grid)
+      </h2>
+      <div class="past-projects-grid grid max-w-[900px] gap-5 sm:gap-10">
+        <h3 class="text-2xl font-semibold sm:text-right">Shopify</h3>
+        <div>
+          <h4 class="text-lg font-semibold">Senior Developer Advocate</h4>
+          <p>Job description lorem ispum</p>
+        </div>
+
+        <Image
+          src={picPolyLoveLife}
+          width={400}
+          class="w-full rounded-sm"
+          alt="Poly Love Life homepage"
+        />
+
+        <div>
+          <h3 class="my-4 text-xl font-semibold">Poly Love Life</h3>
+          <p>
+            The missing field guide to polyamory. A digital garden to help
+            people explore concepts and learn relationships skills
+          </p>
+          <p>Badges</p>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>
+
+<style>
+  @media (min-width: 640px) {
+    .past-projects-grid {
+      grid-template-columns: minmax(400px, 1fr) 2fr;
+    }
+  }
+</style>

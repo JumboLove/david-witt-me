@@ -9,7 +9,7 @@ import { backlinksQuery, BacklinkResult } from "./partials/backlink";
 // To use creation date as the sorter:
 // swap out `order(importance desc)` with `order(_createdAt desc)`
 export async function getAllConceptsList() {
-  const query = groq`*[_type == "concept" && isVisible == true && language == $lang] | order(importance desc) {
+  const query = groq`*[_type == "concept" && isVisible == true] | order(importance desc) {
     title,
     slug,
     description,
@@ -29,9 +29,7 @@ export async function getAllConceptsList() {
     })
   );
 
-  const data = await useSanityClient().fetch(query, {
-    lang: "en",
-  });
+  const data = await useSanityClient().fetch(query, {});
 
   try {
     return ConceptsResult.parse(data);
@@ -41,7 +39,7 @@ export async function getAllConceptsList() {
 }
 
 export async function getAllConceptsFull() {
-  const query = groq`*[_type == "concept" && isVisible == true && language == $lang] | order(importance asc) {
+  const query = groq`*[_type == "concept" && isVisible == true] | order(importance asc) {
     title,
     slug,
     description,
@@ -66,9 +64,7 @@ export async function getAllConceptsFull() {
     })
   );
 
-  const data = await useSanityClient().fetch(query, {
-    lang: "en",
-  });
+  const data = await useSanityClient().fetch(query, {});
 
   try {
     return ConceptsResult.parse(data);
@@ -81,7 +77,7 @@ export async function getConcept(slug: string) {
   if (!slug) {
     throw new Error(`Error in getConcept: No slug provided`);
   }
-  const query = groq`*[_type == "concept" && slug.current == $slug && language == $lang][0] {
+  const query = groq`*[_type == "concept" && slug.current == $slug][0] {
     title,
     slug,
     description,
@@ -105,7 +101,6 @@ export async function getConcept(slug: string) {
   });
 
   const data = await useSanityClient().fetch(query, {
-    lang: "en",
     slug: slug,
   });
 
