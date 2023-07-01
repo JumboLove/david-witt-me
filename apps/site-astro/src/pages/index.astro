@@ -2,13 +2,15 @@
 import picDavid from "@/assets/david-and-lucy.jpg";
 import picPolyLoveLife from "@/assets/poly-love-life-site.png";
 import { Image } from "astro:assets";
+import type { z } from "zod";
 import Layout from "../layouts/Layout.astro";
 import SanityImage from "@/components/content/SanityImage.astro";
 import PortableText from "@/components/PortableText/PortableText.astro";
 import TagsList from "@/components/content/TagsList.astro";
 import { ShopifyCareer } from "@/components/homepage/career";
+import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
 
-import { getProject, type GetProjectResult } from "@/queries/project";
+import { getProject, getProjectZodObject } from "@/queries/project";
 
 import {
   Popover,
@@ -16,12 +18,16 @@ import {
   PopoverTrigger,
 } from "@/components/content/Popover";
 
+// ProjectResult will match the data output of getProject()
+const projectZodObject = getProjectZodObject();
+type ProjectResult = z.infer<typeof projectZodObject>;
+
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
 const pastProjectIds = ["shopify-workshops"] as const;
 const pastProjects: Partial<
-  Record<(typeof pastProjectIds)[number], GetProjectResult>
+  Record<(typeof pastProjectIds)[number], ProjectResult>
 > = {};
 
 await Promise.all(
@@ -112,44 +118,7 @@ await Promise.all(
       <div class="past-projects-grid grid max-w-[900px] gap-5 sm:gap-10">
         <ShopifyCareer />
 
-        <!-- Shopify Workshops -->
-        {
-          pastProjects["shopify-workshops"]?.mainImage && (
-            <SanityImage
-              image={pastProjects["shopify-workshops"].mainImage}
-              width={400}
-              height={600}
-              class="w-full rounded-sm"
-              alt={`${pastProjects["shopify-workshops"].title} homepage`}
-            />
-          )
-        }
-
-        <div>
-          <h3 class="my-4 text-xl font-semibold">
-            {pastProjects["shopify-workshops"]?.title}
-          </h3>
-          <div class="prose">
-            <PortableText value={pastProjects["shopify-workshops"]?.body} />
-          </div>
-        </div>
-
-        <!-- PLL for testing -->
-        <Image
-          src={picPolyLoveLife}
-          width={400}
-          class="w-full rounded-sm"
-          alt="Poly Love Life homepage"
-        />
-
-        <div>
-          <h3 class="my-4 text-xl font-semibold">Poly Love Life</h3>
-          <p>
-            The missing field guide to polyamory. A digital garden to help
-            people explore concepts and learn relationships skills
-          </p>
-          <p>Badges</p>
-        </div>
+        <CareerProjectBlock project={pastProjects["shopify-workshops"]} />
       </div>
     </section>
   </main>
