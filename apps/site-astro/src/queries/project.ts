@@ -109,3 +109,20 @@ export async function getProject(slug: string) {
     throw new Error(`Error parsing getProject: ${slug}, \n${error.message}`);
   }
 }
+
+// Pulling these types out to export for type safety
+// when fetching projects on the homepage
+const MergedProject = Project.extend({
+  tags: TagsResult,
+});
+
+const ProjectResult = MergedProject.pick({
+  title: true,
+  slug: true,
+  description: true,
+  mainImage: true,
+  tags: true,
+  body: true,
+});
+
+export type GetProjectResult = z.infer<typeof ProjectResult>;

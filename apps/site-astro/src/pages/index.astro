@@ -6,8 +6,9 @@ import Layout from "../layouts/Layout.astro";
 import SanityImage from "@/components/content/SanityImage.astro";
 import PortableText from "@/components/PortableText/PortableText.astro";
 import TagsList from "@/components/content/TagsList.astro";
+import { ShopifyCareer } from "@/components/homepage/career";
 
-import { getProject } from "@/queries/project";
+import { getProject, type GetProjectResult } from "@/queries/project";
 
 import {
   Popover,
@@ -17,6 +18,18 @@ import {
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
+
+const pastProjectIds = ["shopify-workshops"] as const;
+const pastProjects: Partial<
+  Record<(typeof pastProjectIds)[number], GetProjectResult>
+> = {};
+
+await Promise.all(
+  pastProjectIds.map(async (pastProjectId) => {
+    const projectData = await getProject(pastProjectId);
+    pastProjects[pastProjectId] = projectData;
+  })
+);
 ---
 
 <Layout>
@@ -92,19 +105,36 @@ const currentProjects = await Promise.all(currentProjectIds.map(getProject));
       </div>
     </section>
 
-    <!-- Testing with Grid Layout -->
-
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
-        In the past I've done some things...(grid)
+        In the past I've done some things...
       </h2>
       <div class="past-projects-grid grid max-w-[900px] gap-5 sm:gap-10">
-        <h3 class="text-2xl font-semibold sm:text-right">Shopify</h3>
+        <ShopifyCareer />
+
+        <!-- Shopify Workshops -->
+        {
+          pastProjects["shopify-workshops"]?.mainImage && (
+            <SanityImage
+              image={pastProjects["shopify-workshops"].mainImage}
+              width={400}
+              height={600}
+              class="w-full rounded-sm"
+              alt={`${pastProjects["shopify-workshops"].title} homepage`}
+            />
+          )
+        }
+
         <div>
-          <h4 class="text-lg font-semibold">Senior Developer Advocate</h4>
-          <p>Job description lorem ispum</p>
+          <h3 class="my-4 text-xl font-semibold">
+            {pastProjects["shopify-workshops"]?.title}
+          </h3>
+          <div class="prose">
+            <PortableText value={pastProjects["shopify-workshops"]?.body} />
+          </div>
         </div>
 
+        <!-- PLL for testing -->
         <Image
           src={picPolyLoveLife}
           width={400}
@@ -126,7 +156,16 @@ const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 </Layout>
 
 <style>
-  @media (min-width: 640px) {
+  .past-projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) {
+    .past-projects-grid {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+  @media (min-width: 850px) {
     .past-projects-grid {
       grid-template-columns: minmax(400px, 1fr) 2fr;
     }
