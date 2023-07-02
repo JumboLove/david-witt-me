@@ -192,12 +192,12 @@ const logoCloud = [
     </section>
 
     {/* Recently read */}
-    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
-      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+    <section class="mx-auto my-20 w-full max-w-[1200px] py-4">
+      <h2 class="mx-2 mb-5 text-2xl font-semibold md:text-4xl">
         Reading and studying...
       </h2>
       <div>
-        <Slider>
+        <Slider class="gap-6">
           {
             recentBooks.map((book) => (
               <MediaTile
@@ -205,6 +205,7 @@ const logoCloud = [
                 subtitle={book.creator}
                 media={book.mainImage}
                 format="book"
+                class="p-2"
               />
             ))
           }
