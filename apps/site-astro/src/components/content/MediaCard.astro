@@ -1,0 +1,42 @@
+---
+import type { Image } from "sanity-zod-types";
+import SanityImage from "./SanityImage.astro";
+
+interface Props {
+  title: string;
+  subtitle: string | null;
+  media: string | Image | null;
+}
+
+const { title, subtitle, media } = Astro.props;
+
+const imageWidth = 220;
+const imageHeight = imageWidth * 1.5;
+---
+
+<figure>
+  {
+    typeof media === "object" && media?._type === "image" && (
+      <SanityImage
+        image={media}
+        width={imageWidth}
+        height={imageHeight}
+        alt={`Book cover for ${title}`}
+      />
+    )
+  }
+  {
+    typeof media === "string" && (
+      <img
+        src={media}
+        width={imageWidth}
+        height={imageHeight}
+        alt={`Book cover for ${title}`}
+      />
+    )
+  }
+  <figcaption>
+    <h4>{title}</h4>
+    {subtitle && <p>{subtitle}</p>}
+  </figcaption>
+</figure>
