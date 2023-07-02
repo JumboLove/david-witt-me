@@ -5,7 +5,7 @@ import PortableText from "@/components/PortableText/PortableText.astro";
 import { titleTemplate } from "@/lib/metadata";
 import MetaTags from "@/components/MetaTags.astro";
 
-const post = await getPost("kitchen-sink");
+// const post = await getPost("kitchen-sink");
 ---
 
 <Layout>
@@ -30,6 +30,6 @@ const post = await getPost("kitchen-sink");
     </p>
   </header>
   <main class="prose-custom content-container">
-    {post.body && <PortableText value={post.body} />}
+    <!-- {post.body && <PortableText value={post.body} />} -->
   </main>
 </Layout>

@@ -6,6 +6,9 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
+  experimental: {
+    assets: true
+  },
   integrations: [sanity({
     projectId: process.env.SANITY_STUDIO_PROJECT_ID,
     dataset: 'production',

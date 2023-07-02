@@ -2,8 +2,7 @@ import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {codeInput} from '@sanity/code-input'
-import {schemaTypes, translatedTypes} from './schemas'
-import {documentInternationalization} from '@sanity/document-internationalization'
+import {sanitySchemaTypes} from 'content-models'
 
 export default defineConfig({
   name: 'default',
@@ -11,20 +10,9 @@ export default defineConfig({
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: 'production',
 
-  plugins: [
-    deskTool(),
-    visionTool(),
-    codeInput(),
-    documentInternationalization({
-      supportedLanguages: [
-        {id: 'en', title: 'English'},
-        {id: 'es', title: 'Spanish'},
-      ],
-      schemaTypes: translatedTypes,
-    }),
-  ],
+  plugins: [deskTool(), visionTool(), codeInput()],
 
   schema: {
-    types: schemaTypes,
+    types: sanitySchemaTypes,
   },
 })

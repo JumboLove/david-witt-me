@@ -1,12 +1,15 @@
+import type { SanityLinkableType } from "content-models";
+
 // This funciton should be kept in sync with the
-// Astro/pages directory
+// Astro/pages directory and the "LinkableType" union
+// in packages/content-models/src/index.ts
 
-type SanityTypes = "post" | "concept" | "tag" | "resource";
-
-export function getUrlForSanityType(type: SanityTypes, slug: string) {
+export function getUrlForSanityType(type: SanityLinkableType, slug: string) {
   switch (type) {
     case "post":
       return `/blog/${slug}`;
+    case "project":
+      return `/projects/${slug}`;
     case "concept":
       return `/concepts/${slug}`;
     case "tag":

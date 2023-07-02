@@ -1,0 +1,68 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+import type { Image } from "sanity-zod-types";
+import SanityImage from "./SanityImage.astro";
+
+interface Props extends HTMLAttributes<"figure"> {
+  title: string;
+  subtitle: string | null;
+  media: string | Image | null;
+  format?: "book";
+}
+
+const {
+  title,
+  subtitle,
+  media,
+  format = "book",
+  class: className,
+} = Astro.props;
+
+let imageWidth: number, imageHeight: number;
+
+// This is necessary for Tailwind to output the max
+// width class we build on the <figure/>
+const maxWidthClasses = ["max-w-[200px]"];
+
+switch (format) {
+  case "book":
+    imageWidth = 220;
+    imageHeight = imageWidth * 1.5;
+    break;
+  default:
+    // use a square image as default
+    imageWidth = 220;
+    imageHeight = imageWidth;
+    break;
+}
+---
+
+<figure
+  class={cn("flex flex-col gap-4", ` max-w-[${imageWidth}px]`, className)}
+>
+  {
+    typeof media === "object" && media?._type === "image" && (
+      <SanityImage
+        image={media}
+        width={imageWidth}
+        height={imageHeight}
+        alt={`Book cover for ${title}`}
+      />
+    )
+  }
+  {
+    typeof media === "string" && (
+      <img
+        src={media}
+        width={imageWidth}
+        height={imageHeight}
+        alt={`Book cover for ${title}`}
+      />
+    )
+  }
+  <figcaption>
+    <h4 class="mb-1 text-lg leading-none tracking-tight">{title}</h4>
+    {subtitle && <p class="text-muted-foreground">{subtitle}</p>}
+  </figcaption>
+</figure>

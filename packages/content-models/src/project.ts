@@ -3,9 +3,9 @@ import { z } from "zod";
 import * as S from "sanity-zod-types";
 import { Tag } from "./tag";
 
-export const resourceSanityDefinition = defineType({
-  name: "resource",
-  title: "Resource",
+export const projectSanityDefinition = defineType({
+  name: "project",
+  title: "Project",
   type: "document",
   fields: [
     defineField({
@@ -39,21 +39,10 @@ export const resourceSanityDefinition = defineType({
       },
     }),
     defineField({
-      name: "creator",
-      title: "Creator",
-      type: "string",
-    }),
-    defineField({
-      name: "url",
-      title: "URL",
-      type: "url",
+      name: "body",
+      title: "Body",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "affiliateUrl",
-      title: "Affiliate URL",
-      description: "Only fill this in if a generated URL cannot be created",
-      type: "url",
     }),
     defineField({
       name: "importance",
@@ -67,7 +56,7 @@ export const resourceSanityDefinition = defineType({
       name: "isVisible",
       title: "Is Visible",
       description:
-        "Hidden resources will not show on the site unless explicitly queried",
+        "Hidden projects will not show on the site unless explicitly queried",
       type: "boolean",
       initialValue: true,
     }),
@@ -81,18 +70,15 @@ export const resourceSanityDefinition = defineType({
   ],
 });
 
-export const Resource = S.Document.extend({
+export const Project = S.Document.extend({
   title: S.String,
   slug: S.Slug,
   description: S.String,
   mainImage: S.Image.nullable(),
-  creator: S.String.nullable(),
-  url: S.Url,
-  affiliateUrl: S.Url.nullable(),
+  body: z.any().nullable(), // Zod will not validate Portable Text
   importance: S.Number.min(0).max(100),
   isVisible: S.Boolean,
   tags: z.array(Tag).nullable(),
-  language: S.String,
 });
 
-export type Resource = z.infer<typeof Resource>;
+export type Project = z.infer<typeof Project>;
