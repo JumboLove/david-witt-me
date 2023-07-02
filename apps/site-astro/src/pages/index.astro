@@ -1,6 +1,5 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
-import picPolyLoveLife from "@/assets/poly-love-life-site.png";
 import { Image } from "astro:assets";
 import type { z } from "zod";
 import Layout from "../layouts/Layout.astro";
@@ -10,7 +9,7 @@ import TagsList from "@/components/content/TagsList.astro";
 import { ShopifyCareer } from "@/components/homepage/career";
 import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
 
-import { getProject, getProjectZodObject } from "@/queries/project";
+import { getProject } from "@/queries/project";
 
 import {
   Popover,
@@ -18,24 +17,8 @@ import {
   PopoverTrigger,
 } from "@/components/content/Popover";
 
-// ProjectResult will match the data output of getProject()
-const projectZodObject = getProjectZodObject();
-type ProjectResult = z.infer<typeof projectZodObject>;
-
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
-
-const pastProjectIds = ["shopify-workshops"] as const;
-const pastProjects: Partial<
-  Record<(typeof pastProjectIds)[number], ProjectResult>
-> = {};
-
-await Promise.all(
-  pastProjectIds.map(async (pastProjectId) => {
-    const projectData = await getProject(pastProjectId);
-    pastProjects[pastProjectId] = projectData;
-  })
-);
 ---
 
 <Layout>
@@ -118,7 +101,8 @@ await Promise.all(
       <div class="past-projects-grid grid max-w-[900px] gap-5 sm:gap-10">
         <ShopifyCareer />
 
-        <CareerProjectBlock project={pastProjects["shopify-workshops"]} />
+        <CareerProjectBlock projectId={"shopify-workshops"} />
+        <CareerProjectBlock projectId={"hydrogen-tutorial-series"} />
       </div>
     </section>
   </main>

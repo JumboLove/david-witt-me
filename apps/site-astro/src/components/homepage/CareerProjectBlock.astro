@@ -1,17 +1,14 @@
 ---
-import type { z } from "zod";
-import { getProjectZodObject } from "@/queries/project";
+import { getProject } from "@/queries/project";
 import SanityImage from "@/components/content/SanityImage.astro";
 import PortableText from "@/components/PortableText/PortableText.astro";
 
-const projectZodObject = getProjectZodObject();
-type ProjectResult = z.infer<typeof projectZodObject>;
-
 export interface Props {
-  project?: ProjectResult;
+  projectId: string;
 }
 
-const { project } = Astro.props;
+const { projectId } = Astro.props;
+const project = await getProject(projectId);
 ---
 
 {
@@ -26,13 +23,12 @@ const { project } = Astro.props;
   )
 }
 
-{
-  project && (
-    <div>
-      <h3 class="my-4 text-xl font-semibold">{project.title}</h3>
-      <div class="prose">
-        <PortableText value={project?.body} />
-      </div>
-    </div>
-  )
-}
+{/* Spacing div if no image exists */}
+{!project.mainImage && <div />}
+
+<div>
+  <h3 class="my-4 text-xl font-semibold">{project.title}</h3>
+  <div class="prose">
+    <PortableText value={project?.body} />
+  </div>
+</div>

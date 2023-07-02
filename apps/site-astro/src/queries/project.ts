@@ -86,22 +86,6 @@ export async function getProject(slug: string) {
     ${blockContentQuery}
   }`;
 
-  const ProjectResult = getProjectZodObject();
-
-  const data = await useSanityClient().fetch(query, {
-    slug: slug,
-  });
-
-  try {
-    return ProjectResult.parse(data);
-  } catch (error: any) {
-    throw new Error(`Error parsing getProject: ${slug}, \n${error.message}`);
-  }
-}
-
-// Pulling these types out to export for type safety
-// when fetching projects on the homepage
-export function getProjectZodObject() {
   const MergedProject = Project.extend({
     tags: TagsResult,
   });
@@ -115,5 +99,13 @@ export function getProjectZodObject() {
     body: true,
   });
 
-  return ProjectResult;
+  const data = await useSanityClient().fetch(query, {
+    slug: slug,
+  });
+
+  try {
+    return ProjectResult.parse(data);
+  } catch (error: any) {
+    throw new Error(`Error parsing getProject: ${slug}, \n${error.message}`);
+  }
 }
