@@ -165,15 +165,16 @@ const logoCloud = [
           Trusted by talented folks at...
         </h2>
         <div
-          class="logo-cloud mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
+          class="logo-cloud mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 text-black dark:text-white sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
         >
           {
             logoCloud.map((logo) => (
               <logo.logo
                 aria-label={logo.alt}
-                className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+                className="col-span-2 max-h-12 w-full object-contain  lg:col-span-1"
                 width={158}
                 height={48}
+                color={"currentColor"}
               />
             ))
           }
