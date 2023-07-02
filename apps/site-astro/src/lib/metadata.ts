@@ -1,7 +1,7 @@
 export const siteTitle = "David Witt";
 export const siteTagline = "developer, writer, dubious philosopher";
 export const siteDescription =
-  "David's digital garden with content on web development, polyamory, and living a rich,full life";
+  "David's digital garden with content on web development, polyamory, and living a rich, full life";
 export const hostname =
   process.env.NODE_ENV === "production"
     ? "https://davidwitt.me/"
