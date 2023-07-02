@@ -2,6 +2,7 @@
 import { getProject } from "@/queries/project";
 import SanityImage from "@/components/content/SanityImage.astro";
 import PortableText from "@/components/PortableText/PortableText.astro";
+import TagsList from "@/components/content/TagsList.astro";
 
 export interface Props {
   projectId: string;
@@ -15,8 +16,8 @@ const project = await getProject(projectId);
   project?.mainImage && (
     <SanityImage
       image={project.mainImage}
-      width={400}
-      height={600}
+      width={1180}
+      height={820}
       class="w-full rounded-sm"
       alt={`${project.title} homepage`}
     />
@@ -31,4 +32,9 @@ const project = await getProject(projectId);
   <div class="prose">
     <PortableText value={project?.body} />
   </div>
+  {
+    project.tags && (
+      <TagsList tags={project.tags} asLinks={true} className="my-4" />
+    )
+  }
 </div>

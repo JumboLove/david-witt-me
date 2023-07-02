@@ -1,21 +1,18 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
-import { Image } from "astro:assets";
-import type { z } from "zod";
-import Layout from "../layouts/Layout.astro";
-import SanityImage from "@/components/content/SanityImage.astro";
 import PortableText from "@/components/PortableText/PortableText.astro";
-import TagsList from "@/components/content/TagsList.astro";
-import { ShopifyCareer } from "@/components/homepage/career";
-import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
-
-import { getProject } from "@/queries/project";
-
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/content/Popover";
+import SanityImage from "@/components/content/SanityImage.astro";
+import TagsList from "@/components/content/TagsList.astro";
+import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
+import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/career";
+import { getProject } from "@/queries/project";
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
@@ -103,6 +100,11 @@ const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
         <CareerProjectBlock projectId={"shopify-workshops"} />
         <CareerProjectBlock projectId={"hydrogen-tutorial-series"} />
+
+        <DemandPdxCareer />
+
+        <CareerProjectBlock projectId={"therabody"} />
+        <CareerProjectBlock projectId={"saje"} />
       </div>
     </section>
   </main>
