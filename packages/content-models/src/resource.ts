@@ -39,6 +39,11 @@ export const resourceSanityDefinition = defineType({
       },
     }),
     defineField({
+      name: "creator",
+      title: "Creator",
+      type: "string",
+    }),
+    defineField({
       name: "url",
       title: "URL",
       type: "url",
@@ -81,6 +86,7 @@ export const Resource = S.Document.extend({
   slug: S.Slug,
   description: S.String,
   mainImage: S.Image.nullable(),
+  creator: S.String.nullable(),
   url: S.Url,
   affiliateUrl: S.Url.nullable(),
   importance: S.Number.min(0).max(100),

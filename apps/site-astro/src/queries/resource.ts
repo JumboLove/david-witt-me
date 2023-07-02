@@ -123,3 +123,47 @@ export async function getResource(slug: string) {
     throw new Error(`Error parsing getResource: ${slug}, \n${error.message}`);
   }
 }
+
+interface GetBooksProps {
+  order: "recent" | "importance";
+  limit: number;
+}
+
+export async function getBooksList({
+  order = "recent",
+  limit = 5,
+}: GetBooksProps) {
+  const sortString =
+    order === "recent" ? "_createdAt desc" : "order(importance desc)";
+  const query = groq`*[_type == "resource" && (("fiction" in tags[]->slug.current) || ("nonfiction" in tags[]->slug.current))]
+  | order(${sortString})[0...$limit] {
+    title,
+    slug,
+    description,
+    url,
+    affiliateUrl,
+    creator
+  }`;
+
+  const ResourcesResult = z.array(
+    Resource.pick({
+      title: true,
+      slug: true,
+      description: true,
+      url: true,
+      affiliateUrl: true,
+      resourceContent: true,
+      creator: true,
+    })
+  );
+
+  const data = await useSanityClient().fetch(query, {
+    limit: limit,
+  });
+
+  try {
+    return ResourcesResult.parse(data);
+  } catch (error: any) {
+    throw new Error(`Error parsing getBooksList, \n${error.message}`);
+  }
+}
