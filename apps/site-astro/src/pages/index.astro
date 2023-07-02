@@ -1,5 +1,17 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
+import {
+  PumaLogo,
+  SalesforceLogo,
+  ShopifyLogo,
+  TherabodyLogo,
+  HannaLogo,
+  SajeLogo,
+  NixonLogo,
+  JblLogo,
+  ShiseidoLogo,
+} from "@/components/homepage/BrandLogos";
+
 import PortableText from "@/components/PortableText/PortableText.astro";
 import {
   Popover,
@@ -9,13 +21,52 @@ import {
 import SanityImage from "@/components/content/SanityImage.astro";
 import TagsList from "@/components/content/TagsList.astro";
 import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
-import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/career";
+import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/Career";
 import { getProject } from "@/queries/project";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
+
+const logoCloud = [
+  {
+    logo: ShopifyLogo,
+    alt: "Shopify",
+  },
+  {
+    logo: PumaLogo,
+    alt: "Puma",
+  },
+  {
+    logo: SalesforceLogo,
+    alt: "Salesforce",
+  },
+  {
+    logo: TherabodyLogo,
+    alt: "Therabody",
+  },
+  {
+    logo: HannaLogo,
+    alt: "Hanna Andersson",
+  },
+  {
+    logo: SajeLogo,
+    alt: "Saje Natural Wellness",
+  },
+  {
+    logo: NixonLogo,
+    alt: "Nixon",
+  },
+  {
+    logo: JblLogo,
+    alt: "JBL",
+  },
+  {
+    logo: ShiseidoLogo,
+    alt: "Shiseido",
+  },
+];
 ---
 
 <Layout>
@@ -105,6 +156,28 @@ const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
         <CareerProjectBlock projectId={"therabody"} />
         <CareerProjectBlock projectId={"saje"} />
+      </div>
+    </section>
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+          Trusted by talented folks at...
+        </h2>
+        <div
+          class="logo-cloud mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
+        >
+          {
+            logoCloud.map((logo) => (
+              <logo.logo
+                aria-label={logo.alt}
+                className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+                width={158}
+                height={48}
+              />
+            ))
+          }
+        </div>
       </div>
     </section>
   </main>
