@@ -1,18 +1,19 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
 import {
+  HannaLogo,
+  JblLogo,
+  NixonLogo,
   PumaLogo,
+  SajeLogo,
   SalesforceLogo,
+  ShiseidoLogo,
   ShopifyLogo,
   TherabodyLogo,
-  HannaLogo,
-  SajeLogo,
-  NixonLogo,
-  JblLogo,
-  ShiseidoLogo,
 } from "@/components/homepage/BrandLogos";
 
 import PortableText from "@/components/PortableText/PortableText.astro";
+import MediaTile from "@/components/content/MediaTile.astro";
 import {
   Popover,
   PopoverContent,
@@ -20,14 +21,18 @@ import {
 } from "@/components/content/Popover";
 import SanityImage from "@/components/content/SanityImage.astro";
 import TagsList from "@/components/content/TagsList.astro";
-import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
 import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/Career";
+import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
+import Slider from "@/components/util/Slider.astro";
 import { getProject } from "@/queries/project";
+import { getBooksList } from "@/queries/resource";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
+
+const recentBooks = await getBooksList({ order: "recent", limit: 6 });
 
 const logoCloud = [
   {
@@ -35,20 +40,20 @@ const logoCloud = [
     alt: "Shopify",
   },
   {
-    logo: PumaLogo,
-    alt: "Puma",
+    logo: TherabodyLogo,
+    alt: "Therabody",
   },
   {
     logo: SalesforceLogo,
     alt: "Salesforce",
   },
   {
-    logo: TherabodyLogo,
-    alt: "Therabody",
-  },
-  {
     logo: HannaLogo,
     alt: "Hanna Andersson",
+  },
+  {
+    logo: PumaLogo,
+    alt: "Puma",
   },
   {
     logo: SajeLogo,
@@ -71,6 +76,7 @@ const logoCloud = [
 
 <Layout>
   <main>
+    {/* Main Header */}
     <header class="content-container max-w-[900px]">
       <div
         class="flex flex-col items-center gap-5 sm:grid sm:grid-cols-2 sm:gap-10"
@@ -104,6 +110,7 @@ const logoCloud = [
       </div>
     </header>
 
+    {/* Currently obsessed  */}
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
         Currently obsessing over...
@@ -142,6 +149,7 @@ const logoCloud = [
       </div>
     </section>
 
+    {/* Past work */}
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
         In the past I've done some things...
@@ -159,6 +167,7 @@ const logoCloud = [
       </div>
     </section>
 
+    {/* Logo cloud */}
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
@@ -179,6 +188,27 @@ const logoCloud = [
             ))
           }
         </div>
+      </div>
+    </section>
+
+    {/* Recently read */}
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
+      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+        Reading and studying...
+      </h2>
+      <div>
+        <Slider>
+          {
+            recentBooks.map((book) => (
+              <MediaTile
+                title={book.title}
+                subtitle={book.creator}
+                media={book.mainImage}
+                format="book"
+              />
+            ))
+          }
+        </Slider>
       </div>
     </section>
   </main>

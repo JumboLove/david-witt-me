@@ -140,6 +140,7 @@ export async function getBooksList({
     title,
     slug,
     description,
+    mainImage,
     url,
     affiliateUrl,
     creator
@@ -150,6 +151,7 @@ export async function getBooksList({
       title: true,
       slug: true,
       description: true,
+      mainImage: true,
       url: true,
       affiliateUrl: true,
       resourceContent: true,
