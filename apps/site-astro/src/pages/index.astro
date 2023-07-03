@@ -147,24 +147,7 @@ const logoCloud = [
           })
         }
       </div>
-    </section>
-
-    {/* Past work */}
-    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
-      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
-        In the past I've done some things...
-      </h2>
-      <div class="past-projects-grid grid max-w-[900px] gap-5 sm:gap-10">
-        <ShopifyCareer />
-
-        <CareerProjectBlock projectId={"shopify-workshops"} />
-        <CareerProjectBlock projectId={"hydrogen-tutorial-series"} />
-
-        <DemandPdxCareer />
-
-        <CareerProjectBlock projectId={"therabody"} />
-        <CareerProjectBlock projectId={"saje"} />
-      </div>
+      <p>Want to see more? <a href="/about" class="link">It's over here</a></p>
     </section>
 
     {/* Logo cloud */}
@@ -214,20 +197,3 @@ const logoCloud = [
     </section>
   </main>
 </Layout>
-
-<style>
-  .past-projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 600px) {
-    .past-projects-grid {
-      grid-template-columns: 1fr 2fr;
-    }
-  }
-  @media (min-width: 850px) {
-    .past-projects-grid {
-      grid-template-columns: minmax(400px, 1fr) 2fr;
-    }
-  }
-</style>

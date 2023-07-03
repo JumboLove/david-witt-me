@@ -1,6 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getUrlForSanityType } from "@/lib/url";
+import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/Career";
+import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
 ---
 
 <Layout>
@@ -45,5 +47,40 @@ import { getUrlForSanityType } from "@/lib/url";
         </p>
       </div>
     </section>
+
+    {/* Past work */}
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <h2 class="mb-10 text-2xl font-semibold md:text-4xl">
+        In the past I've done some things...
+      </h2>
+      <div class="past-projects-grid grid max-w-[900px] gap-14 sm:gap-10">
+        <ShopifyCareer />
+
+        <CareerProjectBlock projectId={"shopify-workshops"} />
+        <CareerProjectBlock projectId={"hydrogen-tutorial-series"} />
+
+        <DemandPdxCareer />
+
+        <CareerProjectBlock projectId={"therabody"} />
+        <CareerProjectBlock projectId={"saje"} />
+      </div>
+    </section>
   </main>
 </Layout>
+
+<style>
+  .past-projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .past-projects-grid {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+  @media (min-width: 850px) {
+    .past-projects-grid {
+      grid-template-columns: minmax(400px, 1fr) 2fr;
+    }
+  }
+</style>
