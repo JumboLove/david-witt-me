@@ -1,0 +1,49 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getUrlForSanityType } from "@/lib/url";
+---
+
+<Layout>
+  <main>
+    <header class="mx-auto my-10 w-full max-w-[1200px] p-4 sm:p-6">
+      <h1
+        class="mb-4 text-5xl font-bold tracking-wider text-slate-700 dark:text-slate-200"
+      >
+        David Witt
+      </h1>
+      <h2 class="text-balance text-3xl text-muted-foreground">
+        Web developer, advocate, and unremarkable writer
+      </h2>
+    </header>
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <h2 class="mb-5 text-2xl font-semibold">A bit about me</h2>
+      <div class="prose-custom">
+        <p>
+          I am a seasoned technical lead and developer advocate with a passion
+          for empowering developers and driving exceptional developer
+          experiences.
+        </p>
+        <p>
+          With a strong background in full stack engineering and expertise in
+          front-end development, I have led successful projects, mentored teams,
+          and delivered innovative solutions for renowned brands.
+        </p>
+
+        <p>
+          I build the <a href={getUrlForSanityType("project", "space-madness")}
+            >Space Madness stack</a
+          > to leverage some amazing tech and stitch together ideas in a bidirectionally
+          linked content map. It powers this site, as well as <a
+            href={getUrlForSanityType("project", "poly-love-life")}
+            >Poly Love Life</a
+          > where I write educational content about polyamory.
+        </p>
+        <p>
+          When I'm not working, I dabble in the dark arts of creative writing,
+          Olympic weightlifting, and exploring the majestic PNW.
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
