@@ -1,11 +1,68 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import { getUrlForSanityType } from "@/lib/url";
+import MetaTags from "@/components/MetaTags.astro";
+import {
+  HannaLogo,
+  JblLogo,
+  NixonLogo,
+  PumaLogo,
+  SajeLogo,
+  SalesforceLogo,
+  ShiseidoLogo,
+  ShopifyLogo,
+  TherabodyLogo,
+} from "@/components/homepage/BrandLogos";
 import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/Career";
 import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getUrlForSanityType } from "@/lib/url";
+
+const logoCloud = [
+  {
+    logo: ShopifyLogo,
+    alt: "Shopify",
+  },
+  {
+    logo: TherabodyLogo,
+    alt: "Therabody",
+  },
+  {
+    logo: SalesforceLogo,
+    alt: "Salesforce",
+  },
+  {
+    logo: HannaLogo,
+    alt: "Hanna Andersson",
+  },
+  {
+    logo: PumaLogo,
+    alt: "Puma",
+  },
+  {
+    logo: SajeLogo,
+    alt: "Saje Natural Wellness",
+  },
+  {
+    logo: NixonLogo,
+    alt: "Nixon",
+  },
+  {
+    logo: JblLogo,
+    alt: "JBL",
+  },
+  {
+    logo: ShiseidoLogo,
+    alt: "Shiseido",
+  },
+];
 ---
 
 <Layout>
+  <MetaTags
+    title={titleTemplate("About Me")}
+    description={"A bit of bio, a bit of history, a plea for paying work 😅"}
+    slot="metadata"
+  />
   <main>
     <header class="mx-auto my-10 w-full max-w-[1200px] p-4 sm:p-6">
       <h1
@@ -63,6 +120,39 @@ import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
 
         <CareerProjectBlock projectId={"therabody"} />
         <CareerProjectBlock projectId={"saje"} />
+      </div>
+    </section>
+
+    {/* Logo cloud */}
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <h2 class="mb-10 text-2xl font-semibold md:text-4xl">
+        Trusted by talented folks at...
+      </h2>
+      <div
+        class="logo-cloud mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 text-black dark:text-white sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
+      >
+        {
+          logoCloud.map((logo) => (
+            <logo.logo
+              aria-label={logo.alt}
+              className="col-span-2 max-h-12 w-full object-contain  lg:col-span-1"
+              width={158}
+              height={48}
+              color={"currentColor"}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    {/* Work with me */}
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <h2 class="mb-10 text-2xl font-semibold md:text-4xl">
+        Want to work together?
+      </h2>
+      <div class="prose-custom">
+        <p>A bit of a blurb about what I'm looking for; TODO</p>
       </div>
     </section>
   </main>
