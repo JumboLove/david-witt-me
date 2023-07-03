@@ -1,0 +1,77 @@
+---
+import { Github, Linkedin, Twitter } from "lucide-react";
+import { getUrlForSanityType } from "@/lib/url";
+import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
+import { cn } from "@/lib/utils";
+
+const startYear = 2023;
+const currentYear = new Date().getFullYear();
+const copyrightRange =
+  startYear === currentYear ? startYear : `${startYear} - ${currentYear}`;
+
+// Use muted links for the footer so we don't
+// draw attention away from the main body content
+const footerLinkClasses = "p-2 hover:text-primary/50 focus:text-primary/5";
+
+// TODO re-order
+const footerNavLinks: { url: string; title: string }[] = [
+  {
+    url: "/",
+    title: "Home",
+  },
+  {
+    url: getUrlForSanityType("post", ""),
+    title: getSanityTypeDisplayText("post", true),
+  },
+  {
+    url: getUrlForSanityType("resource", ""),
+    title: getSanityTypeDisplayText("resource", true),
+  },
+  {
+    url: "/library", // TODO
+    title: "Library",
+  },
+  {
+    url: "/colophon",
+    title: "Colophon",
+  },
+];
+---
+
+<footer class="mb-10 mt-20 border-t-2 border-primary-foreground">
+  <section
+    class="mx-auto flex w-full max-w-[1200px] flex-col gap-10 px-4 py-10 sm:px-6 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="flex flex-col gap-8">
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/JumboLove/" class={cn(footerLinkClasses)}
+          ><Github className="w-5 h-5" /></a
+        >
+        <a
+          href="https://www.linkedin.com/in/dwitt/"
+          class={cn(footerLinkClasses)}><Linkedin className="w-5 h-5" /></a
+        >
+        <a
+          href="https://twitter.com/davidwittness"
+          class={cn(footerLinkClasses)}><Twitter className="w-5 h-5" /></a
+        >
+      </div>
+
+      <p>
+        © {copyrightRange} David Witt
+      </p>
+    </div>
+
+    <nav class="footer-nav grid grid-cols-2 gap-3">
+      {
+        footerNavLinks.map((link) => (
+          <a href={link.url} class={cn(footerLinkClasses, "md:min-w-[150px]")}>
+            {link.title}
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+</footer>
+
+<style></style>
