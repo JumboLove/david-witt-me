@@ -1,42 +1,46 @@
 ---
-// TODO theming is a bit off
-// focus-hoverable needs attention and should match
-// what the search header box is doing
 import { Moon, Sun } from "lucide-react";
 ---
 
-<button id="theme-toggle" class="border-focusable flex p-2"
-  ><span class="sr-only">Toggle theme between light and dark</span>
-  <div class="w-5 overflow-hidden">
-    <div
-      class="flex h-5 w-10 flex-row items-center transition-all opacity-0"
-      data-theme-toggle-icons
-    >
-      <Sun className="w-5" />
-      <Moon className="w-5" />
-    </div>
-  </div>
+<button
+  id="theme-switch"
+  type="button"
+  role="switch"
+  aria-checked="false"
+  data-state="unchecked"
+  value="on"
+  disabled
+  class="peer relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent opacity-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary/50 data-[state=unchecked]:bg-input"
+>
+  <span class="sr-only">Toggle theme between light and dark</span>
+  <Sun className="absolute w-3 h-3 left-1 text-amber-300" />
+  <span
+    id="theme-switch-span"
+    data-state="unchecked"
+    class="pointer-events-none z-10 block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+  ></span>
+  <Moon className="absolute w-3 h-3 right-1 text-indigo-700" />
 </button>
 
 <script>
   const docEl = document.documentElement;
+
   // Get initial state from document element
   // This will likely be set from the <Layout/> component
   let theme: "light" | "dark" = (() => {
     return docEl.classList.contains("dark") ? "dark" : "light";
   })();
 
-  const themeToggleBtn = document.getElementById("theme-toggle");
-  const iconWrapper = themeToggleBtn?.querySelector(
-    "[data-theme-toggle-icons]"
-  );
+  const themeSwitch = document.getElementById("theme-switch");
+  const themeSwitchSpan = document.getElementById("theme-switch-span");
 
-  themeToggleBtn?.addEventListener("click", toggleTheme);
+  themeSwitch?.addEventListener("click", toggleTheme);
   // sync UI state with preferred theme
   (() => {
     theme === "light" ? setLightMode() : setDarkMode();
     window.setTimeout(() => {
-      iconWrapper?.classList.remove("opacity-0");
+      themeSwitch?.removeAttribute("disabled");
+      themeSwitch?.classList.remove("opacity-50");
     }, 150);
   })();
 
@@ -48,13 +52,21 @@ import { Moon, Sun } from "lucide-react";
     theme = "light";
     docEl.classList.remove("dark");
     window.localStorage.setItem("theme", theme);
-    iconWrapper?.classList.add("-translate-x-1/2");
+
+    // switch
+    themeSwitch?.setAttribute("aria-checked", "false");
+    themeSwitch?.setAttribute("data-state", "unchecked");
+    themeSwitchSpan?.setAttribute("data-state", "unchecked");
   }
 
   function setDarkMode() {
     theme = "dark";
     docEl.classList.add("dark");
     window.localStorage.setItem("theme", theme);
-    iconWrapper?.classList.remove("-translate-x-1/2");
+
+    // switch
+    themeSwitch?.setAttribute("aria-checked", "true");
+    themeSwitch?.setAttribute("data-state", "checked");
+    themeSwitchSpan?.setAttribute("data-state", "checked");
   }
 </script>
