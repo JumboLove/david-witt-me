@@ -29,7 +29,7 @@ const project = await getProject(projectId);
 
 <div>
   <h3 class="mb-4 text-xl font-semibold">{project.title}</h3>
-  <div class="prose">
+  <div class="prose-custom">
     <PortableText value={project?.body} />
   </div>
   {

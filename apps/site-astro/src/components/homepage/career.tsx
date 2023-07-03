@@ -8,9 +8,9 @@ export function ShopifyCareer() {
         <h4 className="mb-3 text-lg font-semibold sm:text-2xl">
           Senior Developer Advocate
         </h4>
-        <div className="prose">
+        <div className="prose-custom">
           <p>
-            Worked on the <a href="https://hydrogen.shopify.dev/">Hydrogen</a>
+            Worked on the <a href="https://hydrogen.shopify.dev/">Hydrogen</a>{" "}
             team to iterate on developer feedback to improve DX
           </p>
 
@@ -41,7 +41,7 @@ export function DemandPdxCareer() {
         <h4 className="mb-3 text-lg font-semibold sm:text-2xl">
           Senior Technical Lead
         </h4>
-        <div className="prose">
+        <div className="prose-custom">
           <p>
             Lead full stack engineering for site builds and improvement projects
           </p>
