@@ -1,0 +1,82 @@
+---
+import MetaTags from "@/components/MetaTags.astro";
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getResource, getBooksList } from "@/queries/resource";
+import MediaCard from "@/components/content/MediaCard.astro";
+import MediaTile from "@/components/content/MediaTile.astro";
+
+const title = "My Library";
+const description = "Media I love, or media I hope to love one day";
+const currentBook = await getResource("storyworthy");
+const recentBooks = await getBooksList({ order: "recent", limit: 24 });
+---
+
+<Layout>
+  <MetaTags
+    title={titleTemplate(title)}
+    description={description}
+    slot="metadata"
+  />
+
+  <main>
+    <header class="mx-auto my-10 w-full max-w-[1200px] p-4 sm:p-6">
+      <h1
+        class="mb-4 text-5xl font-bold tracking-wider text-slate-700 dark:text-slate-200"
+      >
+        {title}
+      </h1>
+      <h2 class="text-balance text-3xl text-muted-foreground">
+        {description}
+      </h2>
+    </header>
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <h2 class="mb-10 text-2xl font-semibold md:text-4xl">
+        Currently Reading...
+      </h2>
+      <div>
+        <MediaCard
+          title={currentBook.title}
+          subtitle={currentBook.creator}
+          description={currentBook.description}
+          media={currentBook.mainImage}
+          format="book"
+          class="p-2"
+        />
+      </div>
+    </section>
+
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <h2 class="mb-10 text-2xl font-semibold md:text-4xl">On my shelf...</h2>
+      <div class="recent-books grid gap-6 sm:gap-12">
+        {
+          recentBooks
+            .filter((book) => book.slug.current !== currentBook.slug.current)
+            .map((book) => {
+              return (
+                <MediaTile
+                  title={book.title}
+                  subtitle={book.creator}
+                  media={book.mainImage}
+                  format="book"
+                />
+              );
+            })
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .recent-books {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .recent-books {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+    }
+  }
+</style>
