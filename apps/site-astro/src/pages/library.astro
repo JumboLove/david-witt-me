@@ -2,12 +2,14 @@
 import MetaTags from "@/components/MetaTags.astro";
 import Layout from "@/layouts/Layout.astro";
 import { titleTemplate } from "@/lib/metadata";
-import { getResource } from "@/queries/resource";
+import { getResource, getBooksList } from "@/queries/resource";
 import MediaCard from "@/components/content/MediaCard.astro";
+import MediaTile from "@/components/content/MediaTile.astro";
 
 const title = "My Library";
 const description = "Media I love, or media I hope to love one day";
 const currentBook = await getResource("storyworthy");
+const recentBooks = await getBooksList({ order: "recent", limit: 24 });
 ---
 
 <Layout>
@@ -47,10 +49,34 @@ const currentBook = await getResource("storyworthy");
 
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
       <h2 class="mb-10 text-2xl font-semibold md:text-4xl">On my shelf...</h2>
-      <div>
-        <p>TODO get list of all books (no limit)</p>
-        <p>Filter out currently reading</p>
+      <div class="recent-books grid gap-6 sm:gap-12">
+        {
+          recentBooks
+            .filter((book) => book.slug.current !== currentBook.slug.current)
+            .map((book) => {
+              return (
+                <MediaTile
+                  title={book.title}
+                  subtitle={book.creator}
+                  media={book.mainImage}
+                  format="book"
+                />
+              );
+            })
+        }
       </div>
     </section>
   </main>
 </Layout>
+
+<style>
+  .recent-books {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .recent-books {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+    }
+  }
+</style>
