@@ -1,16 +1,5 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
-import {
-  HannaLogo,
-  JblLogo,
-  NixonLogo,
-  PumaLogo,
-  SajeLogo,
-  SalesforceLogo,
-  ShiseidoLogo,
-  ShopifyLogo,
-  TherabodyLogo,
-} from "@/components/homepage/BrandLogos";
 
 import PortableText from "@/components/PortableText/PortableText.astro";
 import MediaTile from "@/components/content/MediaTile.astro";
@@ -21,8 +10,6 @@ import {
 } from "@/components/content/Popover";
 import SanityImage from "@/components/content/SanityImage.astro";
 import TagsList from "@/components/content/TagsList.astro";
-import { DemandPdxCareer, ShopifyCareer } from "@/components/homepage/Career";
-import CareerProjectBlock from "@/components/homepage/CareerProjectBlock.astro";
 import Slider from "@/components/util/Slider.astro";
 import { getProject } from "@/queries/project";
 import { getBooksList } from "@/queries/resource";
@@ -33,45 +20,6 @@ const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
 const recentBooks = await getBooksList({ order: "recent", limit: 6 });
-
-const logoCloud = [
-  {
-    logo: ShopifyLogo,
-    alt: "Shopify",
-  },
-  {
-    logo: TherabodyLogo,
-    alt: "Therabody",
-  },
-  {
-    logo: SalesforceLogo,
-    alt: "Salesforce",
-  },
-  {
-    logo: HannaLogo,
-    alt: "Hanna Andersson",
-  },
-  {
-    logo: PumaLogo,
-    alt: "Puma",
-  },
-  {
-    logo: SajeLogo,
-    alt: "Saje Natural Wellness",
-  },
-  {
-    logo: NixonLogo,
-    alt: "Nixon",
-  },
-  {
-    logo: JblLogo,
-    alt: "JBL",
-  },
-  {
-    logo: ShiseidoLogo,
-    alt: "Shiseido",
-  },
-];
 ---
 
 <Layout>
@@ -90,7 +38,7 @@ const logoCloud = [
         <div
           class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
         >
-          <p>developer advocate, full stack engineer, dubious philosopher</p>
+          <p>Developer advocate, full stack engineer, dubious philosopher</p>
           <p>
             Currently developing <a href="https://spacemadness.dev/"
               >Space Madness</a
@@ -147,47 +95,13 @@ const logoCloud = [
           })
         }
       </div>
-    </section>
-
-    {/* Past work */}
-    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
-      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
-        In the past I've done some things...
-      </h2>
-      <div class="past-projects-grid grid max-w-[900px] gap-5 sm:gap-10">
-        <ShopifyCareer />
-
-        <CareerProjectBlock projectId={"shopify-workshops"} />
-        <CareerProjectBlock projectId={"hydrogen-tutorial-series"} />
-
-        <DemandPdxCareer />
-
-        <CareerProjectBlock projectId={"therabody"} />
-        <CareerProjectBlock projectId={"saje"} />
-      </div>
-    </section>
-
-    {/* Logo cloud */}
-    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
-          Trusted by talented folks at...
-        </h2>
-        <div
-          class="logo-cloud mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 text-black dark:text-white sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
-        >
-          {
-            logoCloud.map((logo) => (
-              <logo.logo
-                aria-label={logo.alt}
-                className="col-span-2 max-h-12 w-full object-contain  lg:col-span-1"
-                width={158}
-                height={48}
-                color={"currentColor"}
-              />
-            ))
-          }
-        </div>
+      <div class="prose-custom my-10">
+        <p class="">
+          Want to see want else I've done? <br />Curious to know more about me?<br
+          />
+          <a href="/about" class="link">I'm an open book</a>, with lots of
+          dog-eared pages
+        </p>
       </div>
     </section>
 
@@ -214,20 +128,3 @@ const logoCloud = [
     </section>
   </main>
 </Layout>
-
-<style>
-  .past-projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 600px) {
-    .past-projects-grid {
-      grid-template-columns: 1fr 2fr;
-    }
-  }
-  @media (min-width: 850px) {
-    .past-projects-grid {
-      grid-template-columns: minmax(400px, 1fr) 2fr;
-    }
-  }
-</style>

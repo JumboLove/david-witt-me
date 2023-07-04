@@ -3,7 +3,9 @@
 export function ShopifyCareer() {
   return (
     <>
-      <h3 className="text-2xl font-semibold sm:text-right">Shopify</h3>
+      <h3 className="text-3xl font-semibold sm:text-right sm:text-5xl">
+        Shopify
+      </h3>
       <div>
         <h4 className="mb-3 text-lg font-semibold sm:text-2xl">
           Senior Developer Advocate
@@ -36,7 +38,9 @@ export function ShopifyCareer() {
 export function DemandPdxCareer() {
   return (
     <>
-      <h3 className="text-2xl font-semibold sm:text-right">DemandPDX</h3>
+      <h3 className="text-3xl font-semibold sm:text-right sm:text-5xl">
+        DemandPDX
+      </h3>
       <div>
         <h4 className="mb-3 text-lg font-semibold sm:text-2xl">
           Senior Technical Lead
