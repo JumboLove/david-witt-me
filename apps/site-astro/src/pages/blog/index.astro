@@ -35,9 +35,9 @@ const title = getSanityTypeDisplayText("post", true);
               href={getUrlForSanityType("post", post.slug.current)}
               class="group"
             >
-              <h2 class="h3 group-hover:text-sky-500">{post.title}</h2>
+              <h2 class="h3 mb-3 group-hover:text-sky-500">{post.title}</h2>
               {lines.map((line, i) => (
-                <p class="p text-md" set:html={line} />
+                <p set:html={line} />
               ))}
             </a>
           );
