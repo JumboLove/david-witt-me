@@ -1,8 +1,9 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
-
+import { splitIntoLines } from "@/lib/stringUtils";
 import PortableText from "@/components/PortableText/PortableText.astro";
 import MediaTile from "@/components/content/MediaTile.astro";
+import { getUrlForSanityType } from "@/lib/url";
 import {
   Popover,
   PopoverContent,
@@ -14,16 +15,18 @@ import Slider from "@/components/util/Slider.astro";
 import { getNotesList } from "@/queries/note";
 import { getProject } from "@/queries/project";
 import { getBooksList } from "@/queries/resource";
+import { getPostsList } from "@/queries/post";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
 const recentBooks = await getBooksList({ order: "recent", limit: 6 });
 const recentNotes = await getNotesList({ order: "recent", limit: 5 });
+const recentPosts = await getPostsList({ order: "recent", limit: 5 });
 ---
 
 <Layout>
@@ -136,9 +139,34 @@ const recentNotes = await getNotesList({ order: "recent", limit: 5 });
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
         Thinking and writing about...
       </h2>
-      <div class="flex flex-col gap-6 sm:flex-row-reverse">
-        <div class="flex-1">recent posts</div>
+      <div class="flex flex-col justify-start gap-6 sm:flex-row-reverse">
         <div class="flex flex-1 flex-col gap-6">
+          {
+            recentPosts.map((post) => {
+              const lines = splitIntoLines(post.description ?? "");
+              return (
+                <Card className="max-w-[50ch]">
+                  <CardHeader>
+                    <a
+                      href={getUrlForSanityType("post", post.slug.current)}
+                      class="link"
+                    >
+                      <CardTitle className="text-primary/80">
+                        {post.title}
+                      </CardTitle>
+                    </a>
+                  </CardHeader>
+                  <CardContent className="prose-note trim-top trim-bottom">
+                    {lines.map((line, i) => (
+                      <p set:html={line} />
+                    ))}
+                  </CardContent>
+                </Card>
+              );
+            })
+          }
+        </div>
+        <div class="flex flex-shrink-0 flex-col gap-6">
           {
             recentNotes.map((note) => {
               return (

@@ -85,7 +85,7 @@
   }
 
   .prose-note {
-    @apply prose prose-slate dark:prose-invert prose-headings:tracking-tight prose-p:my-3 prose-blockquote:my-3 prose-blockquote:not-italic prose-code:before:hidden prose-code:after:hidden;
+    @apply prose prose-slate dark:prose-invert prose-headings:tracking-tight prose-p:my-3 prose-p:leading-5 prose-blockquote:my-3 prose-blockquote:not-italic prose-code:before:hidden prose-code:after:hidden;
   }
 
   .content-container {
@@ -278,8 +278,13 @@
   }
 
   .trim-bottom > :last-child {
-    padding: 0;
-    margin: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .trim-top > :first-child {
+    padding-top: 0;
+    margin-top: 0;
   }
 
   /* TODO this might need some love */
