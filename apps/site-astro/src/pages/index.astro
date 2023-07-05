@@ -136,20 +136,23 @@ const recentNotes = await getNotesList({ order: "recent", limit: 5 });
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
         Thinking and writing about...
       </h2>
-      <div class="flex flex-col gap-6">
-        {
-          recentNotes.map((note) => {
-            return (
-              <Card className="max-w-[50ch]">
-                <CardContent>
-                  <div class="prose-note trim-bottom">
-                    <PortableText value={note.body} />
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })
-        }
+      <div class="flex flex-col gap-6 sm:flex-row-reverse">
+        <div class="flex-1">recent posts</div>
+        <div class="flex flex-1 flex-col gap-6">
+          {
+            recentNotes.map((note) => {
+              return (
+                <Card className="max-w-[50ch]">
+                  <CardContent>
+                    <div class="prose-note trim-bottom mt-6">
+                      <PortableText value={note.body} />
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          }
+        </div>
       </div>
     </section>
   </main>
