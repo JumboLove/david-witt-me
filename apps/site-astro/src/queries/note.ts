@@ -32,3 +32,41 @@ export async function getAllNotes() {
     throw new Error(`Error parsing getAllNotes, \n${error.message}`);
   }
 }
+
+interface GetNotesListProps {
+  order: "recent" | "importance";
+  limit: number;
+}
+
+export async function getNotesList({
+  order = "recent",
+  limit = 5,
+}: GetNotesListProps) {
+  const sortString =
+    order === "recent" ? "_createdAt desc" : "order(importance desc)";
+  const query = groq`*[_type == "note" && isVisible == true] | order(${sortString})[0...$limit] {
+    ${blockContentQuery},
+    ${tagsQuery}
+  }`;
+
+  const MergedNote = Note.extend({
+    tags: TagsResult,
+  });
+
+  const NotesResult = z.array(
+    MergedNote.pick({
+      body: true,
+      tags: true,
+    })
+  );
+
+  const data = await useSanityClient().fetch(query, {
+    limit: limit,
+  });
+
+  try {
+    return NotesResult.parse(data);
+  } catch (error: any) {
+    throw new Error(`Error parsing getNotesList, \n${error.message}`);
+  }
+}

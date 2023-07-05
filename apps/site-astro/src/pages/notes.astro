@@ -34,7 +34,7 @@ const notes = await getAllNotes();
         {
           notes.map((note) => {
             return (
-              <div>
+              <div class="prose-custom">
                 <PortableText value={note.body} />
               </div>
             );
