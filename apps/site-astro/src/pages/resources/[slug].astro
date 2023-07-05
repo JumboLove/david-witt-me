@@ -72,14 +72,14 @@ const renderedBacklinks = resource.backlinks
         </div>
       )
     }
-
-    {
-      renderedBacklinks && renderedBacklinks.length > 0 && (
-        <>
-          <h3>Backlinks</h3>
-          <BacklinksList backlinks={renderedBacklinks} />
-        </>
-      )
-    }
   </div>
+
+  {
+    renderedBacklinks && renderedBacklinks.length > 0 && (
+      <aside class="content-container prose-width">
+        <h3 class="h3 my-4">Backlinks</h3>
+        <BacklinksList backlinks={renderedBacklinks} />
+      </aside>
+    )
+  }
 </Layout>

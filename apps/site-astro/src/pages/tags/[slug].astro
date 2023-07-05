@@ -36,10 +36,12 @@ const { tag } = Astro.props as Props;
   <article class="prose-custom content-container">
     <h1 class="h2">{tag.title}</h1>
     <p class="text-lead">{tag.description}</p>
-    {
-      tag.backlinks && tag.backlinks.length > 0 && (
-        <BacklinksList backlinks={tag.backlinks} grouped={true} />
-      )
-    }
   </article>
+  {
+    tag.backlinks && tag.backlinks.length > 0 && (
+      <aside class="content-container prose-width">
+        <BacklinksList backlinks={tag.backlinks} grouped={true} />
+      </aside>
+    )
+  }
 </Layout>
