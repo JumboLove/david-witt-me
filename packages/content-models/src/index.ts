@@ -61,7 +61,6 @@ export const SanityBacklinkType = z.union([
   z.literal("project"),
   z.literal("resource"),
   z.literal("tag"),
-  z.literal("note"),
 ]);
 
 export type SanityBacklinkType = z.infer<typeof SanityBacklinkType>;

@@ -17,7 +17,7 @@ const { tags, asLinks = false, variant = "outline", className } = Astro.props;
 
 {
   tags && (
-    <div class={cn("not-prose flex gap-2", className)}>
+    <div class={cn("not-prose flex flex-wrap gap-2", className)}>
       {tags.map((tag) => {
         return asLinks ? (
           <a
