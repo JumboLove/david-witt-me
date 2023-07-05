@@ -16,6 +16,8 @@ export function getUrlForSanityType(type: SanityLinkableType, slug: string) {
       return `/tags/${slug}`;
     case "resource":
       return `/resources/${slug}`;
+    case "note":
+      return `/notes/`;
     default:
       throw new Error(`URL cannot be created for type: ${type}`);
   }
