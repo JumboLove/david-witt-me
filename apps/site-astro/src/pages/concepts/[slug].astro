@@ -40,14 +40,13 @@ const { concept } = Astro.props as Props;
 
     {concept.tags && <TagsList tags={concept.tags} asLinks={true} />}
     {concept.body && <PortableText value={concept.body} />}
-
-    {
-      concept.backlinks && concept.backlinks.length > 0 && (
-        <>
-          <h3>Backlinks</h3>
-          <BacklinksList backlinks={concept.backlinks} />
-        </>
-      )
-    }
   </article>
+  {
+    concept.backlinks && concept.backlinks.length > 0 && (
+      <aside class="content-container prose-width">
+        <h3 class="h3 my-4">Backlinks</h3>
+        <BacklinksList backlinks={concept.backlinks} />
+      </aside>
+    )
+  }
 </Layout>

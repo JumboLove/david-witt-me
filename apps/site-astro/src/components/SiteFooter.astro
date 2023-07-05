@@ -20,6 +20,10 @@ const footerNavLinks: { url: string; title: string }[] = [
     title: "Home",
   },
   {
+    url: "/library",
+    title: "Library",
+  },
+  {
     url: getUrlForSanityType("post", ""),
     title: getSanityTypeDisplayText("post", true),
   },
@@ -28,8 +32,8 @@ const footerNavLinks: { url: string; title: string }[] = [
     title: getSanityTypeDisplayText("resource", true),
   },
   {
-    url: "/library", // TODO
-    title: "Library",
+    url: getUrlForSanityType("note", ""),
+    title: getSanityTypeDisplayText("note", true),
   },
   {
     url: "/colophon",

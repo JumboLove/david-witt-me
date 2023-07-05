@@ -24,6 +24,9 @@ export * from "./partial";
 import * as blockContent from "./blockContent";
 export * from "./blockContent";
 
+import * as note from "./note";
+export * from "./note";
+
 // All custom marks, blocks, and types for Block Content
 export * from "./blockContent/callout";
 export * from "./blockContent/image";
@@ -35,11 +38,12 @@ export * from "./blockContent/partialInclude";
 
 // Sanity Schema Definitions are fed into Sanity's Studio config
 export const sanitySchemaTypes = [
-  concept.conceptSanityDefinition,
   post.postSanityDefinition,
+  note.noteSanityDefinition,
   project.projectSanityDefinition,
   resource.resourceSanityDefinition,
   resourceContent.resourceContentSanityDefinition,
+  concept.conceptSanityDefinition,
   tag.tagSanityDefinition,
   blockContent.blockContentSanityDefinition,
   partial.partialSanityDefinition,
@@ -78,6 +82,7 @@ export const SanityLinkableType = z.union([
   z.literal("project"),
   z.literal("resource"),
   z.literal("tag"),
+  z.literal("note"),
 ]);
 
 export type SanityLinkableType = z.infer<typeof SanityLinkableType>;

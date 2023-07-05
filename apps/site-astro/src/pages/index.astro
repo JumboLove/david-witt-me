@@ -1,8 +1,9 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
-
+import { splitIntoLines } from "@/lib/stringUtils";
 import PortableText from "@/components/PortableText/PortableText.astro";
 import MediaTile from "@/components/content/MediaTile.astro";
+import { getUrlForSanityType } from "@/lib/url";
 import {
   Popover,
   PopoverContent,
@@ -11,15 +12,21 @@ import {
 import SanityImage from "@/components/content/SanityImage.astro";
 import TagsList from "@/components/content/TagsList.astro";
 import Slider from "@/components/util/Slider.astro";
+import { getNotesList } from "@/queries/note";
 import { getProject } from "@/queries/project";
 import { getBooksList } from "@/queries/resource";
+import { getPostsList } from "@/queries/post";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
 const recentBooks = await getBooksList({ order: "recent", limit: 6 });
+const recentNotes = await getNotesList({ order: "recent", limit: 5 });
+const recentPosts = await getPostsList({ order: "recent", limit: 5 });
 ---
 
 <Layout>
@@ -38,7 +45,7 @@ const recentBooks = await getBooksList({ order: "recent", limit: 6 });
         <div
           class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
         >
-          <p>Developer advocate, full stack engineer, dubious philosopher</p>
+          <p>Developer advocate, front-end engineer, dubious philosopher</p>
           <p>
             Currently developing <a href="https://spacemadness.dev/"
               >Space Madness</a
@@ -95,10 +102,9 @@ const recentBooks = await getBooksList({ order: "recent", limit: 6 });
           })
         }
       </div>
-      <div class="prose-custom my-10">
-        <p class="">
-          Want to see want else I've done? <br />Curious to know more about me?<br
-          />
+      <div class="prose-custom my-10" data-pagefind-ignore>
+        <p>
+          Want to see more?
           <a href="/about" class="link">I'm an open book</a>, with lots of
           dog-eared pages
         </p>
@@ -107,11 +113,11 @@ const recentBooks = await getBooksList({ order: "recent", limit: 6 });
 
     {/* Recently read */}
     <section class="mx-auto my-20 w-full max-w-[1200px] py-4">
-      <h2 class="mx-2 mb-5 text-2xl font-semibold md:text-4xl">
+      <h2 class="mx-4 mb-5 text-2xl font-semibold md:text-4xl">
         Reading and studying...
       </h2>
       <div>
-        <Slider class="gap-6">
+        <Slider class="gap-4">
           {
             recentBooks.map((book) => (
               <MediaTile
@@ -119,11 +125,76 @@ const recentBooks = await getBooksList({ order: "recent", limit: 6 });
                 subtitle={book.creator}
                 media={book.mainImage}
                 format="book"
-                class="p-2"
+                class="p-4"
               />
             ))
           }
         </Slider>
+      </div>
+    </section>
+
+    {/* Notes and Articles */}
+    <section
+      class="mx-auto my-20 w-full max-w-[1200px] p-4"
+      data-pagefind-ignore
+    >
+      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+        Thinking and writing about...
+      </h2>
+      <div
+        class="flex flex-col justify-start gap-6 sm:gap-8 md:flex-row-reverse lg:gap-20"
+      >
+        <div class="flex flex-1 flex-col gap-6">
+          <h3 class="text-xl font-semibold text-primary/80 md:my-1">
+            Recent <a href={getUrlForSanityType("post", "")} class="link"
+              >Articles</a
+            >
+          </h3>
+          {
+            recentPosts.map((post) => {
+              const lines = splitIntoLines(post.description ?? "");
+              return (
+                <Card className="max-w-[50ch]">
+                  <CardHeader>
+                    <a
+                      href={getUrlForSanityType("post", post.slug.current)}
+                      class="link"
+                    >
+                      <CardTitle className="leading-tight text-primary/80">
+                        {post.title}
+                      </CardTitle>
+                    </a>
+                  </CardHeader>
+                  <CardContent className="prose-note trim-top trim-bottom">
+                    {lines.map((line, i) => (
+                      <p set:html={line} />
+                    ))}
+                  </CardContent>
+                </Card>
+              );
+            })
+          }
+        </div>
+        <div class="flex flex-shrink-0 flex-col gap-6">
+          <h3 class="text-xl font-semibold text-primary/80 md:my-1">
+            Recent <a href={getUrlForSanityType("note", "")} class="link"
+              >Notes</a
+            >
+          </h3>
+          {
+            recentNotes.map((note) => {
+              return (
+                <Card className="max-w-[40ch]">
+                  <CardContent>
+                    <div class="prose-note trim-bottom mt-6">
+                      <PortableText value={note.body} />
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          }
+        </div>
       </div>
     </section>
   </main>

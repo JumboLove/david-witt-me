@@ -38,6 +38,48 @@ export async function getAllPostsList() {
   }
 }
 
+interface GetPostsListProps {
+  order: "recent" | "importance";
+  limit: number;
+}
+
+export async function getPostsList({
+  order = "recent",
+  limit = 5,
+}: GetPostsListProps) {
+  const sortString =
+    order === "recent" ? "_createdAt desc" : "order(importance desc)";
+  const query = groq`*[_type == "post" && isVisible == true] | order(${sortString})[0...$limit] {
+    title,
+    slug,
+    description,
+    ${tagsQuery}
+  }`;
+
+  const MergedPost = Post.extend({
+    tags: TagsResult,
+  });
+
+  const PostsResult = z.array(
+    MergedPost.pick({
+      title: true,
+      slug: true,
+      description: true,
+      tags: true,
+    })
+  );
+
+  const data = await useSanityClient().fetch(query, {
+    limit: limit,
+  });
+
+  try {
+    return PostsResult.parse(data);
+  } catch (error: any) {
+    throw new Error(`Error parsing getPostsList, \n${error.message}`);
+  }
+}
+
 export async function getAllPostsFull() {
   const query = groq`*[_type == "post" && isVisible == true] | order(_createdAt asc) {
     title,

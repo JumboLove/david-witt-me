@@ -1,4 +1,5 @@
 ---
+import NoteCard from "@/components/content/NoteCard.astro";
 import {
   Card,
   CardDescription,
@@ -9,6 +10,7 @@ import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { getUrlForSanityType } from "@/lib/url";
 import { cn } from "@/lib/utils";
 import type { Backlink, BacklinkResult } from "@/queries/partials/backlink";
+import type { SanityBacklinkType } from "content-models";
 
 interface Props {
   backlinks: BacklinkResult;
@@ -18,7 +20,7 @@ interface Props {
 
 const { backlinks, className, grouped = false } = Astro.props;
 
-const defaultClasses = "grid md:grid-cols-2 gap-4 not-prose";
+const defaultClasses = "grid md:grid-cols-2 gap-4";
 
 // Resource content will not have its own page
 // grab the resource content's parent resource data instead
@@ -29,7 +31,7 @@ function getBacklinkUrl(backlink: Backlink) {
   return getUrlForSanityType(backlinkObj._type, backlinkObj.slug.current);
 }
 
-type SanityTypes = "post" | "concept" | "tag" | "resource" | "resourceContent";
+type SanityTypes = SanityBacklinkType | "resourceContent" | "note";
 
 type BacklinkBucket = {
   [K in SanityTypes]: Backlink[];
@@ -41,6 +43,8 @@ function bucketBacklinksByType(backlinks: Backlink[]) {
   const backlinkBucket: BacklinkBucket = {
     post: [],
     concept: [],
+    project: [],
+    note: [],
     resource: [],
     resourceContent: [],
     tag: [],
@@ -66,16 +70,22 @@ const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
   !grouped && (
     <div class={cn(defaultClasses, className)} data-pagefind-ignore>
       {backlinks &&
-        backlinks.map((backlink) => (
-          <a href={getBacklinkUrl(backlink)}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{backlink.title}</CardTitle>
-                <CardDescription>{backlink.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          </a>
-        ))}
+        backlinks.map((backlink) => {
+          if (backlink._type === "note") {
+            return <NoteCard body={backlink?.body} />;
+          }
+
+          return (
+            <a href={getBacklinkUrl(backlink)}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{backlink.title}</CardTitle>
+                  <CardDescription>{backlink.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </a>
+          );
+        })}
     </div>
   )
 }
@@ -84,21 +94,32 @@ const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
   grouped &&
     Object.entries(buckets)
       .filter(([type, backlinks]) => backlinks.length > 0)
-      .map(([type, backlinks]) => (
-        <div data-pagefind-ignore>
-          <h3>{getSanityTypeDisplayText(type, true)}</h3>
-          <div class={cn(defaultClasses, className)}>
-            {backlinks.map((backlink) => (
-              <a href={getBacklinkUrl(backlink)}>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{backlink.title}</CardTitle>
-                    <CardDescription>{backlink.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </a>
-            ))}
+      .map(([type, backlinks]: [unknown, Backlink[]]) => {
+        const typedType = type as SanityTypes;
+        return (
+          <div class="mb-10" data-pagefind-ignore>
+            <h3 class="h3 my-4">{getSanityTypeDisplayText(typedType, true)}</h3>
+            <div class={cn(defaultClasses, className)}>
+              {backlinks.map((backlink) => {
+                if (backlink._type === "note") {
+                  return <NoteCard body={backlink?.body} />;
+                }
+
+                return (
+                  <a href={getBacklinkUrl(backlink)}>
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>{backlink.title}</CardTitle>
+                        <CardDescription>
+                          {backlink.description}
+                        </CardDescription>
+                      </CardHeader>
+                    </Card>
+                  </a>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))
+        );
+      })
 }

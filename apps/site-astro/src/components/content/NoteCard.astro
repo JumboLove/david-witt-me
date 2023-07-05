@@ -1,0 +1,23 @@
+---
+import type { PortableText as AstroPortableText } from "astro-portabletext";
+import { Card, CardContent } from "../ui/card";
+import PortableText from "@/components/PortableText/PortableText.astro";
+import { cn } from "@/lib/utils";
+
+type PortableTextProps = Parameters<typeof AstroPortableText>[0];
+
+interface Props {
+  body: PortableTextProps["value"];
+  class?: string;
+}
+
+const { body, class: className } = Astro.props;
+---
+
+<Card className={cn("max-w-[40ch]", className)}>
+  <CardContent>
+    <div class="prose-note trim-bottom mt-6">
+      <PortableText value={body} />
+    </div>
+  </CardContent>
+</Card>

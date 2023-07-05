@@ -81,7 +81,11 @@
 
 @layer utilities {
   .prose-custom {
-    @apply prose prose-slate dark:prose-invert md:prose-lg prose-headings:tracking-tight prose-p:leading-7 prose-code:before:hidden prose-code:after:hidden;
+    @apply prose prose-slate dark:prose-invert md:prose-lg prose-headings:tracking-tight prose-p:leading-7 prose-blockquote:not-italic prose-code:before:hidden prose-code:after:hidden;
+  }
+
+  .prose-note {
+    @apply prose prose-slate dark:prose-invert prose-headings:tracking-tight prose-p:my-3 prose-p:leading-5 prose-blockquote:my-3 prose-blockquote:not-italic prose-code:before:hidden prose-code:after:hidden;
   }
 
   .content-container {
@@ -273,6 +277,17 @@
     text-wrap: balance;
   }
 
+  .trim-bottom > :last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .trim-top > :first-child {
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  /* TODO this might need some love */
   .border-focusable {
     @apply rounded-[0.5rem] border border-slate-600 text-muted-foreground ring-offset-background transition-colors hover:bg-accent/10 hover:text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-accent dark:hover:text-accent-foreground;
   }
