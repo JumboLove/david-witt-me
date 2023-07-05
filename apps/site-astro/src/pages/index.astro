@@ -102,10 +102,9 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
           })
         }
       </div>
-      <div class="prose-custom my-10">
-        <p class="">
-          Want to see want else I've done? <br />Curious to know more about me?<br
-          />
+      <div class="prose-custom my-10" data-pagefind-ignore>
+        <p>
+          Want to see more?
           <a href="/about" class="link">I'm an open book</a>, with lots of
           dog-eared pages
         </p>
@@ -135,13 +134,18 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
     </section>
 
     {/* Notes and Articles */}
-    <section class="mx-auto my-20 w-full max-w-[1200px] p-4">
+    <section
+      class="mx-auto my-20 w-full max-w-[1200px] p-4"
+      data-pagefind-ignore
+    >
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
         Thinking and writing about...
       </h2>
-      <div class="flex flex-col justify-start gap-6 md:flex-row-reverse">
+      <div
+        class="flex flex-col justify-start gap-6 sm:gap-8 md:flex-row-reverse lg:gap-20"
+      >
         <div class="flex flex-1 flex-col gap-6">
-          <h3 class="text-xl font-semibold text-primary/80">
+          <h3 class="text-xl font-semibold text-primary/80 md:my-1">
             Recent <a href={getUrlForSanityType("post", "")} class="link"
               >Articles</a
             >
@@ -172,7 +176,7 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
           }
         </div>
         <div class="flex flex-shrink-0 flex-col gap-6">
-          <h3 class="text-xl font-semibold text-primary/80">
+          <h3 class="text-xl font-semibold text-primary/80 md:my-1">
             Recent <a href={getUrlForSanityType("note", "")} class="link"
               >Notes</a
             >
