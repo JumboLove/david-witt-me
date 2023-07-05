@@ -45,7 +45,7 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
         <div
           class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
         >
-          <p>Developer advocate, full stack engineer, dubious philosopher</p>
+          <p>Developer advocate, front-end engineer, dubious philosopher</p>
           <p>
             Currently developing <a href="https://spacemadness.dev/"
               >Space Madness</a
@@ -139,8 +139,13 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
       <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
         Thinking and writing about...
       </h2>
-      <div class="flex flex-col justify-start gap-6 sm:flex-row-reverse">
+      <div class="flex flex-col justify-start gap-6 md:flex-row-reverse">
         <div class="flex flex-1 flex-col gap-6">
+          <h3 class="text-xl font-semibold text-primary/80">
+            Recent <a href={getUrlForSanityType("post", "")} class="link"
+              >Articles</a
+            >
+          </h3>
           {
             recentPosts.map((post) => {
               const lines = splitIntoLines(post.description ?? "");
@@ -151,7 +156,7 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
                       href={getUrlForSanityType("post", post.slug.current)}
                       class="link"
                     >
-                      <CardTitle className="text-primary/80">
+                      <CardTitle className="leading-tight text-primary/80">
                         {post.title}
                       </CardTitle>
                     </a>
@@ -167,10 +172,15 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
           }
         </div>
         <div class="flex flex-shrink-0 flex-col gap-6">
+          <h3 class="text-xl font-semibold text-primary/80">
+            Recent <a href={getUrlForSanityType("note", "")} class="link"
+              >Notes</a
+            >
+          </h3>
           {
             recentNotes.map((note) => {
               return (
-                <Card className="max-w-[50ch]">
+                <Card className="max-w-[40ch]">
                   <CardContent>
                     <div class="prose-note trim-bottom mt-6">
                       <PortableText value={note.body} />
