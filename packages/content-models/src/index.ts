@@ -38,15 +38,15 @@ export * from "./blockContent/partialInclude";
 
 // Sanity Schema Definitions are fed into Sanity's Studio config
 export const sanitySchemaTypes = [
-  concept.conceptSanityDefinition,
   post.postSanityDefinition,
+  note.noteSanityDefinition,
   project.projectSanityDefinition,
   resource.resourceSanityDefinition,
   resourceContent.resourceContentSanityDefinition,
+  concept.conceptSanityDefinition,
   tag.tagSanityDefinition,
   blockContent.blockContentSanityDefinition,
   partial.partialSanityDefinition,
-  note.noteSanityDefinition,
 ];
 
 /**
