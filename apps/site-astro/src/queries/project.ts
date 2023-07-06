@@ -13,6 +13,7 @@ export async function getAllProjectsList() {
     title,
     slug,
     description,
+    mainImage,
     ${tagsQuery}
   }`;
 
@@ -25,6 +26,7 @@ export async function getAllProjectsList() {
       title: true,
       slug: true,
       description: true,
+      mainImage: true,
       tags: true,
     })
   );
@@ -43,6 +45,7 @@ export async function getAllProjectsFull() {
     title,
     slug,
     description,
+    mainImage,
     ${tagsQuery},
     ${blockContentQuery},
     ${backlinksQuery},
@@ -58,6 +61,7 @@ export async function getAllProjectsFull() {
       title: true,
       slug: true,
       description: true,
+      mainImage: true,
       tags: true,
       body: true,
       backlinks: true,

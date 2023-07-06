@@ -1,0 +1,71 @@
+---
+import MetaTags from "@/components/MetaTags.astro";
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
+import { splitIntoLines } from "@/lib/stringUtils";
+import { getUrlForSanityType } from "@/lib/url";
+import { getAllProjectsList } from "@/queries/project";
+import SanityImage from "@/components/content/SanityImage.astro";
+import TagsList from "@/components/content/TagsList.astro";
+
+const data = await getAllProjectsList();
+const title = getSanityTypeDisplayText("project", true);
+---
+
+<Layout>
+  <MetaTags
+    title={titleTemplate(title)}
+    description={"Projects I work on"}
+    slot="metadata"
+  />
+
+  <header class="prose-width content-container">
+    <h1 class="h2">{title}</h1>
+  </header>
+
+  <main
+    class="content-container prose-width flex flex-col gap-20"
+    data-pagefind-ignore
+  >
+    {
+      data &&
+        data.map((project) => {
+          const lines = splitIntoLines(project.description);
+          const url = getUrlForSanityType("project", project.slug.current);
+          return (
+            <figure>
+              {project.mainImage && (
+                <a href={url}>
+                  <SanityImage
+                    image={project.mainImage}
+                    width={600}
+                    height={400}
+                    class="w-full rounded-sm"
+                    alt={`${project.title} homepage`}
+                  />
+                </a>
+              )}
+              <figcaption>
+                <a href={url}>
+                  <h3 class="my-4 text-2xl font-semibold hover:text-sky-500">
+                    {project.title}
+                  </h3>
+                </a>
+                {lines.map((line, i) => (
+                  <p set:html={line} />
+                ))}
+                {project.tags && (
+                  <TagsList
+                    tags={project.tags}
+                    asLinks={true}
+                    className="my-4"
+                  />
+                )}
+              </figcaption>
+            </figure>
+          );
+        })
+    }
+  </main>
+</Layout>

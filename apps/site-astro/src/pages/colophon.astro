@@ -1,0 +1,72 @@
+---
+import MetaTags from "@/components/MetaTags.astro";
+
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getUrlForSanityType } from "@/lib/url";
+
+const title = "Colophon";
+const description = "How the site was made, plus some shoutouts";
+---
+
+<Layout>
+  <MetaTags
+    title={titleTemplate(title)}
+    description={description}
+    slot="metadata"
+  />
+  <main>
+    <header class="mx-auto my-10 w-full max-w-[1200px] p-4 sm:p-6">
+      <h1
+        class="mb-4 text-5xl font-bold tracking-wider text-slate-700 dark:text-slate-200"
+      >
+        {title}
+      </h1>
+      <h2 class="text-balance text-3xl text-muted-foreground">
+        {description}
+      </h2>
+    </header>
+    <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
+      <div class="prose-custom">
+        <h2>Tech Stack</h2>
+        <p>
+          I built this site using <a
+            href={getUrlForSanityType("project", "space-madness")}
+            >Space Madness</a
+          >, a content framework built with <a
+            href={getUrlForSanityType("tag", "sanity")}>Sanity</a
+          > and <a href={getUrlForSanityType("tag", "astro")}>Astro</a>
+        </p>
+        <p>
+          I host the site on <a href="https://www.netlify.com/">Netlify</a>.
+          They are wonderful advocates for developers and make hosting sites a
+          delight.
+        </p>
+
+        <p>
+          This site relies on several pieces of technology to create a wonderful
+          developer experience. <p>
+            <a href="https://tailwindcss.com/">Tailwind</a> powers our core styles,
+            and we extend on it with our own theming.
+          </p>
+          <p>
+            <a href="https://ui.shadcn.com/">shadcn/ui</a> and <a
+              href="https://www.radix-ui.com/">Radix</a
+            > help me iterate on prebuilt, fully accessible components.
+          </p>
+          <p>
+            <a href="https://pagefind.app/">Pagefind</a> is our client side search
+            tool. All searches are private and are not tracked.
+          </p>
+          <p>Icons are provided by <a href="https://lucide.dev/">Lucide</a>.</p>
+        </p>
+        <h2>Inspiration</h2>
+        <p>
+          I took a lot of inspiration from <a href="https://maggieappleton.com/"
+            >Maggie Appleton</a
+          >, a brilliant designer, developer, and thought leader.
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,65 @@
+---
+import MetaTags from "@/components/MetaTags.astro";
+import PortableText from "@/components/PortableText/PortableText.astro";
+import BacklinksList from "@/components/content/BacklinksList.astro";
+import TagsList from "@/components/content/TagsList.astro";
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getAllProjectsFull } from "@/queries/project";
+import type { InferGetStaticPropsType } from "astro";
+import SanityImage from "@/components/content/SanityImage.astro";
+
+export async function getStaticPaths() {
+  const data = await getAllProjectsFull();
+  const staticProps = data.map((project) => {
+    return {
+      params: {
+        slug: project.slug.current,
+      },
+      props: {
+        project: project,
+      },
+    };
+  });
+
+  return staticProps;
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { project } = Astro.props as Props;
+---
+
+<Layout>
+  <MetaTags
+    title={titleTemplate(project.title)}
+    description={project.description}
+    slot="metadata"
+  />
+  <article class="prose-custom content-container">
+    <h1>{project.title}</h1>
+    {project.tags && <TagsList tags={project.tags} asLinks={true} />}
+
+    {
+      project.mainImage && (
+        <SanityImage
+          image={project.mainImage}
+          width={600}
+          height={400}
+          class="w-full rounded-sm"
+          alt={`${project.title} homepage`}
+        />
+      )
+    }
+
+    {project.body && <PortableText value={project.body} />}
+  </article>
+  {
+    project.backlinks && project.backlinks.length > 0 && (
+      <aside class="content-container prose-width">
+        <h3 class="h3 my-4">Backlinks</h3>
+        <BacklinksList backlinks={project.backlinks} />
+      </aside>
+    )
+  }
+</Layout>

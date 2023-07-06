@@ -3,7 +3,7 @@ import MetaTags from "@/components/MetaTags.astro";
 import Layout from "@/layouts/Layout.astro";
 import { titleTemplate } from "@/lib/metadata";
 import { getAllNotes } from "@/queries/note";
-import PortableText from "@/components/PortableText/PortableText.astro";
+import NoteCard from "@/components/content/NoteCard.astro";
 
 const title = "My Notes";
 const description = "Small thoughts, quotes, quick jokes";
@@ -20,7 +20,7 @@ const notes = await getAllNotes();
   <main>
     <header class="mx-auto my-10 w-full max-w-[1200px] p-4 sm:p-6">
       <h1
-        class="mb-4 text-5xl font-bold tracking-wider text-slate-700 dark:text-slate-200"
+        class="mb-4 text-5xl font-bold tracking-wider text-primary/80 dark:text-primary/90"
       >
         {title}
       </h1>
@@ -30,13 +30,15 @@ const notes = await getAllNotes();
     </header>
 
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
-      <div class="grid gap-6 sm:gap-12">
+      <div class="flex flex-wrap gap-6 sm:gap-8">
         {
           notes.map((note) => {
             return (
-              <div class="prose-custom">
-                <PortableText value={note.body} />
-              </div>
+              <NoteCard
+                body={note.body}
+                prose="custom"
+                class="w-full max-w-[50ch]"
+              />
             );
           })
         }
