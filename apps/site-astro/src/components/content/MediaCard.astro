@@ -66,11 +66,11 @@ const lines = splitIntoLines(description ?? "");
     )
   }
   <figcaption>
-    <h3
+    <div
       class="mb-4 text-4xl font-semibold leading-none tracking-wide text-primary/80"
     >
       {title}
-    </h3>
+    </div>
     {subtitle && <p class="mb-2 text-xl text-muted-foreground">{subtitle}</p>}
     <div class="text-balance max-w-sm">
       {lines.map((line, i) => <p class="text-lg" set:html={line} />)}
