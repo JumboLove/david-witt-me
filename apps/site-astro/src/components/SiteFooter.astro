@@ -19,12 +19,20 @@ const footerNavLinks: { url: string; title: string }[] = [
     title: "Home",
   },
   {
-    url: "/library",
-    title: "Library",
+    url: "/about",
+    title: "About",
   },
   {
     url: getUrlForSanityType("post", ""),
     title: getSanityTypeDisplayText("post", true),
+  },
+  {
+    url: "/library",
+    title: "Library",
+  },
+  {
+    url: getUrlForSanityType("project", ""),
+    title: getSanityTypeDisplayText("project", true),
   },
   {
     url: getUrlForSanityType("resource", ""),
@@ -37,10 +45,6 @@ const footerNavLinks: { url: string; title: string }[] = [
   {
     url: "/colophon",
     title: "Colophon",
-  },
-  {
-    url: getUrlForSanityType("project", ""),
-    title: getSanityTypeDisplayText("project", true),
   },
 ];
 ---
