@@ -13,7 +13,6 @@ const copyrightRange =
 // draw attention away from the main body content
 const footerLinkClasses = "p-2 hover:text-primary/50 focus:text-primary/5";
 
-// TODO re-order
 const footerNavLinks: { url: string; title: string }[] = [
   {
     url: "/",
@@ -38,6 +37,10 @@ const footerNavLinks: { url: string; title: string }[] = [
   {
     url: "/colophon",
     title: "Colophon",
+  },
+  {
+    url: getUrlForSanityType("project", ""),
+    title: getSanityTypeDisplayText("project", true),
   },
 ];
 ---
