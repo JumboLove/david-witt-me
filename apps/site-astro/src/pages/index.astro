@@ -34,13 +34,14 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
     {/* Main Header */}
     <header class="content-container max-w-[900px]">
       <div
-        class="flex flex-col items-center gap-5 sm:grid sm:grid-cols-2 sm:gap-10"
+        class="flex flex-col items-center gap-5 p-4 sm:grid sm:grid-cols-2 sm:gap-10"
       >
         <Image
           src={picDavid}
           width={600}
           class="w-full max-w-[400px] rounded-full"
           alt="David and Lucy - my dog"
+          loading="eager"
         />
         <div
           class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
