@@ -17,6 +17,12 @@ import Layout from "@/layouts/Layout.astro";
 import { titleTemplate } from "@/lib/metadata";
 import { getUrlForSanityType } from "@/lib/url";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/content/Popover";
+
 const logoCloud = [
   {
     logo: ShopifyLogo,
@@ -152,7 +158,42 @@ const logoCloud = [
         Want to work together?
       </h2>
       <div class="prose-custom">
-        <p>A bit of a blurb about what I'm looking for; TODO</p>
+        <p>
+          If you want to hire me to build your next site with {
+            (
+              <Popover>
+                <>
+                  <PopoverTrigger>Space Madness</PopoverTrigger>
+                  <PopoverContent>
+                    <div class="flex flex-col justify-between gap-2 leading-snug">
+                      <p>
+                        A content framework that connects ideas so you can build
+                        your digital garden.
+                      </p>
+                      <a
+                        href={getUrlForSanityType("project", "space-madness")}
+                        class="link"
+                      >
+                        Space Madness
+                      </a>
+                    </div>
+                  </PopoverContent>
+                </>
+              </Popover>
+            )
+          }, reach out to me on <a href="https://twitter.com/davidwittness"
+            >Twitter</a
+          > or <a href="https://www.linkedin.com/in/dwitt/">LinkedIn</a>.
+        </p>
+        <p>
+          Hire me on <a
+            href="https://www.pangea.app/profile/f920ba4f-af90-41da-83aa-b5f86b72772f"
+            >Pangea</a
+          > for your next project.
+        </p>
+        <p>
+          I am currently <strong>open</strong> to new employment opportunities.
+        </p>
       </div>
     </section>
   </main>
