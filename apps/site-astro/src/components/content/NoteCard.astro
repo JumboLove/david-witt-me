@@ -9,14 +9,16 @@ type PortableTextProps = Parameters<typeof AstroPortableText>[0];
 interface Props {
   body: PortableTextProps["value"];
   class?: string;
+  prose?: "custom" | "note";
 }
 
-const { body, class: className } = Astro.props;
+const { body, class: className, prose = "note" } = Astro.props;
+const proseClass = prose === "note" ? "prose-note" : "prose-custom";
 ---
 
 <Card className={cn("max-w-[40ch]", className)}>
   <CardContent>
-    <div class="prose-note trim-bottom mt-6">
+    <div class={cn("trim-bottom mt-6", proseClass)}>
       <PortableText value={body} />
     </div>
   </CardContent>
