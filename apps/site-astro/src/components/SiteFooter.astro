@@ -61,31 +61,34 @@ const footerNavLinks: { url: string; title: string }[] = [
         >
         <a
           href="https://www.linkedin.com/in/dwitt/"
-          class="cn(footerLinkClasses)<span"
-          class="sr-only">Linked profile for David Witt</a
+          class={cn(footerLinkClasses)}
         >
-        <Linkedin className="w-5 h-5" />
+          <span class="sr-only">Linked profile for David Witt</span>
+          <Linkedin className="w-5 h-5" />
+        </a>
+        <a
+          href="https://twitter.com/davidwittness"
+          class={cn(footerLinkClasses)}
+          ><span class="sr-only">Twitter profile for David Witt</span>
+          <Twitter className="w-5 h-5" /></a
+        >
       </div>
-      <a href="https://twitter.com/davidwittness" class={cn(footerLinkClasses)}
-        ><span class="sr-only">Twitter profile for David Witt</span>
-        <Twitter className="w-5 h-5" /></a
-      >
+
+      <p>
+        © {copyrightRange} David Witt
+      </p>
     </div>
 
-    <p>
-      © {copyrightRange} David Witt
-    </p>
+    <nav class="footer-nav grid grid-cols-2 gap-3">
+      {
+        footerNavLinks.map((link) => (
+          <a href={link.url} class={cn(footerLinkClasses, "md:min-w-[150px]")}>
+            {link.title}
+          </a>
+        ))
+      }
+    </nav>
   </section>
 
-  <nav class="footer-nav grid grid-cols-2 gap-3">
-    {
-      footerNavLinks.map((link) => (
-        <a href={link.url} class={cn(footerLinkClasses, "md:min-w-[150px]")}>
-          {link.title}
-        </a>
-      ))
-    }
-  </nav>
+  <style></style>
 </footer>
-
-<style></style>
