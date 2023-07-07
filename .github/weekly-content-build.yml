@@ -1,0 +1,15 @@
+name: Weekly Content Build
+
+on:
+  schedule:
+    - cron: "0 5 * * 4" # Every Friday at 4 am
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Make POST request to Netlify Build Hook
+        run: |
+          curl -X POST -d {} "https://api.netlify.com/build_hooks/64a82572782a3004b6534592"
