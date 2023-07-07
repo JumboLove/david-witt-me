@@ -1,10 +1,12 @@
-# Space Madness
+# David Witt's personal site
 
-## A content framework that connects ideas so you can build your digital garden
+## Built with [Space Madness](https://spacemadness.dev/)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b7b70f89-282d-4a89-97c8-fc97b39565f1/deploy-status)](https://app.netlify.com/sites/space-madness-demo/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e1f557e6-6107-4042-92ad-e18336c50b77/deploy-status)](https://app.netlify.com/sites/david-witt-space-madness/deploys)
 
-[demo.spacemadness.dev](https://demo.spacemadness.dev/)
+[davidwitt.me](https://davidwitt.me/)
+
+[content.davidwitt.me](https://content.davidwitt.me/)
 
 A turbo repo that includes everything you need to run your backend in Sanity and your frontend in Astro.
 
@@ -38,13 +40,13 @@ See the [Space Madness Docs](https://spacemadness.dev/docs/) for detailed instru
 
 ## Deploying
 
-Deploying is supported for any hosting platform that supports static site hosting.
+This site is hosted on [Netlify](https://app.netlify.com/)
 
 ## Hosting the Astro site
 
 ### Build command
 
-`turbo build --filter=site-space-madness-astro`
+`turbo build --filter=site-david-witt-me`
 
 ### Publish directory
 
@@ -52,11 +54,11 @@ Deploying is supported for any hosting platform that supports static site hostin
 
 ## Hosting the Sanity site
 
-Deploying is supported for any hosting platform that supports static site hosting.
+The Sanity Studio for this site is hosted on [Netlify](https://app.netlify.com/)
 
 ### Build command
 
-`turbo build --filter=site-space-madness-sanity`
+`turbo build --filter=site-david-witt-me-sanity`
 
 ### Publish directory
 
