@@ -39,6 +39,7 @@ export async function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
+const { slug: currentSlug } = Astro.params;
 const { data, filter } = Astro.props as Props;
 ---
 
@@ -67,11 +68,13 @@ const { data, filter } = Astro.props as Props;
     {
       filters && (
         <div class="row-wrap mb-10 flex gap-2">
-          {Array.from(filters.entries()).map(([slug, filter]) => (
-            <a href={`/resources/filter/${slug}`}>
-              <Badge variant="outline">{filter.title}</Badge>
-            </a>
-          ))}
+          {Array.from(filters.entries())
+            .filter(([slug]) => slug !== currentSlug)
+            .map(([slug, filter]) => (
+              <a href={`/resources/filter/${slug}`}>
+                <Badge variant="outline">{filter.title}</Badge>
+              </a>
+            ))}
         </div>
       )
     }
