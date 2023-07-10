@@ -1,0 +1,100 @@
+---
+import MetaTags from "@/components/MetaTags.astro";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getUrlForSanityType } from "@/lib/url";
+import { filters } from "@/queries/filters/resource";
+import { getAllResourcesList } from "@/queries/resource";
+import type { InferGetStaticPropsType } from "astro";
+import { X } from "lucide-react";
+
+export async function getStaticPaths() {
+  const staticPropsPromises = Array.from(filters.entries()).map(
+    async ([slug, filter]) => {
+      const { data } = await getAllResourcesList(filter.query);
+
+      return {
+        params: {
+          slug,
+        },
+        props: {
+          filter,
+          data,
+        },
+      };
+    }
+  );
+
+  const staticProps = await Promise.all(staticPropsPromises);
+
+  return staticProps;
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { slug: currentSlug } = Astro.params;
+const { data, filter } = Astro.props as Props;
+---
+
+<Layout>
+  <MetaTags
+    title={titleTemplate(`Resources: ${filter.title}`)}
+    description={`Resources filterd by ${filter.title}`}
+    slot="metadata"
+  />
+  <header class="prose-width content-container">
+    <h1 class="h2 flex items-end gap-4">
+      <span>Resources</span>
+      <a href={getUrlForSanityType("resource", "")}
+        ><Badge
+          variant="secondary"
+          className="text-base flex items-center justify-center"
+        >
+          <span class="grow-0 tracking-wide">{filter.title}</span>
+          <X className="w-4 h-4 ml-2 grow-0" />
+        </Badge></a
+      >
+    </h1>
+  </header>
+
+  <main class="content-container prose-width" data-pagefind-ignore>
+    {
+      filters && (
+        <div class="row-wrap mb-10 flex gap-2">
+          {Array.from(filters.entries())
+            .filter(([slug]) => slug !== currentSlug)
+            .map(([slug, filter]) => (
+              <a href={`/resources/filter/${slug}`}>
+                <Badge variant="outline">{filter.title}</Badge>
+              </a>
+            ))}
+        </div>
+      )
+    }
+    {
+      data && (
+        <div class="not-prose grid gap-4 md:grid-cols-2">
+          {data.map((resource) => {
+            return (
+              <a href={getUrlForSanityType("resource", resource.slug.current)}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{resource.title}</CardTitle>
+                    <CardDescription>{resource.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </a>
+            );
+          })}
+        </div>
+      )
+    }
+  </main>
+</Layout>

@@ -7,12 +7,15 @@ import {
   ResoruceContentResult,
   resourceContentQuery,
 } from "./partials/resourceContent";
+import { filters } from "./filters/resource";
 
 // Resources are sorted by importance by default
 // To use creation date as the sorter:
 // swap out `order(importance desc)` with `order(_createdAt desc)`
-export async function getAllResourcesList() {
-  const query = groq`*[_type == "resource" && isVisible == true] | order(importance desc) {
+export async function getAllResourcesList(
+  select = groq`*[_type == "resource" && isVisible == true]`
+) {
+  const query = groq`${select} | order(importance desc) {
     title,
     slug,
     description,
@@ -35,7 +38,7 @@ export async function getAllResourcesList() {
   const data = await useSanityClient().fetch(query, {});
 
   try {
-    return ResourcesResult.parse(data);
+    return { data: ResourcesResult.parse(data), filters };
   } catch (error: any) {
     throw new Error(`Error parsing getAllResourcesList, \n${error.message}`);
   }
