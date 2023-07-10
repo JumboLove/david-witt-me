@@ -1,5 +1,6 @@
 ---
 import MetaTags from "@/components/MetaTags.astro";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardDescription,
@@ -8,24 +9,46 @@ import {
 } from "@/components/ui/card";
 import Layout from "@/layouts/Layout.astro";
 import { titleTemplate } from "@/lib/metadata";
-import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { getUrlForSanityType } from "@/lib/url";
+import { filters } from "@/queries/filters/resource";
 import { getAllResourcesList } from "@/queries/resource";
-import { Badge } from "@/components/ui/badge";
+import type { InferGetStaticPropsType } from "astro";
 
-const { data, filters } = await getAllResourcesList();
-const title = getSanityTypeDisplayText("resource", true);
+export async function getStaticPaths() {
+  const staticPropsPromises = Array.from(filters.entries()).map(
+    async ([slug, filter]) => {
+      const { data } = await getAllResourcesList(filter.query);
+
+      return {
+        params: {
+          slug,
+        },
+        props: {
+          filter,
+          data,
+        },
+      };
+    }
+  );
+
+  const staticProps = await Promise.all(staticPropsPromises);
+
+  return staticProps;
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { data, filter } = Astro.props as Props;
 ---
 
 <Layout>
   <MetaTags
-    title={titleTemplate(title)}
-    description={"References to sites, books, podcasts, and the like"}
+    title={titleTemplate(`Resources: ${filter.title}`)}
+    description={`Resources filterd by ${filter.title}`}
     slot="metadata"
   />
-
   <header class="prose-width content-container">
-    <h1 class="h2">{title}</h1>
+    <h1 class="h2">{filter.title}</h1>
   </header>
 
   <main class="content-container prose-width" data-pagefind-ignore>
