@@ -102,6 +102,12 @@
     @apply rounded-sm bg-slate-200 px-2 py-1;
   }
 
+  .prose img,
+  .prose-custom img {
+    max-width: 100%;
+    height: auto;
+  }
+
   .dark .prose-custom code:not(pre code),
   .dark .code {
     @apply rounded-sm bg-slate-700 px-2 py-1 text-slate-200;
@@ -287,8 +293,7 @@
     margin-top: 0;
   }
 
-  /* TODO this might need some love */
   .border-focusable {
-    @apply rounded-[0.5rem] border border-slate-600 text-muted-foreground ring-offset-background transition-colors hover:bg-accent/10 hover:text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-accent dark:hover:text-accent-foreground;
+    @apply rounded-[0.5rem] border border-primary/50 text-muted-foreground ring-offset-background transition-colors hover:bg-accent/70 hover:text-accent-foreground/90 focus:bg-accent/70 focus:text-accent-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-accent dark:hover:text-accent-foreground;
   }
 }

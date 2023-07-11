@@ -1,7 +1,7 @@
 import groq from "groq";
 import { z } from "zod";
 import * as S from "sanity-zod-types";
-import { SanityBacklinkType } from "content-models";
+import { SanityLinkableType } from "content-models";
 import { blockContentQuery } from "./blockContent";
 
 export const backlinksQuery = groq`  
@@ -24,7 +24,7 @@ export const backlinksQuery = groq`
 
 const StandardBacklink = z.object({
   title: S.String,
-  _type: SanityBacklinkType,
+  _type: SanityLinkableType,
   slug: S.Slug,
   description: S.String,
 });
