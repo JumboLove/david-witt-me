@@ -13,14 +13,19 @@ if (!providerData) {
   throw new Error("No matching provider data found");
 }
 
+if (!url && !id) {
+  throw new Error("Please provide an ID or Url to embed");
+}
+
 const { provider, id: providerId } = providerData;
 
-// TODO get ID on server using provider function
-const embedId = "X8qd3zAb8u0";
+const { id: embedId } = provider.getRenderProps(url || id || "");
+
+if (!embedId) {
+  throw new Error("Embed ID could not be inferred from the inputs");
+}
 ---
 
 <div>
-  <h2>Astro embed</h2>
-  <p>{providerId}</p>
   <ClientEmbed id={embedId} providerId={providerId} client:visible />
 </div>
