@@ -12,8 +12,9 @@ import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { getUrlForSanityType } from "@/lib/url";
 import { getAllResourcesList } from "@/queries/resource";
 import { Badge } from "@/components/ui/badge";
+import { filters } from "@/queries/filters/resource";
 
-const { data, filters } = await getAllResourcesList();
+const data = await getAllResourcesList();
 const title = getSanityTypeDisplayText("resource", true);
 ---
 

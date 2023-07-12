@@ -38,7 +38,7 @@ export async function getAllResourcesList(
   const data = await useSanityClient().fetch(query, {});
 
   try {
-    return { data: ResourcesResult.parse(data), filters };
+    return ResourcesResult.parse(data);
   } catch (error: any) {
     throw new Error(`Error parsing getAllResourcesList, \n${error.message}`);
   }
