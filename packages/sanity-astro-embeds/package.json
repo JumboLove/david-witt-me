@@ -11,6 +11,10 @@
   },
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "exports": {
+    "./parseEmbedUrl": "./src/parseEmbedUrl.ts",
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
