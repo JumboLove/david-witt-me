@@ -46,7 +46,7 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
         <div
           class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
         >
-          <p>Developer advocate, front-end engineer, dubious philosopher</p>
+          <p>Developer advocate, front-end engineer, <a href="/tags/philosophy" class="link">dubious philosopher</a></p>
           <p>
             Currently developing <a href="https://spacemadness.dev/"
               >Space Madness</a
@@ -131,6 +131,12 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
             ))
           }
         </Slider>
+      </div>
+      <div class="prose-custom my-10 px-4" data-pagefind-ignore>
+        <p>
+          Head in the clouds, eyes and ears in 
+          <a href="/library" class="link">my library</a>
+        </p>
       </div>
     </section>
 

@@ -9,6 +9,7 @@ module.exports = {
 			center: true,
 			padding: "2rem",
 			screens: {
+				'xs': '500px',
 				"2xl": "1400px",
 			},
 		},
