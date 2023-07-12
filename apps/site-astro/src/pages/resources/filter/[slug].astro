@@ -18,7 +18,7 @@ import { X } from "lucide-react";
 export async function getStaticPaths() {
   const staticPropsPromises = Array.from(filters.entries()).map(
     async ([slug, filter]) => {
-      const { data } = await getAllResourcesList(filter.query);
+      const data = await getAllResourcesList(filter.query);
 
       return {
         params: {
