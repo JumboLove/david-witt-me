@@ -1,11 +1,13 @@
 import { embedRegistry, type EmbedProvider } from "./embedRegistry";
 
-export function parseEmbedUrl(url: string): EmbedProvider | null {
+export function parseEmbedUrl(
+  url: string
+): { provider: EmbedProvider<any>; id: string } | null {
   for (const key in embedRegistry) {
     if (embedRegistry.hasOwnProperty(key)) {
       const provider = embedRegistry[key];
       if (provider.regexp.test(url)) {
-        return provider;
+        return { provider, id: key };
       }
     }
   }

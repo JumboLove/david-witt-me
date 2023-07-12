@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { Tweet, Vimeo, YouTube } from "mdx-embed";
 import getYouTubeID from "get-youtube-id";
 
-type EmbedProvider<TProps> = {
+export type EmbedProvider<TProps> = {
   title: string;
   regexp: RegExp;
   render: FunctionComponent<TProps>;
@@ -33,13 +33,7 @@ export const embedRegistry: EmbedRegistry = {
     title: "YouTube",
     regexp:
       /^https?:\/\/(?:www\.)?youtu(?:be\.com\/(?:watch\?v=|embed\/)|\.be\/)([\w\-]+)(?:$|\&|\?)/,
-    render: ({ url, ...props }) => {
-      if (url) {
-        const videoId = getYouTubeID(url);
-        return <YouTube youTubeId={videoId} {...props} />;
-      } else {
-        return <p>YouTube url is missing!</p>;
-      }
-    },
+    render: ({ id, ...props }) =>
+      id ? <YouTube youTubeId={id} {...props} /> : null,
   },
 };

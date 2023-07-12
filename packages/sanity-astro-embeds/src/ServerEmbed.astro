@@ -1,0 +1,26 @@
+---
+import { parseEmbedUrl } from "./parseEmbedUrl";
+import { ClientEmbed } from "./ClientEmbed";
+
+export interface Props {
+  id?: string;
+  url?: string;
+}
+
+const { id, url } = Astro.props;
+const providerData = url ? parseEmbedUrl(url) : undefined;
+if (!providerData) {
+  throw new Error("No matching provider data found");
+}
+
+const { provider, id: providerId } = providerData;
+
+// TODO get ID on server using provider function
+const embedId = "X8qd3zAb8u0";
+---
+
+<div>
+  <h2>Astro embed</h2>
+  <p>{providerId}</p>
+  <ClientEmbed id={embedId} providerId={providerId} client:visible />
+</div>
