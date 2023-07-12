@@ -50,22 +50,6 @@ export const sanitySchemaTypes = [
 ];
 
 /**
- * Build Zod schema for backlinks, based on Sanity documents
- * For example, we have Sanity documents post, concept, and resource
- * We will need a matching Zod schema:
- * z.union([z.literal('post'), z.literal('concept'), z.literal('resource')])
- */
-export const SanityBacklinkType = z.union([
-  z.literal("concept"),
-  z.literal("post"),
-  z.literal("project"),
-  z.literal("resource"),
-  z.literal("tag"),
-]);
-
-export type SanityBacklinkType = z.infer<typeof SanityBacklinkType>;
-
-/**
  * Build Zod schema for Sanity document types
  * that are mapped to pages in the Astro site
  * For example:

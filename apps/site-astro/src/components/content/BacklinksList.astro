@@ -10,7 +10,7 @@ import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { getUrlForSanityType } from "@/lib/url";
 import { cn } from "@/lib/utils";
 import type { Backlink, BacklinkResult } from "@/queries/partials/backlink";
-import type { SanityBacklinkType } from "content-models";
+import type { SanityLinkableType } from "content-models";
 
 interface Props {
   backlinks: BacklinkResult;
@@ -31,7 +31,7 @@ function getBacklinkUrl(backlink: Backlink) {
   return getUrlForSanityType(backlinkObj._type, backlinkObj.slug.current);
 }
 
-type SanityTypes = SanityBacklinkType | "resourceContent" | "note";
+type SanityTypes = SanityLinkableType | "resourceContent" | "note";
 
 type BacklinkBucket = {
   [K in SanityTypes]: Backlink[];
@@ -40,7 +40,7 @@ type BacklinkBucket = {
 function bucketBacklinksByType(backlinks: Backlink[]) {
   // Use this structure to set the display order of buckets
   // Buckets not listed here will show at the end
-  const backlinkBucket: BacklinkBucket = {
+  const backlinkBuckets: BacklinkBucket = {
     post: [],
     concept: [],
     project: [],
@@ -53,14 +53,14 @@ function bucketBacklinksByType(backlinks: Backlink[]) {
   for (const backlink of backlinks) {
     const type = backlink._type;
 
-    if (backlinkBucket[type]) {
-      backlinkBucket[type].push(backlink);
+    if (backlinkBuckets[type]) {
+      backlinkBuckets[type].push(backlink);
     } else {
-      backlinkBucket[type] = [backlink];
+      backlinkBuckets[type] = [backlink];
     }
   }
 
-  return backlinkBucket;
+  return backlinkBuckets;
 }
 
 const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
