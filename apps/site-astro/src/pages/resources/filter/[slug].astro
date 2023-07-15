@@ -53,6 +53,7 @@ const { data, filter } = Astro.props as Props;
     <h1 class="h2 flex items-end gap-4">
       <span>Resources</span>
       <a href={getUrlForSanityType("resource", "")}
+        style={`view-transition-name: filter-${currentSlug}`}
         ><Badge
           variant="secondary"
           className="text-base flex items-center justify-center"
@@ -71,7 +72,7 @@ const { data, filter } = Astro.props as Props;
           {Array.from(filters.entries())
             .filter(([slug]) => slug !== currentSlug)
             .map(([slug, filter]) => (
-              <a href={`/resources/filter/${slug}`}>
+              <a href={`/resources/filter/${slug}`} style={`view-transition-name: filter-${slug}`}>
                 <Badge variant="outline">{filter.title}</Badge>
               </a>
             ))}

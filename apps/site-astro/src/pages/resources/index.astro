@@ -34,7 +34,7 @@ const title = getSanityTypeDisplayText("resource", true);
       filters && (
         <div class="row-wrap mb-10 flex gap-2">
           {Array.from(filters.entries()).map(([slug, filter]) => (
-            <a href={`/resources/filter/${slug}`}>
+            <a href={`/resources/filter/${slug}`} style={`view-transition-name: filter-${slug}`}>
               <Badge variant="outline">{filter.title}</Badge>
             </a>
           ))}
