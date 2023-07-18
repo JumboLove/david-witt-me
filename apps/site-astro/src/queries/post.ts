@@ -26,7 +26,7 @@ export async function getAllPostsList() {
       slug: true,
       description: true,
       tags: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});
@@ -66,7 +66,7 @@ export async function getPostsList({
       slug: true,
       description: true,
       tags: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {
@@ -103,7 +103,7 @@ export async function getAllPostsFull() {
       tags: true,
       body: true,
       backlinks: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});

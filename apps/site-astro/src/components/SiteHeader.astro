@@ -3,14 +3,18 @@ import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { getUrlForSanityType } from "@/lib/url";
 import { Search } from "lucide-react";
 import ThemeToggle from "@/components/util/ThemeToggle.astro";
-import {SiteLogo} from "@/components/homepage/SiteLogo";
+import { SiteLogo } from "@/components/homepage/SiteLogo";
 ---
 
 <header
   class="site-header flex flex-col place-content-between items-center gap-4 p-4 sm:flex-row sm:items-start sm:p-6"
   data-pagefind-ignore
 >
-  <a href="/"><h2 class="h2 pb-0 text-primary/80 hover:text-primary focus:text-primary"><SiteLogo color={"currentColor"} width={70} /></h2></a>
+  <a href="/"
+    ><h2 class="h2 pb-0 text-primary/80 hover:text-primary focus:text-primary">
+      <SiteLogo color={"currentColor"} width={70} />
+    </h2></a
+  >
 
   <nav class="flex flex-row flex-wrap items-center gap-x-8 gap-y-4 sm:gap-6">
     <a href="/about" class="link">About</a>

@@ -28,7 +28,7 @@ export async function getAllProjectsList() {
       description: true,
       mainImage: true,
       tags: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});
@@ -65,7 +65,7 @@ export async function getAllProjectsFull() {
       tags: true,
       body: true,
       backlinks: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});

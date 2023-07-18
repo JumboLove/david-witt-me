@@ -1,7 +1,7 @@
 import { embedRegistry, type EmbedProvider } from "./embedRegistry";
 
 export function parseEmbedUrl(
-  url: string
+  url: string,
 ): { provider: EmbedProvider<any>; id: string } | null {
   for (const key in embedRegistry) {
     if (embedRegistry.hasOwnProperty(key)) {

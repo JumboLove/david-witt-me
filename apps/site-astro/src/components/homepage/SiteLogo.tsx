@@ -1,7 +1,7 @@
 import type { SVGAttributes } from "react";
 
 export function SiteLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#000", ...restProps } = props;
 
