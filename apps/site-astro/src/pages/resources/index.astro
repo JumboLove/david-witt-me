@@ -34,7 +34,10 @@ const title = getSanityTypeDisplayText("resource", true);
       filters && (
         <div class="row-wrap mb-10 flex gap-2">
           {Array.from(filters.entries()).map(([slug, filter]) => (
-            <a href={`/resources/filter/${slug}`}>
+            <a
+              href={`/resources/filter/${slug}`}
+              style={`view-transition-name: filter-${slug}`}
+            >
               <Badge variant="outline">{filter.title}</Badge>
             </a>
           ))}
@@ -46,7 +49,10 @@ const title = getSanityTypeDisplayText("resource", true);
         <div class="not-prose grid gap-4 md:grid-cols-2">
           {data.map((resource) => {
             return (
-              <a href={getUrlForSanityType("resource", resource.slug.current)}>
+              <a
+                href={getUrlForSanityType("resource", resource.slug.current)}
+                style={`view-transition-name: card-${resource.slug.current}`}
+              >
                 <Card>
                   <CardHeader>
                     <CardTitle>{resource.title}</CardTitle>

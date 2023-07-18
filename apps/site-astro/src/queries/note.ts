@@ -21,7 +21,7 @@ export async function getAllNotes() {
     MergedNote.pick({
       body: true,
       tags: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});
@@ -57,7 +57,7 @@ export async function getNotesList({
     MergedNote.pick({
       body: true,
       tags: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {

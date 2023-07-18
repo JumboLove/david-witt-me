@@ -17,7 +17,7 @@ const generateSlug: SlugSourceFn = function (doc, options) {
 
   // transform the string body and get the first five words
   const stringBody = transformPortableTextToString(
-    doc?.body as PortableTextObject[]
+    doc?.body as PortableTextObject[],
   );
   const slugString = stringBody?.split(" ").slice(0, 5).join(" ");
 
@@ -92,14 +92,14 @@ export const noteSanityDefinition = defineType({
  * that can be used within Sanity Studio
  */
 function transformPortableTextToString(
-  value?: PortableTextObject[]
+  value?: PortableTextObject[],
 ): string | null {
   if (!value) {
     return null;
   }
 
   const block: PortableTextObject | undefined = value.find(
-    (block) => block._type === "block"
+    (block) => block._type === "block",
   );
 
   const children = block?.children as PortableTextObject[];

@@ -18,7 +18,7 @@ function calculateInverseColor(color: string) {
 }
 
 export function PumaLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#000", ...restProps } = props;
 
@@ -41,7 +41,7 @@ export function PumaLogo(
 }
 
 export function SalesforceLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#00A1E0", ...restProps } = props;
 
@@ -70,7 +70,7 @@ export function SalesforceLogo(
 }
 
 export function ShopifyLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#95BF46", ...restProps } = props;
 
@@ -96,7 +96,7 @@ export function ShopifyLogo(
 }
 
 export function TherabodyLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#000", ...restProps } = props;
 
@@ -115,7 +115,7 @@ export function TherabodyLogo(
 }
 
 export function HannaLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#CF0A2C", ...restProps } = props;
 
@@ -134,7 +134,7 @@ export function HannaLogo(
 }
 
 export function SajeLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#231F20", ...restProps } = props;
 
@@ -156,7 +156,7 @@ export function SajeLogo(
 }
 
 export function NixonLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#000", ...restProps } = props;
 
@@ -177,7 +177,7 @@ export function NixonLogo(
 }
 
 export function JblLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#fff", ...restProps } = props;
 
@@ -197,7 +197,7 @@ export function JblLogo(
 }
 
 export function ShiseidoLogo(
-  props: SVGAttributes<SVGSVGElement> & { color?: string }
+  props: SVGAttributes<SVGSVGElement> & { color?: string },
 ) {
   const { color = "#fff", ...restProps } = props;
 

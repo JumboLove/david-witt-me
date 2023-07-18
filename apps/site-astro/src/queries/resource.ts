@@ -13,7 +13,7 @@ import { filters } from "./filters/resource";
 // To use creation date as the sorter:
 // swap out `order(importance desc)` with `order(_createdAt desc)`
 export async function getAllResourcesList(
-  select = groq`*[_type == "resource" && isVisible == true]`
+  select = groq`*[_type == "resource" && isVisible == true]`,
 ) {
   const query = groq`${select} | order(importance desc) {
     title,
@@ -32,7 +32,7 @@ export async function getAllResourcesList(
       slug: true,
       description: true,
       tags: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});
@@ -72,7 +72,7 @@ export async function getAllResourcesFull() {
       resourceContent: true,
       tags: true,
       backlinks: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {});
@@ -163,7 +163,7 @@ export async function getBooksList({
       affiliateUrl: true,
       resourceContent: true,
       creator: true,
-    })
+    }),
   );
 
   const data = await useSanityClient().fetch(query, {

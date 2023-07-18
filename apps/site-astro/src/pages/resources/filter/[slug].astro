@@ -29,7 +29,7 @@ export async function getStaticPaths() {
           data,
         },
       };
-    }
+    },
   );
 
   const staticProps = await Promise.all(staticPropsPromises);
@@ -52,7 +52,9 @@ const { data, filter } = Astro.props as Props;
   <header class="prose-width content-container">
     <h1 class="h2 flex items-end gap-4">
       <span>Resources</span>
-      <a href={getUrlForSanityType("resource", "")}
+      <a
+        href={getUrlForSanityType("resource", "")}
+        style={`view-transition-name: filter-${currentSlug}`}
         ><Badge
           variant="secondary"
           className="text-base flex items-center justify-center"
@@ -71,7 +73,10 @@ const { data, filter } = Astro.props as Props;
           {Array.from(filters.entries())
             .filter(([slug]) => slug !== currentSlug)
             .map(([slug, filter]) => (
-              <a href={`/resources/filter/${slug}`}>
+              <a
+                href={`/resources/filter/${slug}`}
+                style={`view-transition-name: filter-${slug}`}
+              >
                 <Badge variant="outline">{filter.title}</Badge>
               </a>
             ))}
@@ -83,7 +88,10 @@ const { data, filter } = Astro.props as Props;
         <div class="not-prose grid gap-4 md:grid-cols-2">
           {data.map((resource) => {
             return (
-              <a href={getUrlForSanityType("resource", resource.slug.current)}>
+              <a
+                href={getUrlForSanityType("resource", resource.slug.current)}
+                style={`view-transition-name: card-${resource.slug.current}`}
+              >
                 <Card>
                   <CardHeader>
                     <CardTitle>{resource.title}</CardTitle>
