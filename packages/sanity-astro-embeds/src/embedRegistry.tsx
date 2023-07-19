@@ -8,18 +8,6 @@ import { type ComponentPropsWithoutRef } from "react";
  * All available MDX Embed components are listed here:
  * @see https://www.mdx-embed.com/?path=/docs/introduction--page
  */
-
-/**
- * @typedef {Object} EmbedProvider
- * @property {string} title - The title of the embed provider.
- * @property {RegExp} regexp - The regular expression used to match URLs for the embed provider.
- * @property {function(string): object} getRenderProps - A function that accepts a URL or ID and returns the render props object.
- * @property {function(object): React.ReactNode} render - The render function that renders the embed component based on the provided props.
- */
-
-/**
- * @type {Object<string, EmbedProvider>}
- */
 export const embedRegistry = {
   twitter: {
     title: "Twitter",
