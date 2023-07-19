@@ -1,11 +1,11 @@
 import { FunctionComponent } from "react";
-import { Tweet, Vimeo, YouTube } from "mdx-embed";
+import { Tweet, Vimeo, YouTube, Spotify } from "mdx-embed";
 import getYouTubeID from "get-youtube-id";
 
-export type EmbedProvider<TProps> = {
+export type EmbedProvider<TProps, TData = Record<string, any>> = {
   title: string;
   regexp: RegExp;
-  getRenderProps: (urlOrId: string) => { id: string };
+  getRenderProps: (urlOrId: string) => { id: string } & TData;
   render: FunctionComponent<TProps>;
 };
 
@@ -56,6 +56,29 @@ export const embedRegistry: EmbedRegistry = {
       id ? (
         <div className="aspect-video">
           <YouTube youTubeId={id} {...props} />
+        </div>
+      ) : null,
+  },
+  spotify: {
+    title: "Spotify",
+    regexp:
+      /^https:\/\/open\.spotify\.com\/(album|track|playlist)\/[a-zA-Z0-9]+/,
+    getRenderProps: (urlOrId: string) => {
+      const renderProps = { id: "", width: "100%" };
+      const spotifyUrlRegex =
+        /^https:\/\/open\.spotify\.com\/(album|track|playlist)\/([a-zA-Z0-9]+)/;
+      const match = urlOrId.match(spotifyUrlRegex);
+
+      if (match && match.length > 2) {
+        renderProps.id = `${match[1]}/${match[2]}`;
+      }
+
+      return renderProps;
+    },
+    render: ({ id, ...props }) =>
+      id ? (
+        <div className="aspect-video">
+          <Spotify spotifyLink={id} {...props} />
         </div>
       ) : null,
   },
