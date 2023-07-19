@@ -24,7 +24,11 @@ export const embedRegistry: EmbedRegistry = {
       return { id };
     },
     render: ({ id, ...props }) =>
-      id ? <Tweet tweetLink={id} {...props} /> : null,
+      id ? (
+        <div className="aspect-video">
+          <Tweet tweetLink={id} {...props} />
+        </div>
+      ) : null,
   },
   vimeo: {
     title: "Vimeo",
@@ -34,7 +38,11 @@ export const embedRegistry: EmbedRegistry = {
       return { id };
     },
     render: ({ id, ...props }) =>
-      id ? <Vimeo vimeoId={id} {...props} /> : null,
+      id ? (
+        <div className="aspect-video">
+          <Vimeo vimeoId={id} {...props} />
+        </div>
+      ) : null,
   },
   youTube: {
     title: "YouTube",
@@ -45,6 +53,10 @@ export const embedRegistry: EmbedRegistry = {
       return { id };
     },
     render: ({ id, ...props }) =>
-      id ? <YouTube youTubeId={id} {...props} /> : null,
+      id ? (
+        <div className="aspect-video">
+          <YouTube youTubeId={id} {...props} />
+        </div>
+      ) : null,
   },
 };
