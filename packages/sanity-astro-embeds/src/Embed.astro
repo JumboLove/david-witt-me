@@ -19,18 +19,9 @@ if (!url && !id) {
 
 const { provider, id: providerId } = providerData;
 
-const { id: embedId, ...restProps } = provider.getRenderProps(url || id || "");
-
-if (!embedId) {
-  throw new Error("Embed ID could not be inferred from the inputs");
-}
+const renderProps = provider.getRenderProps(url || id || "");
 ---
 
-<div>
-  <ClientEmbed
-    id={embedId}
-    providerId={providerId}
-    {...restProps}
-    client:visible
-  />
+<div class="not-prose" data-pagefind-ignore>
+  <ClientEmbed providerId={providerId} {...renderProps} client:visible />
 </div>

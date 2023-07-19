@@ -1,15 +1,16 @@
-import { embedRegistry } from "./embedRegistry";
+import { embedRegistry, type EmbedService } from "./embedRegistry";
 
 interface Props extends Record<string, any> {
-  id: string;
-  providerId: string;
+  providerId: EmbedService;
 }
 
-export function ClientEmbed({ id, providerId, ...restProps }: Props) {
+export function ClientEmbed({ providerId, ...restProps }: Props) {
   const provider = embedRegistry[providerId];
   if (!provider) {
     return <div>No Embed Provider found</div>;
   }
 
-  return <div>{provider && <provider.render id={id} {...restProps} />}</div>;
+  const Cmp = provider.render as React.ElementType;
+
+  return <div>{provider && <Cmp {...restProps} />}</div>;
 }

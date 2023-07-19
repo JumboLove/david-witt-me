@@ -1,32 +1,22 @@
-import { FunctionComponent } from "react";
-import { Tweet, Vimeo, YouTube, Spotify } from "mdx-embed";
 import getYouTubeID from "get-youtube-id";
+import { Spotify, Tweet, Vimeo, YouTube } from "mdx-embed";
+import { type ComponentPropsWithoutRef } from "react";
 
-export type EmbedProvider<TProps, TData = Record<string, any>> = {
-  title: string;
-  regexp: RegExp;
-  getRenderProps: (urlOrId: string) => { id: string } & TData;
-  render: FunctionComponent<TProps>;
-};
-
-interface EmbedRegistry {
-  [key: string]: EmbedProvider<any>;
-}
-
-export const embedRegistry: EmbedRegistry = {
+export const embedRegistry = {
   twitter: {
     title: "Twitter",
     regexp: /^https?:\/\/twitter\.com/,
     getRenderProps: (urlOrId: string) => {
+      const renderProps = {} as ComponentPropsWithoutRef<typeof Tweet>;
       const tweetIdRegex = /^https?:\/\/twitter\.com\/([\w-]+\/status\/\d+)/;
       const match = urlOrId.match(tweetIdRegex);
-      const id = match ? match[1] : "";
-      return { id };
+      renderProps.tweetLink = match ? match[1] : "";
+      return renderProps;
     },
-    render: ({ id, ...props }) =>
-      id ? (
+    render: (props: ComponentPropsWithoutRef<typeof Tweet>) =>
+      props.tweetLink ? (
         <div className="aspect-video">
-          <Tweet tweetLink={id} {...props} />
+          <Tweet {...props} />
         </div>
       ) : null,
   },
@@ -34,13 +24,17 @@ export const embedRegistry: EmbedRegistry = {
     title: "Vimeo",
     regexp: /^https?:\/\/vimeo\.com/,
     getRenderProps: (urlOrId: string) => {
-      const id = urlOrId.replace(/^https?:\/\/vimeo\.com\/(\d+)$/, "$1");
-      return { id };
+      const renderProps = {} as ComponentPropsWithoutRef<typeof Vimeo>;
+      renderProps.vimeoId = urlOrId.replace(
+        /^https?:\/\/vimeo\.com\/(\d+)$/,
+        "$1",
+      );
+      return renderProps;
     },
-    render: ({ id, ...props }) =>
-      id ? (
+    render: (props: ComponentPropsWithoutRef<typeof Vimeo>) =>
+      props.vimeoId ? (
         <div className="aspect-video">
-          <Vimeo vimeoId={id} {...props} />
+          <Vimeo {...props} />
         </div>
       ) : null,
   },
@@ -49,13 +43,15 @@ export const embedRegistry: EmbedRegistry = {
     regexp:
       /^https?:\/\/(?:www\.)?youtu(?:be\.com\/(?:watch\?v=|embed\/)|\.be\/)([\w\-]+)(?:$|\&|\?)/,
     getRenderProps: (urlOrId: string) => {
-      const id = getYouTubeID(urlOrId) || "";
-      return { id };
+      const renderProps = {} as ComponentPropsWithoutRef<typeof YouTube>;
+      renderProps.youTubeId = getYouTubeID(urlOrId) || "";
+
+      return renderProps;
     },
-    render: ({ id, ...props }) =>
-      id ? (
+    render: (props: ComponentPropsWithoutRef<typeof YouTube>) =>
+      props.youTubeId ? (
         <div className="aspect-video">
-          <YouTube youTubeId={id} {...props} />
+          <YouTube {...props} />
         </div>
       ) : null,
   },
@@ -64,22 +60,26 @@ export const embedRegistry: EmbedRegistry = {
     regexp:
       /^https:\/\/open\.spotify\.com\/(album|track|playlist)\/[a-zA-Z0-9]+/,
     getRenderProps: (urlOrId: string) => {
-      const renderProps = { id: "", width: "100%" };
+      const renderProps = { width: "100%" } as ComponentPropsWithoutRef<
+        typeof Spotify
+      >;
       const spotifyUrlRegex =
         /^https:\/\/open\.spotify\.com\/(album|track|playlist)\/([a-zA-Z0-9]+)/;
       const match = urlOrId.match(spotifyUrlRegex);
 
       if (match && match.length > 2) {
-        renderProps.id = `${match[1]}/${match[2]}`;
+        renderProps.spotifyLink = `${match[1]}/${match[2]}`;
       }
 
       return renderProps;
     },
-    render: ({ id, ...props }) =>
-      id ? (
+    render: (props: ComponentPropsWithoutRef<typeof Spotify>) =>
+      props.spotifyLink ? (
         <div className="aspect-video">
-          <Spotify spotifyLink={id} {...props} />
+          <Spotify {...props} />
         </div>
       ) : null,
   },
-};
+} as const;
+
+export type EmbedService = keyof typeof embedRegistry;
