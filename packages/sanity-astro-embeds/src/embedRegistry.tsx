@@ -1,5 +1,5 @@
 import getYouTubeID from "get-youtube-id";
-import { Spotify, Tweet, Vimeo, YouTube } from "mdx-embed";
+import { Spotify, Tweet, Vimeo, YouTube, CodePen } from "mdx-embed";
 import { type ComponentPropsWithoutRef } from "react";
 
 /**
@@ -13,24 +13,28 @@ export const embedRegistry = {
     title: "Twitter",
     regexp: /^https?:\/\/twitter\.com/,
     getRenderProps: (urlOrId: string) => {
-      const renderProps = {} as ComponentPropsWithoutRef<typeof Tweet>;
+      const renderProps = {
+        wrapperClass: "aspect-video",
+      } as ComponentPropsWithoutRef<typeof Tweet> & {
+        wrapperClass: string;
+      };
       const tweetIdRegex = /^https?:\/\/twitter\.com\/([\w-]+\/status\/\d+)/;
       const match = urlOrId.match(tweetIdRegex);
       renderProps.tweetLink = match ? match[1] : "";
       return renderProps;
     },
     render: (props: ComponentPropsWithoutRef<typeof Tweet>) =>
-      props.tweetLink ? (
-        <div className="aspect-video">
-          <Tweet {...props} />
-        </div>
-      ) : null,
+      props.tweetLink ? <Tweet {...props} /> : null,
   },
   vimeo: {
     title: "Vimeo",
     regexp: /^https?:\/\/vimeo\.com/,
     getRenderProps: (urlOrId: string) => {
-      const renderProps = {} as ComponentPropsWithoutRef<typeof Vimeo>;
+      const renderProps = {
+        wrapperClass: "aspect-video",
+      } as ComponentPropsWithoutRef<typeof Vimeo> & {
+        wrapperClass: string;
+      };
       renderProps.vimeoId = urlOrId.replace(
         /^https?:\/\/vimeo\.com\/(\d+)$/,
         "$1",
@@ -38,37 +42,34 @@ export const embedRegistry = {
       return renderProps;
     },
     render: (props: ComponentPropsWithoutRef<typeof Vimeo>) =>
-      props.vimeoId ? (
-        <div className="aspect-video">
-          <Vimeo {...props} />
-        </div>
-      ) : null,
+      props.vimeoId ? <Vimeo {...props} /> : null,
   },
   youTube: {
     title: "YouTube",
     regexp:
       /^https?:\/\/(?:www\.)?youtu(?:be\.com\/(?:watch\?v=|embed\/)|\.be\/)([\w\-]+)(?:$|\&|\?)/,
     getRenderProps: (urlOrId: string) => {
-      const renderProps = {} as ComponentPropsWithoutRef<typeof YouTube>;
+      const renderProps = {
+        wrapperClass: "aspect-video",
+      } as ComponentPropsWithoutRef<typeof YouTube> & {
+        wrapperClass: string;
+      };
       renderProps.youTubeId = getYouTubeID(urlOrId) || "";
 
       return renderProps;
     },
     render: (props: ComponentPropsWithoutRef<typeof YouTube>) =>
-      props.youTubeId ? (
-        <div className="aspect-video">
-          <YouTube {...props} />
-        </div>
-      ) : null,
+      props.youTubeId ? <YouTube {...props} /> : null,
   },
   spotify: {
     title: "Spotify",
     regexp:
       /^https:\/\/open\.spotify\.com\/(album|track|playlist)\/[a-zA-Z0-9]+/,
     getRenderProps: (urlOrId: string) => {
-      const renderProps = { width: "100%" } as ComponentPropsWithoutRef<
-        typeof Spotify
-      >;
+      const renderProps = {
+        width: "100%",
+        wrapperClass: "aspect-video",
+      } as ComponentPropsWithoutRef<typeof Spotify> & { wrapperClass: string };
       const spotifyUrlRegex =
         /^https:\/\/open\.spotify\.com\/(album|track|playlist)\/([a-zA-Z0-9]+)/;
       const match = urlOrId.match(spotifyUrlRegex);
@@ -80,11 +81,28 @@ export const embedRegistry = {
       return renderProps;
     },
     render: (props: ComponentPropsWithoutRef<typeof Spotify>) =>
-      props.spotifyLink ? (
-        <div className="aspect-video">
-          <Spotify {...props} />
-        </div>
-      ) : null,
+      props.spotifyLink ? <Spotify {...props} /> : null,
+  },
+  codePen: {
+    title: "CodePen",
+    regexp: /^https?:\/\/codepen\.io\/[\w-]+\/(pen|full|details)\/[\w-]+$/,
+    getRenderProps: (urlOrId: string) => {
+      const renderProps = {
+        wrapperClass: "aspect-video",
+      } as ComponentPropsWithoutRef<typeof CodePen> & {
+        wrapperClass: string;
+      };
+      const codePenRegex =
+        /^https?:\/\/codepen\.io\/[\w-]+\/(?:pen|full|details)\/([\w-]+)$/;
+      const match = urlOrId.match(codePenRegex);
+
+      if (match && match.length > 1) {
+        renderProps.codePenId = match[1];
+      }
+      return renderProps;
+    },
+    render: (props: ComponentPropsWithoutRef<typeof CodePen>) =>
+      props.codePenId ? <CodePen {...props} /> : null,
   },
 };
 
