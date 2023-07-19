@@ -11,5 +11,5 @@ export function parseEmbedUrl(
       }
     }
   }
-  return null; // Return null if no match is found
+  return null;
 }
