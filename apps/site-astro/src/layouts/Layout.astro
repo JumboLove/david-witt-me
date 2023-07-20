@@ -59,9 +59,15 @@ import SiteFooter from "@/components/SiteFooter.astro";
     <script src="src/scripts/imageZoom.js"></script>
     <script src="src/scripts/copyClipboard.ts"></script>
     <!-- Umami Analytics -->
-    <script
-      async
-      src="https://analytics.spacemadness.dev/script.js"
-      data-website-id="16fbd5bf-d004-4702-84ff-465ce12c591f"></script>
+
+    {
+      process.env.NODE_ENV === "production" && (
+        <script
+          async
+          src="https://analytics.spacemadness.dev/script.js"
+          data-website-id="16fbd5bf-d004-4702-84ff-465ce12c591f"
+        />
+      )
+    }
   </body>
 </html>
