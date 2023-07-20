@@ -80,17 +80,17 @@ const currentPlaylist =
         <Embed url={currentPlaylist} className="aspect-[4/3]" height={600} />
       </div>
     </section>
-
-    <style>
-      .recent-books {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @media (min-width: 640px) {
-        .recent-books {
-          grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
-        }
-      }
-    </style>
   </main>
 </Layout>
+
+<style>
+  .recent-books {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .recent-books {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+    }
+  }
+</style>
