@@ -1,8 +1,7 @@
 import { defineArrayMember } from "sanity";
 import type { PortableTextObject } from "@sanity/types";
 import { PresentationIcon } from "@sanity/icons";
-// TODO try to fix this type error
-import { parseEmbedUrl } from "sanity-astro-embeds/parseEmbedUrl";
+import { parseEmbedUrl } from "../../../sanity-astro-embeds/src/parseEmbedUrl";
 
 export const embedSanityDefinition = defineArrayMember({
   name: "embed",
