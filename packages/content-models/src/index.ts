@@ -12,9 +12,6 @@ export * from "./project";
 import * as resource from "./resource";
 export * from "./resource";
 
-import * as resourceContent from "./resourceContent";
-export * from "./resourceContent";
-
 import * as tag from "./tag";
 export * from "./tag";
 
@@ -42,7 +39,6 @@ export const sanitySchemaTypes = [
   note.noteSanityDefinition,
   project.projectSanityDefinition,
   resource.resourceSanityDefinition,
-  resourceContent.resourceContentSanityDefinition,
   concept.conceptSanityDefinition,
   tag.tagSanityDefinition,
   blockContent.blockContentSanityDefinition,
