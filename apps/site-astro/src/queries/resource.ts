@@ -1,8 +1,12 @@
 import { groq, useSanityClient } from "astro-sanity";
 import { Resource } from "content-models";
 import { z } from "zod";
+import {
+  AllParentResourcesResult,
+  allParentResourcesQuery,
+} from "./partials/allParentResources";
+import { BacklinkResult, backlinksQuery } from "./partials/backlink";
 import { TagsResult, tagsQuery } from "./partials/tag";
-import { backlinksQuery, BacklinkResult } from "./partials/backlink";
 
 // Resources are sorted by importance by default
 // To use creation date as the sorter:
@@ -46,6 +50,7 @@ export async function getAllResourcesFull() {
     description,
     url,
     affiliateUrl,
+    ${allParentResourcesQuery},
     ${tagsQuery},
     ${backlinksQuery},
   }`;
@@ -53,6 +58,7 @@ export async function getAllResourcesFull() {
   const MergedResource = Resource.extend({
     tags: TagsResult,
     backlinks: BacklinkResult,
+    parentResource: AllParentResourcesResult,
   });
 
   const ResourcesResult = z.array(
@@ -64,6 +70,7 @@ export async function getAllResourcesFull() {
       affiliateUrl: true,
       tags: true,
       backlinks: true,
+      parentResource: true,
     }),
   );
 

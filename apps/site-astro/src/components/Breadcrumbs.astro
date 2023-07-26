@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   links: {
-    url: string;
+    url?: string;
     text: string;
   }[];
   class?: string;
@@ -12,15 +12,22 @@ interface Props {
 const { links, class: className } = Astro.props;
 ---
 
-<nav class={cn("relative", className)}>
+<nav class={cn("not-prose", className)} data-pagefind-ignore>
   <ol class="flex items-center">
     {
       links.map((link, i) => {
+        const LinkComponent = link.url ? "a" : "span";
+        const componentClasses = link.url ? "link" : "cursor-default";
+
         return (
           <li class="flex items-center overflow-hidden">
-            <a href={link.url} class="link truncate pb-1">
+            <LinkComponent
+              href={link.url}
+              class={cn("truncate pb-1", componentClasses)}
+            >
               {link.text}
-            </a>
+            </LinkComponent>
+
             {i < links.length - 1 && (
               <svg
                 class="w-3 h-3 mx-2 text-muted mb-1"
