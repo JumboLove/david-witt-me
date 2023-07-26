@@ -1,13 +1,14 @@
 ---
 import MetaTags from "@/components/MetaTags.astro";
-import TagsList from "@/components/content/TagsList.astro";
 import BacklinksList from "@/components/content/BacklinksList.astro";
+import TagsList from "@/components/content/TagsList.astro";
 import Layout from "@/layouts/Layout.astro";
 import { titleTemplate } from "@/lib/metadata";
+import { splitIntoLines } from "@/lib/stringUtils";
+import { getUrlForSanityType } from "@/lib/url";
+import type { Backlink, ResourceBacklink } from "@/queries/partials/backlink";
 import { getAllResourcesFull } from "@/queries/resource";
 import type { InferGetStaticPropsType } from "astro";
-import type { Backlink } from "@/queries/partials/backlink";
-import { splitIntoLines } from "@/lib/stringUtils";
 
 export async function getStaticPaths() {
   const data = await getAllResourcesFull();
@@ -30,15 +31,23 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { resource } = Astro.props as Props;
 const descriptionLines = splitIntoLines(resource.description);
 
-// Prevent 'Resource Content' from showing in backlinks section
-// It will already show in the Resources content section
-function deduplicateBacklinks(backlinks: Backlink[]) {
-  return backlinks.filter((backlink) => backlink._type !== "resourceContent");
-}
+const [renderedBacklinks, childResources] = (() => {
+  const backlinks: Backlink[] = [];
+  const childResources: ResourceBacklink[] = [];
 
-const renderedBacklinks = resource.backlinks
-  ? deduplicateBacklinks(resource.backlinks)
-  : [];
+  resource.backlinks?.forEach((backlink) => {
+    if (
+      backlink._type === "resource" &&
+      backlink.parentResource?.slug.current === resource.slug.current
+    ) {
+      childResources.push(backlink);
+    } else {
+      backlinks.push(backlink);
+    }
+  });
+
+  return [backlinks, childResources];
+})();
 ---
 
 <Layout>
@@ -55,16 +64,28 @@ const renderedBacklinks = resource.backlinks
     {descriptionLines.map((line, i) => <p class="p" set:html={line} />)}
 
     {
-      resource.resourceContent && (
+      childResources && (
         <div>
-          {resource.resourceContent.map((rc) => {
+          {childResources.map((childResource) => {
+            const childResourceDescriptionLines = splitIntoLines(
+              childResource.description,
+            );
             return (
               <div>
                 <h3>
-                  {rc.url ? <a href={rc.url}>{rc.title}</a> : <>{rc.title}</>}
+                  <a
+                    href={getUrlForSanityType(
+                      childResource._type,
+                      childResource.slug.current,
+                    )}
+                    class="link"
+                  >
+                    {childResource.title}
+                  </a>
                 </h3>
-
-                <p>{rc.description}</p>
+                {childResourceDescriptionLines.map((line, i) => (
+                  <p class="p" set:html={line} />
+                ))}
               </div>
             );
           })}

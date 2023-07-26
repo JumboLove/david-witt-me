@@ -3,11 +3,6 @@ import { Resource } from "content-models";
 import { z } from "zod";
 import { TagsResult, tagsQuery } from "./partials/tag";
 import { backlinksQuery, BacklinkResult } from "./partials/backlink";
-import {
-  ResoruceContentResult,
-  resourceContentQuery,
-} from "./partials/resourceContent";
-import { filters } from "./filters/resource";
 
 // Resources are sorted by importance by default
 // To use creation date as the sorter:
@@ -51,13 +46,11 @@ export async function getAllResourcesFull() {
     description,
     url,
     affiliateUrl,
-    ${resourceContentQuery},
     ${tagsQuery},
     ${backlinksQuery},
   }`;
 
   const MergedResource = Resource.extend({
-    resourceContent: ResoruceContentResult,
     tags: TagsResult,
     backlinks: BacklinkResult,
   });
@@ -69,7 +62,6 @@ export async function getAllResourcesFull() {
       description: true,
       url: true,
       affiliateUrl: true,
-      resourceContent: true,
       tags: true,
       backlinks: true,
     }),
@@ -96,13 +88,11 @@ export async function getResource(slug: string) {
     url,
     affiliateUrl,
     creator,
-    ${resourceContentQuery},
     ${tagsQuery},
     ${backlinksQuery},
   }`;
 
   const MergedResource = Resource.extend({
-    resourceContent: ResoruceContentResult,
     tags: TagsResult,
     backlinks: BacklinkResult,
   });
@@ -115,7 +105,6 @@ export async function getResource(slug: string) {
     url: true,
     affiliateUrl: true,
     creator: true,
-    resourceContent: true,
     tags: true,
     backlinks: true,
   });
@@ -161,7 +150,6 @@ export async function getBooksList({
       mainImage: true,
       url: true,
       affiliateUrl: true,
-      resourceContent: true,
       creator: true,
     }),
   );
