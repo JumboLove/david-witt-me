@@ -10,6 +10,7 @@ import { getUrlForSanityType } from "@/lib/url";
 import type { Backlink, ResourceBacklink } from "@/queries/partials/backlink";
 import { getAllResourcesFull } from "@/queries/resource";
 import type { InferGetStaticPropsType } from "astro";
+import type { NestableParentResourceResult } from "@/queries/partials/allParentResources";
 
 export async function getStaticPaths() {
   const data = await getAllResourcesFull();
@@ -58,9 +59,12 @@ function splitBacklinksAndChildResources() {
 const breadcrumbLinks: { url?: string; text: string }[] = [];
 
 if (resource.parentResource) {
-  let currentResource = resource;
-  while (currentResource.parentResource) {
+  let currentResource: NestableParentResourceResult = resource;
+  while (currentResource?.parentResource) {
     currentResource = currentResource.parentResource;
+    if (!currentResource) {
+      break;
+    }
     breadcrumbLinks.unshift({
       url: getUrlForSanityType("resource", currentResource.slug.current),
       text: currentResource.title,

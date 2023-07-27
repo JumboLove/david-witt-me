@@ -90,6 +90,7 @@ export const resourceSanityDefinition = defineType({
 });
 
 export const Resource = S.Document.extend({
+  _type: z.literal("resource"),
   title: S.String,
   slug: S.Slug,
   description: S.String,

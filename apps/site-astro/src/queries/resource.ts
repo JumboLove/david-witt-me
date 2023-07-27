@@ -45,6 +45,7 @@ export async function getAllResourcesList(
 
 export async function getAllResourcesFull() {
   const query = groq`*[_type == "resource" && isVisible == true] | order(importance asc) {
+    _type,
     title,
     slug,
     description,
@@ -63,6 +64,7 @@ export async function getAllResourcesFull() {
 
   const ResourcesResult = z.array(
     MergedResource.pick({
+      _type: true,
       title: true,
       slug: true,
       description: true,

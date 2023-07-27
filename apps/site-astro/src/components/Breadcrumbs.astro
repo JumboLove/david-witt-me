@@ -10,10 +10,25 @@ interface Props {
 }
 
 const { links, class: className } = Astro.props;
+
+// switch to a vertical layout on mobile if there is a lot of text
+const layoutClasses = shouldBreadcrumbsBeVertical()
+  ? "flex-col items-start sm:flex-row sm:items-center"
+  : "";
+
+function shouldBreadcrumbsBeVertical() {
+  const reducer = (accumulator: string, currentLink: { text: string }) => {
+    return `${accumulator} ${currentLink.text}`;
+  };
+
+  const allText = links.reduce(reducer, "");
+
+  return allText.length > 50;
+}
 ---
 
 <nav class={cn("not-prose", className)} data-pagefind-ignore>
-  <ol class="flex items-center">
+  <ol class={cn("flex items-center", layoutClasses)}>
     {
       links.map((link, i) => {
         const LinkComponent = link.url ? "a" : "span";

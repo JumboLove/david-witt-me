@@ -56,3 +56,18 @@ export const AllParentResourcesResult = z
   .nullable();
 
 export type AllParentResourcesResult = z.infer<typeof AllParentResourcesResult>;
+
+// This will help with looping through the nested objects
+// Parent Resource can be assigned as any | nullable since it
+// will be re-assigned to this type in the next loop
+export const NestableParentResourceResult = z
+  .object({
+    _type: z.literal("resource"),
+    title: z.string(),
+    slug: S.Slug,
+    parentResource: z.any().nullable(),
+  })
+  .nullable();
+export type NestableParentResourceResult = z.infer<
+  typeof NestableParentResourceResult
+>;
