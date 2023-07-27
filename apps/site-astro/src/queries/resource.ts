@@ -1,13 +1,12 @@
 import { groq, useSanityClient } from "astro-sanity";
 import { Resource } from "content-models";
 import { z } from "zod";
-import { TagsResult, tagsQuery } from "./partials/tag";
-import { backlinksQuery, BacklinkResult } from "./partials/backlink";
 import {
-  ResoruceContentResult,
-  resourceContentQuery,
-} from "./partials/resourceContent";
-import { filters } from "./filters/resource";
+  AllParentResourcesResult,
+  allParentResourcesQuery,
+} from "./partials/allParentResources";
+import { BacklinkResult, backlinksQuery } from "./partials/backlink";
+import { TagsResult, tagsQuery } from "./partials/tag";
 
 // Resources are sorted by importance by default
 // To use creation date as the sorter:
@@ -46,32 +45,34 @@ export async function getAllResourcesList(
 
 export async function getAllResourcesFull() {
   const query = groq`*[_type == "resource" && isVisible == true] | order(importance asc) {
+    _type,
     title,
     slug,
     description,
     url,
     affiliateUrl,
-    ${resourceContentQuery},
+    ${allParentResourcesQuery},
     ${tagsQuery},
     ${backlinksQuery},
   }`;
 
   const MergedResource = Resource.extend({
-    resourceContent: ResoruceContentResult,
     tags: TagsResult,
     backlinks: BacklinkResult,
+    parentResource: AllParentResourcesResult,
   });
 
   const ResourcesResult = z.array(
     MergedResource.pick({
+      _type: true,
       title: true,
       slug: true,
       description: true,
       url: true,
       affiliateUrl: true,
-      resourceContent: true,
       tags: true,
       backlinks: true,
+      parentResource: true,
     }),
   );
 
@@ -96,13 +97,11 @@ export async function getResource(slug: string) {
     url,
     affiliateUrl,
     creator,
-    ${resourceContentQuery},
     ${tagsQuery},
     ${backlinksQuery},
   }`;
 
   const MergedResource = Resource.extend({
-    resourceContent: ResoruceContentResult,
     tags: TagsResult,
     backlinks: BacklinkResult,
   });
@@ -115,7 +114,6 @@ export async function getResource(slug: string) {
     url: true,
     affiliateUrl: true,
     creator: true,
-    resourceContent: true,
     tags: true,
     backlinks: true,
   });
@@ -161,7 +159,6 @@ export async function getBooksList({
       mainImage: true,
       url: true,
       affiliateUrl: true,
-      resourceContent: true,
       creator: true,
     }),
   );

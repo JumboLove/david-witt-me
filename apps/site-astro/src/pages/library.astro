@@ -9,7 +9,7 @@ import { Embed } from "sanity-astro-embeds";
 
 const title = "My Library";
 const description = "Media I love, or media I hope to love one day";
-const currentBook = await getResource("storyworthy");
+const currentBook = await getResource("the-mountain-in-the-sea");
 const recentBooks = await getBooksList({ order: "recent", limit: 24 });
 const currentPlaylist =
   "https://open.spotify.com/playlist/73nQ20kFb4kHHyMNMMtLjs?si=989fe55d985e403d";

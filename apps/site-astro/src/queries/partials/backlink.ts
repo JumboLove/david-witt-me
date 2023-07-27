@@ -1,7 +1,6 @@
 import groq from "groq";
 import { z } from "zod";
 import * as S from "sanity-zod-types";
-import { SanityLinkableType } from "content-models";
 import { blockContentQuery } from "./blockContent";
 
 export const backlinksQuery = groq`  
@@ -10,36 +9,39 @@ export const backlinksQuery = groq`
     _type,
     slug,
     description,
-    _type == 'resourceContent' => {
-      "resource": @.resource -> {
-        _type,
-        slug
-      }
-    },
     _type == 'note' => {
       ${blockContentQuery},
+    },
+    _type == 'resource' => {
+      "parentResource": @.parentResource -> {
+        slug,
+      }
     }
   }
 `;
 
-const StandardBacklink = z.object({
+const BaseBacklink = z.object({
   title: S.String,
-  _type: SanityLinkableType,
   slug: S.Slug,
   description: S.String,
 });
 
-// Resource Content will not have its own page
-// Use the parent Resource to build a URL
-const ResourceContentBacklink = z.object({
-  title: S.String,
-  _type: z.literal("resourceContent"),
-  slug: S.Slug,
-  description: S.String,
-  resource: z.object({
-    _type: z.literal("resource"),
-    slug: S.Slug,
-  }),
+const StandardBacklink = BaseBacklink.extend({
+  _type: z.union([
+    z.literal("concept"),
+    z.literal("post"),
+    z.literal("project"),
+    z.literal("tag"),
+  ]),
+});
+
+const ResourceBacklink = BaseBacklink.extend({
+  _type: z.literal("resource"),
+  parentResource: z
+    .object({
+      slug: S.Slug,
+    })
+    .nullable(),
 });
 
 const NoteBacklink = z.object({
@@ -52,11 +54,12 @@ const NoteBacklink = z.object({
 // enough information to render a link card
 export const Backlink = z.union([
   StandardBacklink,
-  ResourceContentBacklink,
+  ResourceBacklink,
   NoteBacklink,
 ]);
 
 export const BacklinkResult = z.array(Backlink).nullable();
 
 export type Backlink = z.infer<typeof Backlink>;
+export type ResourceBacklink = z.infer<typeof ResourceBacklink>;
 export type BacklinkResult = z.infer<typeof BacklinkResult>;
