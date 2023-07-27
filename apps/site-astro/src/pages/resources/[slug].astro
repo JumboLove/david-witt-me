@@ -37,7 +37,7 @@ const descriptionLines = splitIntoLines(resource.description);
 // rendered outside of the backlinks component
 const [renderedBacklinks, childResources] = splitBacklinksAndChildResources();
 
-function splitBacklinksAndChildResources() {
+function splitBacklinksAndChildResources(): [Backlink[], ResourceBacklink[]] {
   const backlinks: Backlink[] = [];
   const childResources: ResourceBacklink[] = [];
 
