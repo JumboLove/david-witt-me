@@ -87,11 +87,6 @@ sanitySchemaTypes
       case "post":
         SanityTypeDisplayNames[sanitySchema.name] = ["Article", "Articles"];
         break;
-      case "resourceContent":
-        SanityTypeDisplayNames[sanitySchema.name] = [
-          "Resource Content",
-          "Resource Content",
-        ];
       default:
         // Basic pluralization is to add "s" to the title
         SanityTypeDisplayNames[sanitySchema.name] = [
