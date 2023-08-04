@@ -43,7 +43,12 @@ switch (format) {
 const lines = splitIntoLines(description ?? "");
 ---
 
-<figure class={cn("flex flex-col sm:flex-row gap-8 max-w-full", className)}>
+<figure
+  class={cn(
+    "flex flex-col items-start sm:flex-row gap-8 max-w-full",
+    className,
+  )}
+>
   {
     typeof media === "object" && media?._type === "image" && (
       <SanityImage
