@@ -2,7 +2,7 @@
 import { parseEmbedUrl } from "./parseEmbedUrl";
 import { ClientEmbed } from "./ClientEmbed";
 
-interface Props {
+interface Props extends Record<string, any> {
   id?: string;
   url?: string;
   className?: string;
