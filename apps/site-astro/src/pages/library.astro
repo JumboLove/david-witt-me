@@ -1,15 +1,17 @@
 ---
 import MetaTags from "@/components/MetaTags.astro";
-import Layout from "@/layouts/Layout.astro";
-import { titleTemplate } from "@/lib/metadata";
-import { getResource, getBooksList } from "@/queries/resource";
 import MediaCard from "@/components/content/MediaCard.astro";
 import MediaTile from "@/components/content/MediaTile.astro";
+import Layout from "@/layouts/Layout.astro";
+import { titleTemplate } from "@/lib/metadata";
+import { getBooksList, getResource } from "@/queries/resource";
+import { getSiteConfig } from "@/queries/siteConfig";
 import { Embed } from "sanity-astro-embeds";
 
 const title = "My Library";
 const description = "Media I love, or media I hope to love one day";
-const currentBook = await getResource("the-mountain-in-the-sea");
+const siteConfig = await getSiteConfig();
+const currentBook = await getResource(siteConfig.featuredBook.slug.current);
 const recentBooks = await getBooksList({ order: "recent", limit: 24 });
 const currentPlaylist =
   "https://open.spotify.com/playlist/73nQ20kFb4kHHyMNMMtLjs?si=989fe55d985e403d";

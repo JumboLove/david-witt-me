@@ -24,6 +24,9 @@ export * from "./blockContent";
 import * as note from "./note";
 export * from "./note";
 
+import * as siteConfig from "./siteConfig";
+export * from "./siteConfig";
+
 // All custom marks, blocks, and types for Block Content
 export * from "./blockContent/callout";
 export * from "./blockContent/image";
@@ -35,6 +38,7 @@ export * from "./blockContent/partialInclude";
 
 // Sanity Schema Definitions are fed into Sanity's Studio config
 export const sanitySchemaTypes = [
+  siteConfig.siteConfigSanityDefinition,
   post.postSanityDefinition,
   note.noteSanityDefinition,
   project.projectSanityDefinition,
