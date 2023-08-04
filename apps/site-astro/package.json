@@ -24,7 +24,7 @@
     "astro-portabletext": "^0.9.1",
     "astro-sanity": "^1.1.7",
     "class-variance-authority": "^0.6.1",
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "lucide-react": "^0.263.1",
     "mdx-embed": "^1.1.2",
