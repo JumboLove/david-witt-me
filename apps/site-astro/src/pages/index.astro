@@ -1,9 +1,7 @@
 ---
 import picDavid from "@/assets/david-and-lucy.jpg";
-import { splitIntoLines } from "@/lib/stringUtils";
 import PortableText from "@/components/PortableText/PortableText.astro";
 import MediaTile from "@/components/content/MediaTile.astro";
-import { getUrlForSanityType } from "@/lib/url";
 import {
   Popover,
   PopoverContent,
@@ -11,11 +9,14 @@ import {
 } from "@/components/content/Popover";
 import SanityImage from "@/components/content/SanityImage.astro";
 import TagsList from "@/components/content/TagsList.astro";
+import { Badge } from "@/components/ui/badge";
 import Slider from "@/components/util/Slider.astro";
+import { splitIntoLines } from "@/lib/stringUtils";
+import { getUrlForSanityType } from "@/lib/url";
 import { getNotesList } from "@/queries/note";
+import { getPostsList } from "@/queries/post";
 import { getProject } from "@/queries/project";
 import { getBooksList } from "@/queries/resource";
-import { getPostsList } from "@/queries/post";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
@@ -23,6 +24,37 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const currentProjectIds = ["space-madness", "poly-love-life"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
+
+const digitalGardenLinks: { title: string; url: string }[] = [
+  {
+    title: "Digital Gardening",
+    url: "tags/digital-garden",
+  },
+  {
+    title: "Web Dev",
+    url: "resources/filter/webdev",
+  },
+  {
+    title: "Web Dev Tools",
+    url: "tags/web-dev-toolbox",
+  },
+  {
+    title: "Design",
+    url: "tags/design",
+  },
+  {
+    title: "Philosophy",
+    url: "tags/philosophy",
+  },
+  {
+    title: "Tutorials",
+    url: "tags/tutorial",
+  },
+  {
+    title: "All Tags",
+    url: "tags",
+  },
+];
 
 const recentBooks = await getBooksList({ order: "recent", limit: 6 });
 const recentNotes = await getNotesList({ order: "recent", limit: 5 });
@@ -142,6 +174,33 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
           Head in the clouds, eyes and ears in
           <a href="/library" class="link">my library</a>
         </p>
+      </div>
+    </section>
+
+    {/* Digital Garden */}
+    <section
+      class="mx-auto my-20 w-full max-w-[1200px] p-4"
+      data-pagefind-ignore
+    >
+      <h2 class="mb-5 text-2xl font-semibold md:text-4xl">
+        Explore my digital garden...
+      </h2>
+      <div>
+        {
+          digitalGardenLinks && (
+            <div class="flex flex-wrap gap-6">
+              {digitalGardenLinks.map((link) => {
+                return (
+                  <a href={link.url}>
+                    <Badge variant="secondary" className="text-md">
+                      {link.title}
+                    </Badge>
+                  </a>
+                );
+              })}
+            </div>
+          )
+        }
       </div>
     </section>
 

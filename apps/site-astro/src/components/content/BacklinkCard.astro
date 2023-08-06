@@ -1,0 +1,33 @@
+---
+import NoteCard from "@/components/content/NoteCard.astro";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type { Backlink } from "@/queries/partials/backlink";
+
+import { getUrlForSanityType } from "@/lib/url";
+
+interface Props {
+  backlink: Backlink;
+}
+
+const { backlink } = Astro.props;
+---
+
+{
+  backlink._type === "note" ? (
+    <NoteCard body={backlink?.body} />
+  ) : (
+    <a href={getUrlForSanityType(backlink._type, backlink.slug.current)}>
+      <Card>
+        <CardHeader>
+          <CardTitle>{backlink.title}</CardTitle>
+          <CardDescription>{backlink.description}</CardDescription>
+        </CardHeader>
+      </Card>
+    </a>
+  )
+}
