@@ -39,14 +39,16 @@ declare global {
     let themeSwitchSpan;
     return {
       updatePicker() {
-        document.getElementById("theme-switch");
-
         themeSwitch = document.getElementById("theme-switch");
         themeSwitchSpan = document.getElementById("theme-switch-span");
 
         this.setSwitch();
         themeSwitch?.removeAttribute("disabled");
         themeSwitch?.classList.remove("opacity-50");
+
+        themeSwitch?.addEventListener("click", () => {
+          this.toggleTheme();
+        });
       },
       toggleTheme() {
         theme === "light" ? this.setDarkMode() : this.setLightMode();

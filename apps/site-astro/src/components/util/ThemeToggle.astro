@@ -26,19 +26,3 @@ import { Moon, Sun } from "lucide-react";
 <script is:inline>
   window.StarlightThemeProvider.updatePicker();
 </script>
-
-<script>
-  const docEl = document.documentElement;
-
-  // Get initial state from document element
-  // This will likely be set from the <Layout/> component
-  let theme: "light" | "dark" = (() => {
-    return docEl.classList.contains("dark") ? "dark" : "light";
-  })();
-
-  const themeSwitch = document.getElementById("theme-switch");
-
-  themeSwitch?.addEventListener("click", () => {
-    window.StarlightThemeProvider.toggleTheme();
-  });
-</script>

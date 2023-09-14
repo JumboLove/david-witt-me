@@ -8,7 +8,7 @@ import ThemeProvider from "@/components/ThemeProvider.astro";
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -26,9 +26,6 @@ import ThemeProvider from "@/components/ThemeProvider.astro";
     </slot>
   </head>
   <body class="max-w-full overflow-x-hidden">
-    <script is:inline>
-      // TODO
-    </script>
     <ThemeProvider />
     <SiteHeader />
     <slot />
