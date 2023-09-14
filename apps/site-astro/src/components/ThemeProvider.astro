@@ -1,0 +1,79 @@
+---
+declare global {
+  interface Window {
+    StarlightThemeProvider: {
+      updatePicker: () => void;
+      toggleTheme: () => void;
+      setLightMode: () => void;
+      setDarkMode: () => void;
+      setSwitch: () => void;
+    };
+  }
+}
+---
+
+{
+  /* 
+  This is intentionally inlined to avoid FOUC. 
+  Theme Provider inspired by Starlight
+  */
+}
+
+<script is:inline>
+  window.StarlightThemeProvider = (() => {
+    const storedTheme =
+      typeof localStorage !== "undefined" && localStorage.getItem("theme");
+    const docEl = document.documentElement;
+    let theme =
+      storedTheme ||
+      (window.matchMedia("(prefers-color-scheme: light)").matches
+        ? "light"
+        : "dark");
+
+    // Tailwind uses 'dark' on the body element for its theming
+    if (theme === "dark") {
+      docEl.classList.add(theme);
+    }
+
+    let themeSwitch;
+    let themeSwitchSpan;
+    return {
+      updatePicker() {
+        document.getElementById("theme-switch");
+
+        themeSwitch = document.getElementById("theme-switch");
+        themeSwitchSpan = document.getElementById("theme-switch-span");
+
+        this.setSwitch();
+        themeSwitch?.removeAttribute("disabled");
+        themeSwitch?.classList.remove("opacity-50");
+      },
+      toggleTheme() {
+        theme === "light" ? this.setDarkMode() : this.setLightMode();
+      },
+      setLightMode() {
+        theme = "light";
+        docEl.classList.remove("dark");
+        window.localStorage.setItem("theme", theme);
+        this.setSwitch();
+      },
+      setDarkMode() {
+        theme = "dark";
+        docEl.classList.add("dark");
+        window.localStorage.setItem("theme", theme);
+        this.setSwitch();
+      },
+      setSwitch() {
+        if (theme === "light") {
+          themeSwitch?.setAttribute("aria-checked", "false");
+          themeSwitch?.setAttribute("data-state", "unchecked");
+          themeSwitchSpan?.setAttribute("data-state", "unchecked");
+        } else {
+          themeSwitch?.setAttribute("aria-checked", "true");
+          themeSwitch?.setAttribute("data-state", "checked");
+          themeSwitchSpan?.setAttribute("data-state", "checked");
+        }
+      },
+    };
+  })();
+</script>
