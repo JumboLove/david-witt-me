@@ -12,7 +12,7 @@ interface Props {
 
 const { backlinks, className, grouped = false } = Astro.props;
 
-const defaultClasses = "grid md:grid-cols-2 gap-4";
+const defaultClasses = "gap-4 sm:columns-2  [&>*]:break-inside-avoid";
 
 type SanityTypes = Backlink["_type"];
 
@@ -52,7 +52,9 @@ const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
   !grouped && (
     <div class={cn(defaultClasses, className)} data-pagefind-ignore>
       {backlinks &&
-        backlinks.map((backlink) => <BacklinkCard backlink={backlink} />)}
+        backlinks.map((backlink) => (
+          <BacklinkCard backlink={backlink} class="mb-4" />
+        ))}
     </div>
   )
 }
@@ -69,7 +71,7 @@ const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
             <div class={cn(defaultClasses, className)}>
               {backlinks &&
                 backlinks.map((backlink) => (
-                  <BacklinkCard backlink={backlink} />
+                  <BacklinkCard backlink={backlink} class="mb-4" />
                 ))}
             </div>
           </div>

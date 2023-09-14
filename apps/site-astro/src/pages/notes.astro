@@ -30,14 +30,16 @@ const notes = await getAllNotes();
     </header>
 
     <section class="mx-auto my-20 w-full max-w-[1200px] p-4 sm:p-6">
-      <div class="flex flex-wrap gap-6 sm:gap-8">
+      <div
+        class="gap-6 sm:gap-8 sm:columns-2 lg:columns-3 [&>*]:break-inside-avoid"
+      >
         {
           notes.map((note) => {
             return (
               <NoteCard
                 body={note.body}
                 prose="custom"
-                class="w-full max-w-[50ch]"
+                class="w-full max-w-[50ch] mb-6 sm:mb-8"
               />
             );
           })
