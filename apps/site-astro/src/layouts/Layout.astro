@@ -28,62 +28,7 @@ import { ViewTransitions } from "astro:transitions";
     <ViewTransitions fallback="swap" />
   </head>
   <body class="max-w-full overflow-x-hidden">
-    <!-- <ThemeProvider /> -->
-    <script is:inline>
-      if (!window.setTheme) {
-        window.setTheme = (inputTheme) => {
-          const theme =
-            inputTheme ||
-            (() => {
-              if (
-                typeof localStorage !== "undefined" &&
-                localStorage.getItem("theme")
-              ) {
-                return localStorage.getItem("theme");
-              }
-              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                return "dark";
-              }
-              return "light";
-            })();
-
-          if (theme === "light") {
-            document.documentElement.classList.remove("dark");
-            window.setPicker("light");
-          } else {
-            document.documentElement.classList.add("dark");
-            window.setPicker("dark");
-          }
-
-          window.localStorage.setItem("theme", theme);
-          window.theme = theme;
-        };
-
-        window.setPicker = (theme) => {
-          const themeSwitch = document.getElementById("theme-switch");
-          const themeSwitchSpan = document.getElementById("theme-switch-span");
-
-          if (!themeSwitch) {
-            return;
-          }
-
-          if (theme === "light") {
-            themeSwitch?.setAttribute("aria-checked", "false");
-            themeSwitch?.setAttribute("data-state", "unchecked");
-            themeSwitchSpan?.setAttribute("data-state", "unchecked");
-          } else {
-            themeSwitch?.setAttribute("aria-checked", "true");
-            themeSwitch?.setAttribute("data-state", "checked");
-            themeSwitchSpan?.setAttribute("data-state", "checked");
-          }
-        };
-      }
-
-      window.setTheme();
-      document.addEventListener("astro:after-swap", () => {
-        window.setTheme();
-      });
-    </script>
+    <ThemeProvider />
 
     <SiteHeader />
     <slot />

@@ -25,6 +25,9 @@ import { Moon, Sun } from "lucide-react";
 {/* Inlined to avoid FOUC. Uses global scope from `ThemeProvider.astro` */}
 <script is:inline>
   if (!window.themeToggleInitialized) {
+    // Initial setTheme() on page load is not sufficient
+    // this is the earliest that we can set the button state
+    // so we call setPicker() here
     window.setPicker(theme);
     window.themeToggleInitialized = true;
 
