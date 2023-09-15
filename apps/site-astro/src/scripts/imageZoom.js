@@ -1,5 +1,5 @@
 // zoom-vanilla.js - 2.0.6 (https://github.com/spinningarrow/zoom-vanilla.js)
-+(function () {
+function onPageLoad() {
   "use strict";
   function e(e) {
     var t = e.getBoundingClientRect(),
@@ -165,6 +165,12 @@
       v = null;
     return { listen: e };
   })().listen();
-})();
+}
+
+// Run on page load and after Astro page transition
+onPageLoad();
+document.addEventListener("astro:after-swap", () => {
+  onPageLoad();
+});
 
 export { };
