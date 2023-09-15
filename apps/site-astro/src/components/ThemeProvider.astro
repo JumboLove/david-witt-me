@@ -32,6 +32,7 @@ declare global {
 
     // Tailwind uses 'dark' on the body element for its theming
     if (theme === "dark") {
+      console.log("set in constructor");
       docEl.classList.add(theme);
     }
 
@@ -39,6 +40,7 @@ declare global {
     let themeSwitchSpan;
     return {
       updatePicker() {
+        console.log("update picker");
         themeSwitch = document.getElementById("theme-switch");
         themeSwitchSpan = document.getElementById("theme-switch-span");
 
@@ -49,6 +51,9 @@ declare global {
         themeSwitch?.addEventListener("click", () => {
           this.toggleTheme();
         });
+      },
+      updatTheme() {
+        console.log("update theme", theme);
       },
       toggleTheme() {
         theme === "light" ? this.setDarkMode() : this.setLightMode();
@@ -78,4 +83,9 @@ declare global {
       },
     };
   })();
+
+  document.addEventListener(
+    "astro:after-swap",
+    StarlightThemeProvider.updatTheme,
+  );
 </script>

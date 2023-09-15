@@ -5,10 +5,11 @@ import SiteHeader from "@/components/SiteHeader.astro";
 import SiteSearch from "@/components/SiteSearch.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import ThemeProvider from "@/components/ThemeProvider.astro";
+import { ViewTransitions } from "astro:transitions";
 ---
 
 <!DOCTYPE html>
-<html lang="en" transition:animate="none">
+<html lang="en" transition:animate="fade">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -24,9 +25,66 @@ import ThemeProvider from "@/components/ThemeProvider.astro";
     <slot name="metadata">
       <MetaTags />
     </slot>
+    <ViewTransitions fallback="swap" />
   </head>
   <body class="max-w-full overflow-x-hidden">
-    <ThemeProvider />
+    <!-- <ThemeProvider /> -->
+    <script is:inline>
+      if (!window.setTheme) {
+        window.setTheme = (inputTheme) => {
+          const theme =
+            inputTheme ||
+            (() => {
+              if (
+                typeof localStorage !== "undefined" &&
+                localStorage.getItem("theme")
+              ) {
+                return localStorage.getItem("theme");
+              }
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                return "dark";
+              }
+              return "light";
+            })();
+
+          if (theme === "light") {
+            document.documentElement.classList.remove("dark");
+            window.setPicker("light");
+          } else {
+            document.documentElement.classList.add("dark");
+            window.setPicker("dark");
+          }
+
+          window.localStorage.setItem("theme", theme);
+          window.theme = theme;
+        };
+
+        window.setPicker = (theme) => {
+          const themeSwitch = document.getElementById("theme-switch");
+          const themeSwitchSpan = document.getElementById("theme-switch-span");
+
+          if (!themeSwitch) {
+            return;
+          }
+
+          if (theme === "light") {
+            themeSwitch?.setAttribute("aria-checked", "false");
+            themeSwitch?.setAttribute("data-state", "unchecked");
+            themeSwitchSpan?.setAttribute("data-state", "unchecked");
+          } else {
+            themeSwitch?.setAttribute("aria-checked", "true");
+            themeSwitch?.setAttribute("data-state", "checked");
+            themeSwitchSpan?.setAttribute("data-state", "checked");
+          }
+        };
+      }
+
+      window.setTheme();
+      document.addEventListener("astro:after-swap", () => {
+        window.setTheme();
+      });
+    </script>
+
     <SiteHeader />
     <slot />
 
