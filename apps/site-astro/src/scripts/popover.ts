@@ -16,12 +16,22 @@ interface PopoverButton extends HTMLButtonElement {
   };
 }
 
-const popoverButtons: NodeListOf<PopoverButton> =
-  document.querySelectorAll("[data-popover-id]");
-popoverButtons.forEach((btn) => {
-  const popover = setupButtonPopover(btn);
-  initPopper(btn, popover);
-  btn.addEventListener("click", () => togglePopover(popover));
+let popoverButtons: NodeListOf<PopoverButton>;
+
+function onPageLoad() {
+  console.log("page load");
+  popoverButtons = document.querySelectorAll("[data-popover-id]");
+  popoverButtons.forEach((btn) => {
+    const popover = setupButtonPopover(btn);
+    initPopper(btn, popover);
+    btn.addEventListener("click", () => togglePopover(popover));
+  });
+}
+
+// Run on page load and after Astro page transition
+onPageLoad();
+document.addEventListener("astro:after-swap", () => {
+  onPageLoad();
 });
 
 function setupButtonPopover(btn: PopoverButton) {

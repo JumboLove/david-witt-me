@@ -6,12 +6,14 @@ interface ClipboardButton extends HTMLButtonElement {
   };
 }
 
-const clipboardButtons: NodeListOf<ClipboardButton> = document.querySelectorAll(
-  "[data-clipboard-copy]",
-);
-clipboardButtons.forEach((btn) => {
-  initButton(btn);
-});
+let clipboardButtons: NodeListOf<ClipboardButton>;
+
+function onPageLoad() {
+  clipboardButtons = document.querySelectorAll("[data-clipboard-copy]");
+  clipboardButtons.forEach((btn) => {
+    initButton(btn);
+  });
+}
 
 function initButton(btn: ClipboardButton) {
   btn.addEventListener("click", () => copyToClipboard(btn));
@@ -62,3 +64,9 @@ function resetButton(btn: ClipboardButton) {
   const iconWrapper = btn.querySelector("[data-clipboard-icons]");
   iconWrapper?.classList.remove("-translate-x-1/2");
 }
+
+// Run on page load and after Astro page transition
+onPageLoad();
+document.addEventListener("astro:after-swap", () => {
+  onPageLoad();
+});
