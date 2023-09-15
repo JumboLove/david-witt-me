@@ -9,19 +9,24 @@ import {
 import type { Backlink } from "@/queries/partials/backlink";
 
 import { getUrlForSanityType } from "@/lib/url";
+import { cn } from "@/lib/utils";
 
 interface Props {
   backlink: Backlink;
+  class?: string;
 }
 
-const { backlink } = Astro.props;
+const { backlink, class: className } = Astro.props;
 ---
 
 {
   backlink._type === "note" ? (
-    <NoteCard body={backlink?.body} />
+    <NoteCard body={backlink?.body} class={cn(className)} />
   ) : (
-    <a href={getUrlForSanityType(backlink._type, backlink.slug.current)}>
+    <a
+      href={getUrlForSanityType(backlink._type, backlink.slug.current)}
+      class={cn(className, "inline-block")}
+    >
       <Card>
         <CardHeader>
           <CardTitle>{backlink.title}</CardTitle>

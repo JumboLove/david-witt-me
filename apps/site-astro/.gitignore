@@ -21,4 +21,4 @@ pnpm-debug.log*
 .DS_Store
 
 # Pagefind copy for local development
-public/_pagefind
+public/pagefind

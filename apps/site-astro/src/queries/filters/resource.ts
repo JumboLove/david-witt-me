@@ -14,5 +14,5 @@ filters.set("books", {
 
 filters.set("webdev", {
   title: "Web Dev",
-  query: groq`*[count((tags[]->slug.current)[@ in ["typescript", "tailwind", "astro", "sanity", "react", "remix", "commerce-cloud"]]) > 0 && _type == "resource" && isVisible == true]`,
+  query: groq`*[count((tags[]->slug.current)[@ in ["typescript", "tailwind", "astro", "sanity", "react", "remix", "commerce-cloud", "web-dev-toolbox"]]) > 0 && _type == "resource" && isVisible == true]`,
 });

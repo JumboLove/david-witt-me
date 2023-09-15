@@ -3,6 +3,7 @@ import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { cn } from "@/lib/utils";
 import type { Backlink, BacklinkResult } from "@/queries/partials/backlink";
 import BacklinkCard from "./BacklinkCard.astro";
+import MasonryLayout from "@/layouts/MasonryLayout.astro";
 
 interface Props {
   backlinks: BacklinkResult;
@@ -11,8 +12,6 @@ interface Props {
 }
 
 const { backlinks, className, grouped = false } = Astro.props;
-
-const defaultClasses = "grid md:grid-cols-2 gap-4";
 
 type SanityTypes = Backlink["_type"];
 
@@ -50,10 +49,10 @@ const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
 
 {
   !grouped && (
-    <div class={cn(defaultClasses, className)} data-pagefind-ignore>
+    <MasonryLayout class={className} data-pagefind-ignore>
       {backlinks &&
         backlinks.map((backlink) => <BacklinkCard backlink={backlink} />)}
-    </div>
+    </MasonryLayout>
   )
 }
 
@@ -66,12 +65,12 @@ const buckets = backlinks ? bucketBacklinksByType(backlinks) : [];
         return (
           <div class="mb-10" data-pagefind-ignore>
             <h3 class="h3 my-4">{getSanityTypeDisplayText(typedType, true)}</h3>
-            <div class={cn(defaultClasses, className)}>
+            <MasonryLayout class={className} data-pagefind-ignore>
               {backlinks &&
                 backlinks.map((backlink) => (
                   <BacklinkCard backlink={backlink} />
                 ))}
-            </div>
+            </MasonryLayout>
           </div>
         );
       })

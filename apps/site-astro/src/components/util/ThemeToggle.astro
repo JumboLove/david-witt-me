@@ -9,8 +9,8 @@ import { Moon, Sun } from "lucide-react";
   aria-checked="false"
   data-state="unchecked"
   value="on"
-  disabled
-  class="peer absolute top-4 left-4 sm:top-0 sm:left-0 sm:relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent opacity-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary/50 data-[state=unchecked]:bg-input"
+  class="peer absolute top-4 left-4 sm:top-0 sm:left-0 sm:relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary/50 data-[state=unchecked]:bg-input"
+  transition:persist
 >
   <span class="sr-only">Toggle theme between light and dark</span>
   <Sun className="absolute w-3 h-3 left-1 text-amber-300" />
@@ -22,51 +22,20 @@ import { Moon, Sun } from "lucide-react";
   <Moon className="absolute w-3 h-3 right-1 text-indigo-700" />
 </button>
 
-<script>
-  const docEl = document.documentElement;
+{/* Inlined to avoid FOUC. Uses global scope from `ThemeProvider.astro` */}
+<script is:inline>
+  if (!window.themeToggleInitialized) {
+    // Initial setTheme() on page load is not sufficient
+    // this is the earliest that we can set the button state
+    // so we call setPicker() here
+    window.setPicker(theme);
+    window.themeToggleInitialized = true;
 
-  // Get initial state from document element
-  // This will likely be set from the <Layout/> component
-  let theme: "light" | "dark" = (() => {
-    return docEl.classList.contains("dark") ? "dark" : "light";
-  })();
+    let themeSwitchBtn = document.getElementById("theme-switch");
+    themeSwitchBtn?.addEventListener("click", toggleTheme);
 
-  const themeSwitch = document.getElementById("theme-switch");
-  const themeSwitchSpan = document.getElementById("theme-switch-span");
-
-  themeSwitch?.addEventListener("click", toggleTheme);
-  // sync UI state with preferred theme
-  (() => {
-    theme === "light" ? setLightMode() : setDarkMode();
-    window.setTimeout(() => {
-      themeSwitch?.removeAttribute("disabled");
-      themeSwitch?.classList.remove("opacity-50");
-    }, 150);
-  })();
-
-  function toggleTheme() {
-    theme === "light" ? setDarkMode() : setLightMode();
-  }
-
-  function setLightMode() {
-    theme = "light";
-    docEl.classList.remove("dark");
-    window.localStorage.setItem("theme", theme);
-
-    // switch
-    themeSwitch?.setAttribute("aria-checked", "false");
-    themeSwitch?.setAttribute("data-state", "unchecked");
-    themeSwitchSpan?.setAttribute("data-state", "unchecked");
-  }
-
-  function setDarkMode() {
-    theme = "dark";
-    docEl.classList.add("dark");
-    window.localStorage.setItem("theme", theme);
-
-    // switch
-    themeSwitch?.setAttribute("aria-checked", "true");
-    themeSwitch?.setAttribute("data-state", "checked");
-    themeSwitchSpan?.setAttribute("data-state", "checked");
+    function toggleTheme() {
+      theme === "light" ? window.setTheme("dark") : window.setTheme("light");
+    }
   }
 </script>
