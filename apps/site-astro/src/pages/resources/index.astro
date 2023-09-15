@@ -13,6 +13,7 @@ import { getUrlForSanityType } from "@/lib/url";
 import { getAllResourcesList } from "@/queries/resource";
 import { Badge } from "@/components/ui/badge";
 import { filters } from "@/queries/filters/resource";
+import MasonryLayout from "@/layouts/MasonryLayout.astro";
 
 const data = await getAllResourcesList();
 const title = getSanityTypeDisplayText("resource", true);
@@ -36,7 +37,7 @@ const title = getSanityTypeDisplayText("resource", true);
           {Array.from(filters.entries()).map(([slug, filter]) => (
             <a
               href={`/resources/filter/${slug}`}
-              style={`view-transition-name: filter-${slug}`}
+              transition:name={`filter-${slug}`}
             >
               <Badge variant="outline">{filter.title}</Badge>
             </a>
@@ -46,13 +47,11 @@ const title = getSanityTypeDisplayText("resource", true);
     }
     {
       data && (
-        <div class="not-prose grid gap-4 md:grid-cols-2">
+        <MasonryLayout class="not-prose">
           {data.map((resource) => {
             return (
-              <a
-                href={getUrlForSanityType("resource", resource.slug.current)}
-                style={`view-transition-name: card-${resource.slug.current}`}
-              >
+              // transition:name={`card-${resource.slug.current}`}
+              <a href={getUrlForSanityType("resource", resource.slug.current)}>
                 <Card>
                   <CardHeader>
                     <CardTitle>{resource.title}</CardTitle>
@@ -62,7 +61,7 @@ const title = getSanityTypeDisplayText("resource", true);
               </a>
             );
           })}
-        </div>
+        </MasonryLayout>
       )
     }
   </main>

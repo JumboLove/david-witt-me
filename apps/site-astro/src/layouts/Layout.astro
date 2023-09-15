@@ -9,7 +9,7 @@ import { ViewTransitions } from "astro:transitions";
 ---
 
 <!DOCTYPE html>
-<html lang="en" transition:animate="fade">
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -25,7 +25,7 @@ import { ViewTransitions } from "astro:transitions";
     <slot name="metadata">
       <MetaTags />
     </slot>
-    <ViewTransitions fallback="swap" />
+    <ViewTransitions fallback="none" />
   </head>
   <body class="max-w-full overflow-x-hidden">
     <ThemeProvider />

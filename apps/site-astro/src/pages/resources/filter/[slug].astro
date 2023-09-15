@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Layout from "@/layouts/Layout.astro";
+import MasonryLayout from "@/layouts/MasonryLayout.astro";
 import { titleTemplate } from "@/lib/metadata";
 import { getUrlForSanityType } from "@/lib/url";
 import { filters } from "@/queries/filters/resource";
@@ -54,7 +55,7 @@ const { data, filter } = Astro.props as Props;
       <span>Resources</span>
       <a
         href={getUrlForSanityType("resource", "")}
-        style={`view-transition-name: filter-${currentSlug}`}
+        transition:name={`filter-${currentSlug}`}
         ><Badge
           variant="secondary"
           className="text-base flex items-center justify-center"
@@ -75,7 +76,7 @@ const { data, filter } = Astro.props as Props;
             .map(([slug, filter]) => (
               <a
                 href={`/resources/filter/${slug}`}
-                style={`view-transition-name: filter-${slug}`}
+                transition:name={`filter-${slug}`}
               >
                 <Badge variant="outline">{filter.title}</Badge>
               </a>
@@ -85,12 +86,13 @@ const { data, filter } = Astro.props as Props;
     }
     {
       data && (
-        <div class="not-prose grid gap-4 md:grid-cols-2">
+        <MasonryLayout class="not-prose">
           {data.map((resource) => {
             return (
+              //transition:name={`card-${resource.slug.current}`}
               <a
                 href={getUrlForSanityType("resource", resource.slug.current)}
-                style={`view-transition-name: card-${resource.slug.current}`}
+                class="block mb-4"
               >
                 <Card>
                   <CardHeader>
@@ -101,7 +103,7 @@ const { data, filter } = Astro.props as Props;
               </a>
             );
           })}
-        </div>
+        </MasonryLayout>
       )
     }
   </main>
