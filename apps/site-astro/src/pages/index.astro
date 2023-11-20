@@ -22,17 +22,13 @@ import Layout from "../layouts/Layout.astro";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const currentProjectIds = ["space-madness", "poly-love-life"];
+const currentProjectIds = ["space-madness", "game-grid"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
 
 const digitalGardenLinks: { title: string; url: string }[] = [
   {
     title: "Digital Gardening",
     url: "tags/digital-garden",
-  },
-  {
-    title: "Web Dev",
-    url: "resources/filter/webdev",
   },
   {
     title: "Web Dev Tools",
@@ -47,8 +43,16 @@ const digitalGardenLinks: { title: string; url: string }[] = [
     url: "tags/philosophy",
   },
   {
+    title: "Things I Like",
+    url: "tags/things-i-like",
+  },
+  {
     title: "Tutorials",
     url: "tags/tutorial",
+  },
+  {
+    title: "Web Dev",
+    url: "resources/filter/webdev",
   },
   {
     title: "All Tags",
@@ -113,19 +117,26 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
       >
         {
           currentProjects.map((project) => {
+            const url = getUrlForSanityType("project", project.slug.current);
             return (
               <figure>
                 {project.mainImage && (
-                  <SanityImage
-                    image={project.mainImage}
-                    width={600}
-                    height={400}
-                    class="w-full rounded-sm"
-                    alt={`${project.title} homepage`}
-                  />
+                  <a href={url}>
+                    <SanityImage
+                      image={project.mainImage}
+                      width={600}
+                      height={400}
+                      class="w-full rounded-sm"
+                      alt={`${project.title} homepage`}
+                    />
+                  </a>
                 )}
                 <figcaption>
-                  <h3 class="my-4 text-xl font-semibold">{project.title}</h3>
+                  <a href={url}>
+                    <h3 class="my-4 text-xl font-semibold hover:text-sky-500">
+                      {project.title}
+                    </h3>
+                  </a>
                   {project.body && <PortableText value={project.body} />}
                   {project.tags && (
                     <TagsList

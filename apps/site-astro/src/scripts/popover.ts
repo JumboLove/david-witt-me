@@ -19,7 +19,6 @@ interface PopoverButton extends HTMLButtonElement {
 let popoverButtons: NodeListOf<PopoverButton>;
 
 function onPageLoad() {
-  console.log("page load");
   popoverButtons = document.querySelectorAll("[data-popover-id]");
   popoverButtons.forEach((btn) => {
     const popover = setupButtonPopover(btn);
