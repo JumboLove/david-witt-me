@@ -34,7 +34,7 @@ const Popover = React.forwardRef<
       {...props}
     >
       {children}
-      <PopoverBubble className="inline h-4 w-4 text-sky-500" />
+      <PopoverBubble className="ml-1 inline h-4 w-4 text-sky-500" />
     </button>
   );
 });
