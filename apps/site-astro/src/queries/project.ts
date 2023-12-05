@@ -1,7 +1,10 @@
 import { groq, useSanityClient } from "astro-sanity";
 import { Project } from "content-models";
 import { z } from "zod";
-import { blockContentQuery } from "./partials/blockContent";
+import {
+  blockContentQuery,
+  longBodyContentQuery,
+} from "./partials/blockContent";
 import { tagsQuery, TagsResult } from "./partials/tag";
 import { backlinksQuery, BacklinkResult } from "./partials/backlink";
 
@@ -48,6 +51,7 @@ export async function getAllProjectsFull() {
     mainImage,
     ${tagsQuery},
     ${blockContentQuery},
+    ${longBodyContentQuery},
     ${backlinksQuery},
   }`;
 
@@ -64,6 +68,7 @@ export async function getAllProjectsFull() {
       mainImage: true,
       tags: true,
       body: true,
+      longBody: true,
       backlinks: true,
     }),
   );
