@@ -45,6 +45,12 @@ export const projectSanityDefinition = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "longBody",
+      title: "Full Content",
+      description: "Used on the projects/:id page",
+      type: "blockContent",
+    }),
+    defineField({
       name: "importance",
       title: "Importance Score",
       type: "number",
@@ -76,6 +82,7 @@ export const Project = S.Document.extend({
   description: S.String,
   mainImage: S.Image.nullable(),
   body: z.any().nullable(), // Zod will not validate Portable Text
+  longBody: z.any().nullable(), // Zod will not validate Portable Text
   importance: S.Number.min(0).max(100),
   isVisible: S.Boolean,
   tags: z.array(Tag).nullable(),
