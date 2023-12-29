@@ -83,7 +83,7 @@ export function SiteNav() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Digital Garden</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4">
+            <ul className="grid w-[95vw] max-w-[400px] gap-3 p-4">
               {digitalGardenNavLinks.map((navLink) => (
                 <ListItem
                   key={navLink.title}
