@@ -1,9 +1,8 @@
 ---
-import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
-import { getUrlForSanityType } from "@/lib/url";
 import { Search } from "lucide-react";
 import ThemeToggle from "@/components/util/ThemeToggle.astro";
 import { SiteLogo } from "@/components/homepage/SiteLogo";
+import { SiteNav } from "./SiteNav";
 ---
 
 <header
@@ -18,16 +17,7 @@ import { SiteLogo } from "@/components/homepage/SiteLogo";
   >
 
   <nav class="flex flex-row flex-wrap items-center gap-x-8 gap-y-4 sm:gap-6">
-    <a href="/about" class="link">About</a>
-    <a href={getUrlForSanityType("post", "")} class="link"
-      >{getSanityTypeDisplayText("post", true)}</a
-    >
-    <a href={getUrlForSanityType("note", "")} class="link"
-      >{getSanityTypeDisplayText("note", true)}</a
-    >
-    <a href={getUrlForSanityType("project", "")} class="link"
-      >{getSanityTypeDisplayText("project", true)}</a
-    >
+    <SiteNav client:load />
 
     <ThemeToggle />
 
