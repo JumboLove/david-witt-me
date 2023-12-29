@@ -15,6 +15,7 @@ import {
   Newspaper,
   StickyNote,
   Tag,
+  FolderHeart,
 } from "lucide-react";
 import { getSanityTypeDisplayText } from "@/lib/sanityStrings";
 import { getUrlForSanityType } from "@/lib/url";
@@ -51,6 +52,12 @@ const digitalGardenNavLinks: {
     title: "Library",
     description: "Media I love, or media I hope to love one day",
     icon: Library,
+  },
+  {
+    href: getUrlForSanityType("resource", ""),
+    title: getSanityTypeDisplayText("resource", true),
+    description: "A curated collection of my favorite creatons",
+    icon: FolderHeart,
   },
   {
     href: getUrlForSanityType("tag", ""),

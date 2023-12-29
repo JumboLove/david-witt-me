@@ -16,3 +16,8 @@ filters.set("webdev", {
   title: "Web Dev",
   query: groq`*[count((tags[]->slug.current)[@ in ["typescript", "tailwind", "astro", "sanity", "react", "remix", "commerce-cloud", "web-dev-toolbox"]]) > 0 && _type == "resource" && isVisible == true]`,
 });
+
+filters.set("things-i-like", {
+  title: "Things I Like",
+  query: groq`*[count((tags[]->slug.current)[@ in ["things-i-like"]]) > 0 && _type == "resource" && isVisible == true]`,
+});
