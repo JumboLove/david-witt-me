@@ -31,6 +31,11 @@ export const projectSanityDefinition = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "url",
+      title: "URL",
+      type: "url",
+    }),
+    defineField({
       name: "mainImage",
       title: "Main image",
       type: "image",
@@ -80,6 +85,7 @@ export const Project = S.Document.extend({
   title: S.String,
   slug: S.Slug,
   description: S.String,
+  url: S.Url.nullable(),
   mainImage: S.Image.nullable(),
   body: z.any().nullable(), // Zod will not validate Portable Text
   longBody: z.any().nullable(), // Zod will not validate Portable Text
