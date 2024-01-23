@@ -7,13 +7,15 @@ export async function getSiteConfig() {
   const query = groq`*[_type == "siteConfig"][0] {
     "featuredBook" : featuredBook -> {
       slug,
-    }
+    },
+    currentPlaylist
   }`;
 
   const SiteConfigResult = z.object({
     featuredBook: z.object({
       slug: S.Slug,
     }),
+    currentPlaylist: S.Url,
   });
 
   const data = await useSanityClient().fetch(query, {});
