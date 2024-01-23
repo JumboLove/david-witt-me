@@ -18,6 +18,13 @@ export const siteConfigSanityDefinition = defineType({
       to: { type: "resource" },
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "currentPlaylist",
+      title: "Current Playlist",
+      description: "Spotify playlist, album share URL",
+      type: "url",
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
     select: { updated: "_updatedAt" },
@@ -33,6 +40,7 @@ export const siteConfigSanityDefinition = defineType({
 
 export const SiteConfig = S.Document.extend({
   featuredBook: S.Reference.nullable(),
+  currentPlaylist: S.Url,
 });
 
 export type SiteConfig = z.infer<typeof SiteConfig>;
