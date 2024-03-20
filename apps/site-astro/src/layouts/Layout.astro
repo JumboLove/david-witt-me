@@ -40,15 +40,17 @@ import { ViewTransitions } from "astro:transitions";
     <script src="src/scripts/popover.ts"></script>
     <script src="src/scripts/imageZoom.js"></script>
     <script src="src/scripts/copyClipboard.ts"></script>
-    <!-- Umami Analytics -->
 
+    <!-- Umami Analytics -->
     {
       process.env.NODE_ENV === "production" && (
-        <script
-          async
-          src="https://analytics.spacemadness.dev/script.js"
-          data-website-id="16fbd5bf-d004-4702-84ff-465ce12c591f"
-        />
+        <>
+          <script
+            defer
+            src="https://umami-production-d591.up.railway.app/script.js"
+            data-website-id="42a0031e-46a9-49fc-801a-1c4499f7b3d8"
+          />
+        </>
       )
     }
   </body>
