@@ -21,6 +21,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import AtlassianLogo from "@/components/svg/Atlassian";
 
 const currentProjectIds = ["space-madness", "game-grid"];
 const currentProjects = await Promise.all(currentProjectIds.map(getProject));
@@ -79,24 +80,27 @@ const recentPosts = await getPostsList({ order: "recent", limit: 5 });
           alt="David and Lucy - my dog"
           loading="eager"
         />
-        <div
-          class="text-balance flex flex-col items-center justify-center gap-5 text-center text-2xl sm:text-start"
-        >
+
+        <div class="text-balance text-xl md:text-2xl flex flex-col gap-8">
           <p>
-            Developer advocate, front-end engineer, <a
+            Working at <AtlassianLogo
+              className="h-[1.25rem] align-baseline inline mr-2"
+            /><a href="https://www.atlassian.com/">Atlassian</a> on the Front
+            End Developer Productivity Team for <a
+              href="https://www.atlassian.com/software/confluence">Confluence</a
+            >
+          </p>
+
+          <p>
+            Front-end engineer, inconsistent writer, <a
               href="/tags/philosophy"
               class="link">dubious philosopher</a
             >
           </p>
+
           <p>
-            Currently developing <a href="https://spacemadness.dev/"
-              >Space Madness</a
-            > and writing my journey along the way
-          </p>
-          <p>
-            Open to new job opportunites. <a
-              href="/about#work-together"
-              class="link">Get in touch with me</a
+            Hoarder of <a href="/tags/web-dev-toolbox" class="link"
+              >web dev links</a
             >
           </p>
         </div>
