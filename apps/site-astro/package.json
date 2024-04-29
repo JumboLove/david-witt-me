@@ -24,7 +24,7 @@
     "astro-sanity": "^1.1.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "cmdk": "^0.2.0",
+    "cmdk": "^1.0.0",
     "lucide-react": "^0.376.0",
     "mdx-embed": "^1.1.2",
     "pagefind": "^1.0.2",
