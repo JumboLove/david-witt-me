@@ -20,7 +20,7 @@
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "astro": "^4.5.9",
-    "astro-portabletext": "^0.9.4",
+    "astro-portabletext": "^0.10.0",
     "astro-sanity": "^1.1.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
